@@ -1,0 +1,17 @@
+<div class="standards-overview">
+<div class="standards-overview-view"  id="current-status">
+  <dx-load-panel
+    #loadPanel1
+    shadingColor="rgba(255,255,255,0.4)"
+    [position]="{ of: '#current-status' }"
+    [visible]="!standardsList"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    [closeOnOutsideClick]="false"
+  ></dx-load-panel>
+  <bluenorth-standards-overview *ngFor="let logo of standardsList"
+                                [logo]="logo">
+  </bluenorth-standards-overview>
+</div>
+</div>

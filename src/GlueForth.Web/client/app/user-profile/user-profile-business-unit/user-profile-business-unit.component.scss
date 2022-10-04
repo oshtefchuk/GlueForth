@@ -1,0 +1,174 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.units-container {
+  background-color: #fff;
+ // padding: 15px;
+  padding: 32px 15px 15px 15px;
+  height: calc(100vh - 138px);
+  .units-title {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+    align-items: baseline;
+    background-color: #fff;
+    span {
+      font-size: 12px;
+    }
+    h1 {
+      font-size: 24px;
+    }
+  }
+
+  /deep/ dx-data-grid {
+    .dx-toolbar-items-container {
+      display: none !important;
+    }
+    .dx-state-hover {
+      cursor: pointer;
+      .assign_user {
+        color: #333;
+      }
+    }
+    .assign_user {
+      color: #337ab7;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .align-button{
+     text-align: right;
+  }
+
+  ::ng-deep dx-button {
+    margin: 15px 0;
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 150px);
+  }
+}
+
+.no-units-message {
+  display: block;
+  width: 50%;
+}
+
+.scroll-view-list-container{
+  max-height: 450px;
+  overflow: auto;
+}
+
+.users-list-container {
+  //height: 300px;
+  i {
+    font-size: 12px;
+    color: #449D43;
+    vertical-align: middle;
+    padding: 10px;
+    cursor: pointer;
+  }
+  li {
+    background-color: rgba(188, 200, 222, 0.15);
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 5px;
+    .info-block {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      position: relative;
+      padding: 5px;
+      align-items: baseline;
+    }
+    .remove-user {
+      position: absolute;
+      right: 0;
+    }
+    span {
+      margin-right: 5px;
+    }
+  }
+
+}
+
+.users-list-empty {
+  text-align: center;
+}
+
+form {
+  /deep/  > dx-button {
+    margin: 5px;
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 135px);
+  }
+}
+
+/deep/ dx-load-indicator {
+  vertical-align: top;
+  .dx-loadindicator-icon {
+    display: inline-flex;
+    .dx-loadindicator-segment {
+      background: #fff;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+
+.confirmation-popup-wrapper {
+  .cancel-confirm-btn {
+    float: left;
+    color: #fff;
+    background-color: silver;
+    padding: 5px 15px;
+    font-weight: 600;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    line-height: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .confirmation-btn {
+    float: right;
+    color: #fff;
+    background-color: red;
+    padding: 5px 15px;
+    font-weight: 600;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    line-height: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  /deep/ dx-load-indicator {
+      vertical-align: top;
+      .dx-loadindicator-icon {
+        display: inline-flex;
+        .dx-loadindicator-segment {
+          background: #fff;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+
+}
+dx-button {
+  width: 150px;
+  position: relative;
+  .dx-button-text {
+    padding-left: 5px;
+  }
+}
+.dx-loadindicator {
+  position: absolute;
+  left: 0;
+}
+
+::ng-deep dx-load-indicator {
+  .dx-loadindicator-icon {
+    .dx-loadindicator-segment {
+      background: #fff;
+    }
+  }
+}

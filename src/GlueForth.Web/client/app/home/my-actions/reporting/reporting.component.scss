@@ -1,0 +1,262 @@
+.reports-container {
+  margin-top: 15px;
+  background-color: #fff;
+  .dx-datagrid-headers, .dx-datagrid-rowsview {
+    border: none;
+  }
+
+.reports-title {
+  height: 30px;
+  background-color: #f6f6f6;
+  border: 1px solid #e1e1e1;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+  margin-bottom: 2px;
+  margin-left: 350px;
+  max-width: 100%;
+  color: #d1d1d1;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+  .reports-top-header {
+    padding: 12.5px;
+    background-color: #6fc0db;
+    color: #fff;
+    margin-left: 350px;
+    margin-right: 180px;
+    max-width: 1296px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 2px;
+    .reports-top-header-items {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      &:not(:last-child) {
+        &:after {
+          content: '';
+          background-image: url(../../../../assets/arrow-right.png);
+          width: 11px;
+          height: 39px;
+          position: absolute;
+          top: -13px;
+          right: 0;
+        }
+      }
+      &.first-item {
+        &:after {
+          right: 8px;
+        }
+      }
+      &.second-item {
+        &:after {
+          right: 4px;
+        }
+      }
+      &.third-item {
+        &:after {
+          right: -3px;
+        }
+      }
+      &.medium {
+        width: 25%;
+      }
+      &.large {
+        width: 38%;
+      }
+      &.small {
+        width: 12%;
+      }
+      span {
+        width: 90%;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        text-transform: uppercase;
+      }
+    }
+  }
+  .cell-style {
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    height: 50px;
+    font-size: 16px;
+    &-na {
+      padding: 14px;
+    }
+  }
+
+  .characteristic-style{
+    color: #667892;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+  .status-template {
+    text-align: center;
+    font-size: 12px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 400;
+  }
+
+  .data-grid-header {
+    margin-left: 5px;
+    border: none;
+    background-color: transparent;
+    vertical-align: baseline;
+    color: #585f68;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .data-grid-header-rotated {
+    transform: rotate(-90deg);
+    transform-origin: bottom center;
+    padding-left: 15px;
+  }
+
+  .progress-label {
+    height: 20px;
+    padding: 2px;
+    background-color: silver;
+    border-radius: 3px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 400;
+    line-height: 20px;
+    margin-left: 10px;
+  }
+    /deep/ .dx-header-row {
+      td {
+       // background-color: #6BCDFA;
+        background-color: #F3F3F3;
+        padding: 3px 0 3px 10px;
+        border-right: 1px solid #eee;
+        border-left: 1px solid #eee;
+      }
+      td[aria-label*="Progress"] {
+        overflow: visible !important;
+        background-color: #ffffff !important;
+        position: relative;
+        box-shadow: inset 0px 7px 0px 2px white, inset 0px 2px 0px 3px #e1e1e1;
+        border: none;
+
+        &:after {
+          content: '';
+          height: 56px;
+          position: absolute;
+          width: 45px;
+          display: block;
+          top: -40px;
+          left: 2px;
+          border-right: 1px solid #e1e1e1;
+          border-left: 1px solid #e1e1e1;
+          border-top: 1px solid #e1e1e1;
+        }
+        .dx-column-indicators {
+          position: absolute;
+          left: 0;
+          top: -41px;
+        }
+        .dx-datagrid-text-content {
+          overflow: visible !important;
+        }
+      }
+      td[aria-label*="Status"] {
+        overflow: visible !important;
+        background-color: #ffffff !important;
+        position: relative;
+        &:after {
+          content: '';
+          height: 44px;
+          position: absolute;
+          width: 131px;
+          display: block;
+          top: -40px;
+          left: -1px;
+          border-right: 1px solid #eee;
+          border-left: 1px solid #eee;
+          border-top: 1px solid #eee;
+        }
+        .dx-column-indicators {
+          position: absolute;
+          left: 10px;
+          top: -35px;
+        }
+        .dx-datagrid-text-content {
+          overflow: visible !important;
+          position: absolute;
+          top: 0;
+          width: 100%;
+          left: 0;
+          text-align: center;
+          padding-bottom: 16px;
+        }
+      }
+    }
+}
+
+/deep/ .dx-datagrid-scroll-container {
+  overflow: visible !important;
+}
+/deep/ .dx-datagrid-rowsview  {
+  td[aria-label*="Strategic"], td[aria-label*="Operational"], td[aria-label*="Performance"], td[aria-label*="Management"], td[aria-label*="Adoption"], td[aria-label*="Corrective"], td[aria-label*="Measured"] {
+      padding: 0px;
+      border: 1px solid #ccc;
+  }
+  td {
+    vertical-align: middle !important;
+  }
+}
+#gridContainer {
+  min-height: 400px;
+  max-height: calc(100vh - 270px);
+}
+
+.na-question, .status-label {
+  font-weight: 700;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+}
+.na-question {
+  font-size: 14px;
+}
+/deep/ .dx-datagrid-rowsview .dx-row  {
+  border-top: none;
+  border-bottom: none;
+}
+
+.question-group-statuses-description {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.report-description-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+ + span {
+   font-size: 13px;
+   margin-left: 2px;
+ }
+}
+
+.report-description-container {
+  margin-left: 30px;
+}
+
+.gradient {
+  background: repeating-linear-gradient(45deg, #5fc874, #fff 2px, #fff 5px);
+  border: 1px solid #5fc874;
+}

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="BlueNorth.Model.Characteristic">
+      <OwnMembers>
+        <Member Name="GuidanceText" PropertyEditorType="DevExpress.ExpressApp.HtmlPropertyEditor.Web.ASPxHtmlPropertyEditor" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <Options CollectionsEditMode="Edit" />
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerAspNetModule" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="18.2.7.0" IsNewNode="True" />
+  </SchemaModules>
+  <ViewItems>
+    <PropertyEditor Name="PropertyEditors">
+      <RegisteredPropertyEditor PropertyType="System.Drawing.Color" EditorType="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxColorPickerPropertyEditor" />
+    </PropertyEditor>
+  </ViewItems>
+  <Views>
+    <ListView Id="Characteristic_LiteSPAQuestions_ListView" DetailRowMode="DetailViewWithActions" AllowEdit="False" InlineEditMode="Inline" DetailViewID="Question_DetailView_Lite" />
+    <DetailView Id="Question_DetailView_Lite" ClassName="BlueNorth.Model.Question" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="GuidanceText" PropertyName="GuidanceText" Index="-1" IsNewNode="True" />
+        <PropertyEditor Id="Reference" PropertyName="Reference" Index="-1" IsNewNode="True" />
+        <PropertyEditor Id="Title" PropertyName="Title" Index="-1" IsNewNode="True" />
+        <PropertyEditor Id="DefaultAnswer" PropertyName="DefaultAnswer" IsNewNode="True" />
+        <PropertyEditor Id="Group" PropertyName="Group" IsNewNode="True" />
+        <PropertyEditor Id="NoAnswerGuidance" PropertyName="NoAnswerGuidance" Caption="Low" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="PartiallyAnswerGuidance" PropertyName="PartiallyAnswerGuidance" Caption="Medium" IsNewNode="True" />
+        <PropertyEditor Id="UnknownAnswerGuidance" PropertyName="UnknownAnswerGuidance" IsNewNode="True" />
+        <PropertyEditor Id="YesAnswerGuidance" PropertyName="YesAnswerGuidance" Caption="High" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="False" IsNewNode="True">
+            <LayoutGroup Id="Question" Index="0" Direction="Horizontal" ShowCaption="True" IsNewNode="True">
+              <LayoutGroup Id="Question_col1" Index="0" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="Group" ViewItem="Group" ShowCaption="" Index="0" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Question_col2" Index="1" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="DefaultAnswer" ViewItem="DefaultAnswer" Index="3" ShowCaption="" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="AnswersGuidance" Direction="Horizontal" ShowCaption="False" IsNewNode="True">
+              <LayoutGroup Id="col0" IsNewNode="True">
+                <LayoutItem Id="UnknownAnswerGuidance" ViewItem="UnknownAnswerGuidance" ShowCaption="" Index="1" IsNewNode="True" />
+                <LayoutItem Id="NoAnswerGuidance" ViewItem="NoAnswerGuidance" ShowCaption="" Index="2" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="col1" IsNewNode="True">
+                <LayoutItem Id="PartiallyAnswerGuidance" ViewItem="PartiallyAnswerGuidance" ShowCaption="" Index="0" IsNewNode="True" />
+                <LayoutItem Id="YesAnswerGuidance" ViewItem="YesAnswerGuidance" ShowCaption="" Index="0" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

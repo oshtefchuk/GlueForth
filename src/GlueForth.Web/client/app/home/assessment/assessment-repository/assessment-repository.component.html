@@ -1,0 +1,156 @@
+<div class="data-grid-container">
+
+  <div class="filters-selector-container">
+    <span>Filter by:</span>
+    <dx-select-box [dataSource]="dimensionList"
+                   [width]="250"
+                   valueExpr="OID"
+                   displayExpr="ShortTitle"
+                   [value]=""
+                   placeholder='Select Dimension'
+                   (onSelectionChanged)="changeFilter($event, 'dimensionList')"
+                   (onOpened)="setCharacteristicSelectWidth($event)">
+    </dx-select-box>
+
+    <dx-select-box [dataSource]="principlesList"
+                   [width]="250"
+                   valueExpr="OID"
+                   displayExpr="Reference"
+                   [value]=""
+                   placeholder='Select Principle'
+                   (onSelectionChanged)="changeFilter($event, 'principlesList')"
+                   (onOpened)="setCategorySelectWidth($event)">
+    </dx-select-box>
+    <dx-select-box [dataSource]="principleGroupList"
+                   [width]="250"
+                   valueExpr="OID"
+                   displayExpr="ShortTitle"
+                   [value]=""
+                   placeholder='Management Focus Area'
+                   (onSelectionChanged)="changeFilter($event, 'principleGroupList')"
+                   (onOpened)="setCharacteristicSelectWidth($event)">
+    </dx-select-box>
+
+    <dx-select-box [dataSource]="characteristicsList"
+                   [width]="250"
+                   valueExpr="OID"
+                   displayExpr="ShortTitle"
+                   [value]=""
+                   placeholder='Select Characteristic'
+                   (onSelectionChanged)="changeFilter($event, 'characteristicsList')"
+                   (onOpened)="setFocusAreaSelectWidth($event)">
+    </dx-select-box>
+
+  </div>
+
+  <dx-data-grid #dataGrid
+                id="gridContainer"
+                [showBorders]="true"
+                [showColumnHeaders]="true"
+                [columnAutoWidth]="true"
+                [headerFilter]="{ visible: true }"
+                [dataSource]="notes | async"
+                [scrolling]='{
+        columnRenderingMode: "standard",
+        mode: "standard",
+        preloadEnabled: false,
+        rowRenderingMode: "standard",
+        scrollByContent: true,
+        scrollByThumb: false,
+        showScrollbar: "onScroll",
+        useNative: null}'
+                [showRowLines]="true">
+    <dxo-export [enabled]="true"
+                backgroundColor="#6BCDFD"
+                fileName="Repository"
+                [allowExportSelectedData]="false">
+    </dxo-export>
+
+    <dxi-column dataField="CharacteristicRef"
+                caption="Ref"
+                headerCellTemplate="titleHeaderTemplate"
+                [width]="'5'+'%'"></dxi-column>
+    <dxi-column dataField="Characteristic"
+                headerCellTemplate="titleHeaderTemplate"
+                [width]="'15' + '%'"></dxi-column>
+    <dxi-column dataField="QuestionType"
+                headerCellTemplate="titleHeaderTemplate"
+                [width]="'15'+'%'"></dxi-column>
+    <dxi-column dataField="Notes"
+                headerCellTemplate="titleHeaderTemplate"
+                cellTemplate="notesCellTemplate"
+                [width]="'48'+'%'"></dxi-column>
+    <dxi-column [width]="'17'+'%'" dataField="documents"
+                [allowFiltering]="false"
+                headerCellTemplate="titleHeaderTemplate"
+                cellTemplate="documentsTemplate"
+    ></dxi-column>
+    <div *dxTemplate="let info of 'documentsTemplate'">
+      <div class="files-item"
+           *ngFor="let item of info.data.Attachments"
+           (click)="dowloadFile(item)">{{item.FileName}}
+      </div>
+    </div>
+    <div *dxTemplate="let info of 'titleHeaderTemplate'" class="data-grid-header">
+      <p class="data-grid-header">{{info.column.caption}}</p>
+    </div>
+    <div *dxTemplate="let info of 'notesCellTemplate'" >
+      <div *ngIf="info.data.Notes" class="files-item" (click)="showNotesPopup('content3', 'note', info)">{{info.data.Notes}}</div>
+      <div *ngIf="!info.data.Notes" class="files-item" (click)="showNotesPopup('content3', 'note', info)"><i class="material-icons">
+        note_add
+      </i></div>
+    </div>
+  </dx-data-grid>
+
+  <dx-popup class="guidance-popup-wrapper" #dxPopupGuidance
+            [width]="currentPopupConfig.width"
+            [height]="currentPopupConfig.height "
+            [showTitle]="currentPopupConfig.showTitle"
+            [title]="currentPopupConfig.title"
+            [dragEnabled]="currentPopupConfig.dragEnabled"
+            [closeOnOutsideClick]="currentPopupConfig.closeOnOutsideClick"
+            [closeOnBackButton]="currentPopupConfig.closeOnBackButton"
+            [showCloseButton]="currentPopupConfig.showCloseButton"
+            [(visible)]="popupShow"
+            [shading]="true"
+            [resizeEnabled]="currentPopupConfig.resizeEnabled"
+            (onHidden)="currentPopupTemplate = ''"
+            [(contentTemplate)]="currentPopupTemplate"
+            (onHiding)="updateNotes()">
+
+    <div *dxTemplate="let data of 'content3'">
+      <dx-scroll-view>
+        <div class="message-note-container">
+          <dx-text-area
+            width="500"
+            [height]="50"
+            (onFocusIn)="isNoteChanged = true"
+            (onInput)="onChangeQuestionNote($event)"
+            [value]="questionNote?.Note">
+          </dx-text-area>
+
+          <dx-button [disabled]="!isNoteChanged" (onClick)="updateQuestionNote($event)" text="Save"></dx-button>
+        </div>
+        <div>
+          <dx-file-uploader
+            [multiple]="false"
+            [allowCanceling]="true"
+            selectButtonText="Attach Files"
+            labelText=""
+            (onValueChanged)="addFiles($event)"
+            [uploadMode]="'useButtons'">
+          </dx-file-uploader>
+        </div>
+        <ng-container *ngIf="questionNote.Attachments && questionNote.Attachments.length; else emptyList">
+          <div class="files-container">
+          <span class="attachment-item" *ngFor="let file of questionNote.Attachments">
+            <span (click)="downloadAttachment(file)">{{file.FileName}}</span>
+            <span (click)="deleteAttachment(file.OID)">x</span>
+          </span>
+          </div>
+        </ng-container>
+        <ng-template #emptyList>No attached files yet..</ng-template>
+      </dx-scroll-view>
+    </div>
+  </dx-popup>
+</div>

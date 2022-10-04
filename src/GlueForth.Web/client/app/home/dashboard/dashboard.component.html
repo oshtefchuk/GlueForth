@@ -1,0 +1,420 @@
+<div class="top-navigation-wrapper" [ngClass]="{'fixed' : isNavFixed}">
+  <div class="top-navigation">
+    <div class="nav-item" #navigation [ngClass]="{'top-navigation-active' : isActive===1}" (click)="isActive=1"
+         pageScroll href="#myActions">
+      MY ACTIONS
+    </div>
+    <div class="nav-item" [ngClass]="{'top-navigation-active' : isActive===2}" (click)="isActive=2" pageScroll
+         href="#strategicAssessment">
+      STRATEGIC ASSESSMENTS
+    </div>
+    <div class="nav-item" [ngClass]="{'top-navigation-active' : isActive===3}" (click)="isActive=3" pageScroll
+         href="#performanceIndicators">
+      PERFORMANCE INDICATORS
+    </div>
+    <div class="nav-item" *ngIf="assesstentType === 0" [ngClass]="{'top-navigation-active' : isActive===4}" (click)="isActive=4" pageScroll
+         href="#standards">
+      STANDARDS
+    </div>
+    <!--<div class="nav-item" [ngClass]="{'top-navigation-active' : isActive===5}" (click)="isActive=5" pageScroll
+         href="#systemHealth">
+      SYSTEM HEALTH
+    </div>-->
+  </div>
+</div>
+<div class="dashboard-container">
+  <div class="anckor" id="myActions"></div>
+  <div class="grid-container">
+    <bluenorth-action-items [reportingCounts]="reportingCounts"
+                          [actionItemBlock]="'action-item-block2'"></bluenorth-action-items>
+    <div class="active-categories-container">
+      <div class="container-header">active categories <span class="question-tooltip">?</span></div>
+    <bluenorth-prior-characteristics
+      [topPriorByPrincipleGroup]="topPriorByPrincipleGroup"></bluenorth-prior-characteristics>
+  </div>
+  </div>
+  <div class="chart-container">
+    <div class="container-header">TREND</div>
+
+    <div class="chart-view">
+      <dx-chart
+        [palette]="['#6fc0db', '#73c837', '#cf8884']"
+        [dataSource]="countriesInfo">
+        <dxi-series
+          valueField="Open"
+          name="Open">
+        </dxi-series>
+        <dxi-series
+          valueField="Completed"
+          name="Completed">
+        </dxi-series>
+        <dxi-series
+          valueField="Overdue"
+          name="Overdue">
+        </dxi-series>
+        <dxo-common-series-settings #seriesSettings
+                                    argumentField="PeriodName"
+                                    >
+        </dxo-common-series-settings>
+        <dxo-margin [bottom]="20"></dxo-margin>
+        <dxo-argument-axis
+          [valueMarginsEnabled]="false"
+          discreteAxisDivisionMode="crossLabels">
+          <dxo-grid [visible]="false"></dxo-grid>
+        </dxo-argument-axis>
+        <dxo-legend
+          verticalAlignment="bottom"
+          horizontalAlignment="center"
+          itemTextPosition="top">
+        </dxo-legend>
+        <dxo-export [enabled]="false"></dxo-export>
+        <dxo-tooltip
+          [enabled]="true"
+          [customizeTooltip]="customizeTooltip">
+        </dxo-tooltip>
+      </dx-chart>
+    </div>
+  </div>
+  <!--<div class="statistics-container">
+    <div class="container-header">
+      MY COMPLETION RATING
+    </div>
+    <i class="fas fa-chart-area"></i>
+    <div class="statistics-container-content">
+      <div class="rating-circle">{{improvementPlanOpenProgress}}%</div>
+      <i class="material-icons">arrow_downward</i>
+      <span>{{improvementPlanOverdueProgress}}%</span>
+      &lt;!&ndash;  <img src="../../../assets/chart-areaspline.png">&ndash;&gt;
+    </div>
+  </div>-->
+  <div class="grid-container">
+  <div class="statistics-container">
+    <div class="anckor3" id="strategicAssessment"></div>
+    <div class="container-header">
+      ASSESSMENT PROGRESS
+      <span *ngIf="lastAssessmentUpdate" class="update-info">Last Update: {{lastAssessmentUpdate | date: 'dd MMMM yyy'}}</span>
+      <span *ngIf="!lastAssessmentUpdate" class="update-info">Last Update: -</span>
+    </div>
+    <div class="statistics-view">
+      <div class="statistics-inner-wrapper in-progress">
+        <div class="review-container" id="lite-pie-chart">
+          <div class="review-container-top">
+            <div class="pie-chart-legend"
+                 [ngClass]="{'pie-chart-legend-empty' : spaDatasetLite.AnsweredPercentage === 0 }"
+                 *ngIf="spaDatasetLite">{{spaDatasetLite.AnsweredPercentage}}%
+            </div>
+            <dx-pie-chart style="height: 150px; width: 150px;"
+                          type="doughnut"
+                          [innerRadius]="1"
+                          [innerRadius]="1"
+                          title=""
+                          [palette]="[ '#91c74b', '#B7CCE1']"
+                          [legend]="{ visible: false }"
+                          [dataSource]="spaDataSetPieChart">
+              <dxi-series
+                argumentField="state"
+                valueField="value">
+                <dxo-label
+                  [visible]="false">
+                  <dxo-connector [visible]="true"></dxo-connector>
+                </dxo-label>
+              </dxi-series>
+              <dxo-export [enabled]="false"></dxo-export>
+            </dx-pie-chart>
+          </div>
+        </div>
+        <span class="statistic-graph-title" *ngIf="assesstentType === 1">LIGHT ASSESSMENT</span>
+        <span class="statistic-graph-title" *ngIf="assesstentType === 0">FULL ASSESSMENT</span>
+        <dx-button text="UPDATE" class="update-btn" (onClick)="navigateToAssessment()"></dx-button>
+      </div>
+      <!--<div class="top-items-wrapper">
+        <span class="top-item-title">TOP 3 STRENGTHS</span>
+        <ul>
+          <li>
+            <span class="top-item-number">1.</span>
+            <span class="top-item-name">Lorem Ipsum is simply dummy</span>
+            <i _ngcontent-c2="" class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </li>
+          <li>
+            <span class="top-item-number">2.</span>
+            <span class="top-item-name">Lorem Ipsum</span>
+            <i _ngcontent-c2="" class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </li>
+          <li>
+            <span class="top-item-number">3.</span>
+            <span class="top-item-name">Lorem Ipsum is simply dummy text</span>
+            <i _ngcontent-c2="" class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </li>
+        </ul>
+        <span class="top-item-title">TOP 3 STRENGTHS</span>
+        <ul>
+          <li>
+            <span class="top-item-number">1.</span>
+            <span class="top-item-name">Lorem Ipsum is simply dummy</span>
+            <i _ngcontent-c2="" class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </li>
+          <li>
+            <span class="top-item-number">2.</span>
+            <span class="top-item-name">Lorem Ipsum</span>
+            <i _ngcontent-c2="" class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </li>
+          <li>
+            <span class="top-item-number">3.</span>
+            <span class="top-item-name">Lorem Ipsum is simply dummy text</span>
+            <i _ngcontent-c2="" class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </li>
+        </ul>
+      </div>-->
+
+    </div>
+  </div>
+  <div class="validation-container">
+    <div class="container-header">
+      ASSESSMENT REVIEW
+      <span *ngIf="lastAssessmentUpdate" class="update-info">Last Update: {{lastAssessmentUpdate | date: 'dd MMMM yyy'}}</span>
+      <span *ngIf="!lastAssessmentUpdate" class="update-info">Last Update: -</span>
+    </div>
+    <div class="validation-view">
+      <div class="validation-title">
+        BLUE NORTH RATING
+        <span class="question-tooltip">?</span>
+      </div>
+      <div class="review-container">
+        <i class="material-icons">
+          star_border
+        </i>
+        <i class="material-icons">
+          star_border
+        </i>
+        <i class="material-icons review-mark">
+          star
+          <span>3</span>
+        </i>
+        <i class="material-icons">
+          star_border
+        </i>
+        <i class="material-icons">
+          star_border
+        </i>
+      </div>
+      <div class="validation-descr">
+        <span><b>Description:</b> This functionality will be rolled out in a future phase and will allow the user to voluntarily submit data for an independent review.</span>
+      </div>
+      <dx-button text="SUBMIT FOR REVIEW" class="sbmt-review-btn"></dx-button>
+    </div>
+  </div>
+  </div>
+  <div class="grid-container">
+  <div class="chart-container" id="performanceIndicators">
+    <div class="container-header">
+      DATA COLLECTION PROGRESS <span class="question-tooltip">?</span></div>
+
+    <div class="chart-view">
+      <dx-select-box style="margin-bottom: 10px;"
+        [items]="categories"
+        [value]="currentCategory"
+        [width]="300"
+        displayExpr="Title"
+        (onSelectionChanged)="setCategory($event)">
+      </dx-select-box>
+
+      <div class="chart-view-inner">
+        <dx-chart class="data-collection-chart"
+                  [palette]="['#558FCC', '#B7CCE1', '#6CCDFA', '#77DDF9']"
+                  [rotated]="true"
+                  id="chart"
+                  [dataSource]="sales"
+                  [equalBarWidth]="false"
+                  [valueAxis]="{max: 100, min: 0 , label:{customizeText: customizeValueLabel}}"
+                  [backgroundColor]="'#DAECF7'"
+        >
+          <dxo-common-series-settings
+            argumentField="year"
+            type="bar"
+            valueField="sales">
+          </dxo-common-series-settings>
+          <dxo-series-template nameField="year"></dxo-series-template>
+          <dxo-legend [visible]="false"></dxo-legend>
+        </dx-chart>
+        <dx-button text="UPDATE" class="update-btn" (onClick)="navigateToPerfomanceIndicatorsCapture()"></dx-button>
+        <!--<div class="top-items-wrapper">
+          <span class="top-item-title">TOP 3 STRENGTHS</span>
+          <ul>
+            <li>
+              <span class="top-item-number">1.</span>
+              <span class="top-item-name">Lorem Ipsum is simply dummy</span>
+              <i _ngcontent-c2="" class="material-icons">
+                keyboard_arrow_right
+              </i>
+            </li>
+            <li>
+              <span class="top-item-number">2.</span>
+              <span class="top-item-name">Lorem Ipsum</span>
+              <i _ngcontent-c2="" class="material-icons">
+                keyboard_arrow_right
+              </i>
+            </li>
+            <li>
+              <span class="top-item-number">3.</span>
+              <span class="top-item-name">Lorem Ipsum is simply dummy text</span>
+              <i _ngcontent-c2="" class="material-icons">
+                keyboard_arrow_right
+              </i>
+            </li>
+          </ul>
+          <span class="top-item-title">TOP 3 STRENGTHS</span>
+          <ul>
+            <li>
+              <span class="top-item-number">1.</span>
+              <span class="top-item-name">Lorem Ipsum is simply dummy</span>
+              <i _ngcontent-c2="" class="material-icons">
+                keyboard_arrow_right
+              </i>
+            </li>
+            <li>
+              <span class="top-item-number">2.</span>
+              <span class="top-item-name">Lorem Ipsum</span>
+              <i _ngcontent-c2="" class="material-icons">
+                keyboard_arrow_right
+              </i>
+            </li>
+            <li>
+              <span class="top-item-number">3.</span>
+              <span class="top-item-name">Lorem Ipsum is simply dummy text</span>
+              <i _ngcontent-c2="" class="material-icons">
+                keyboard_arrow_right
+              </i>
+            </li>
+          </ul>
+          <dx-button text="UPDATE" class="update-btn"></dx-button>
+        </div>-->
+      </div>
+    </div>
+  </div>
+    <div class="validation-container" id="performanceIndicatorsReview">
+      <div class="container-header">
+        PERFORMANCE INDICATOR DATA REVIEW
+        <span *ngIf="lastIndicatorsUpdate" class="update-info">Last Update: {{lastIndicatorsUpdate | date: 'dd MMMM yyy'}}</span>
+        <span *ngIf="!lastIndicatorsUpdate" class="update-info">Last Update: -</span>
+      </div>
+      <div class="validation-view">
+        <div class="validation-title">
+          BLUE NORTH RATING
+          <span class="question-tooltip">?</span>
+        </div>
+        <div class="review-container">
+          <i class="material-icons">
+            star_border
+          </i>
+          <i class="material-icons">
+            star_border
+          </i>
+          <i class="material-icons">
+            star_border
+          </i>
+          <i class="material-icons review-mark">
+            star
+            <span>4</span>
+          </i>
+          <i class="material-icons">
+            star_border
+          </i>
+        </div>
+        <div class="validation-descr">
+          <span><b>Description:</b> This functionality will be rolled out in a future phase and will allow the user to voluntarily submit data for an independent review.</span>
+        </div>
+        <dx-button text="IS UP TO DATE" class="sbmt-review-btn disable"></dx-button>
+      </div>
+
+
+
+    </div>
+  </div>
+
+<div class="standards-overview" *ngIf="assesstentType === 0">
+  <div class="anckor4" id="standards"></div>
+  <div class="container-header">
+    STANDARDS OVERVIEW
+  </div>
+  <div class="standards-overview-view">
+    <bluenorth-standards-overview *ngFor="let logo of standardsList"  [logo]="logo"></bluenorth-standards-overview>
+  </div>
+</div>
+</div>
+<!--<div class="statistics-container container-status">
+  <div class="anckor5" id="systemHealth"></div>
+  <div class="container-header">
+    STATUS
+  </div>
+  <div class="container-status-content">
+    <div class="corner-block block-style">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+      standard dummy text ever since the 1500s,
+      <i class="material-icons down-1">
+        call_made
+      </i>
+    </div>
+    <div class="corner-block">
+    </div>
+
+    <div class="corner-block block-style">
+      <i class="material-icons down-2">
+        call_received
+      </i>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+      standard dummy text ever since the 1500s,
+    </div>
+    <i class="material-icons">
+      arrow_downward
+    </i>
+    <div class="big-square-block block-style">
+
+      <div class="small-square-block block-style">
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+      </div>
+      <div class="small-square-block block-style">
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+      </div>
+      <div class="small-square-block block-style">
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+      </div>
+      <div class="small-square-block block-style">
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+      </div>
+    </div>
+    <div class="corner-block">
+      <i class="material-icons">
+        arrow_upward
+      </i>
+    </div>
+    <div class="corner-block block-style">
+      <i class="material-icons up-1">
+        call_received
+      </i>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+      standard dummy text ever since the 1500s,
+    </div>
+
+    <div class="corner-block">
+    </div>
+    <div class="corner-block block-style">
+      <i class="material-icons down-3">
+        call_made
+      </i>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+      standard dummy text ever since the 1500s,
+    </div>
+  </div>
+</div>-->

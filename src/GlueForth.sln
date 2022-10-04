@@ -1,0 +1,87 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueNorth.Module", "BlueNorth.Module\BlueNorth.Module.csproj", "{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueNorth.Module.Web", "BlueNorth.Module.Web\BlueNorth.Module.Web.csproj", "{0C729AAD-7626-4668-A7F1-35F7D240489D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueNorth.Web", "BlueNorth.Web\BlueNorth.Web.csproj", "{82A6DBC9-B1B4-44E4-9718-55DF930CD349}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueNorth.Model", "BlueNorth.Model\BlueNorth.Model.csproj", "{C2F8696E-FF2E-4BE5-B246-15588CCA0785}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueNorth.WebApi", "BlueNorth.WebApi\BlueNorth.WebApi.csproj", "{5236761F-7E8B-4FB0-9144-D1113EFB6E4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		EasyTest|Any CPU = EasyTest|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C729AAD-7626-4668-A7F1-35F7D240489D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C729AAD-7626-4668-A7F1-35F7D240489D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C729AAD-7626-4668-A7F1-35F7D240489D}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{0C729AAD-7626-4668-A7F1-35F7D240489D}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{0C729AAD-7626-4668-A7F1-35F7D240489D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C729AAD-7626-4668-A7F1-35F7D240489D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82A6DBC9-B1B4-44E4-9718-55DF930CD349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82A6DBC9-B1B4-44E4-9718-55DF930CD349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82A6DBC9-B1B4-44E4-9718-55DF930CD349}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{82A6DBC9-B1B4-44E4-9718-55DF930CD349}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{82A6DBC9-B1B4-44E4-9718-55DF930CD349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82A6DBC9-B1B4-44E4-9718-55DF930CD349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F8696E-FF2E-4BE5-B246-15588CCA0785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F8696E-FF2E-4BE5-B246-15588CCA0785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F8696E-FF2E-4BE5-B246-15588CCA0785}.EasyTest|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F8696E-FF2E-4BE5-B246-15588CCA0785}.EasyTest|Any CPU.Build.0 = Release|Any CPU
+		{C2F8696E-FF2E-4BE5-B246-15588CCA0785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F8696E-FF2E-4BE5-B246-15588CCA0785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5236761F-7E8B-4FB0-9144-D1113EFB6E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5236761F-7E8B-4FB0-9144-D1113EFB6E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5236761F-7E8B-4FB0-9144-D1113EFB6E4D}.EasyTest|Any CPU.ActiveCfg = Release|Any CPU
+		{5236761F-7E8B-4FB0-9144-D1113EFB6E4D}.EasyTest|Any CPU.Build.0 = Release|Any CPU
+		{5236761F-7E8B-4FB0-9144-D1113EFB6E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5236761F-7E8B-4FB0-9144-D1113EFB6E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21DAC3F0-B277-4911-B9D1-88CC88F1F425}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal

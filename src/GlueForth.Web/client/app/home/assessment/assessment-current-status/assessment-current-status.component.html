@@ -1,0 +1,70 @@
+<div class="assesment-current-status-container">
+  <div class="current-status-wrapper">
+    <div class="assesment-current-status-annotation">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+      It has survived not only five centuries, but also the leap into electronic typesetting.
+      <h5> Choose an assessment you want to continue with.</h5>
+    </div>
+
+    <div class="assesment-type-container">
+      <div class="assessment-type-header">
+        <i class="material-icons">pie_chart</i>
+        <h3>Lite ASSESSMENT</h3>
+      </div>
+      <div class="assessment-type-content">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, whe</p>
+        <h5>What this Includes: </h5>
+        <ul>
+          <li>- Quick diagnosis of strengths and weaknesses</li>
+          <li>- Graphical reporting</li>
+          <li>- Performance reporting & priorotisation</li>
+          <li>- Improvement planner</li>
+        </ul>
+        <h5>Excludes</h5>
+        <ul>
+          <li>- Full Benchmarking of relevant standards</li>
+          <li>- Benchmarking of standards</li>
+          <li>- Integrated compliance reporting and management</li>
+        </ul>
+
+        <dx-button
+          text="CONTINUE"
+          type="success"
+          (onClick)="changeAssessmentType(1)">
+        </dx-button>
+      </div>
+
+    </div>
+
+    <div class="assesment-type-container">
+      <div class="assessment-type-header full-assessment-header">
+
+        <i class="material-icons">storage</i>
+        <h3>FUll ASSESSMENT</h3>
+      </div>
+      <div class="assessment-type-content">
+        <p>orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, whe</p>
+        <h5>What this Includes: </h5>
+        <ul>
+          <li>- Quick diagnosis of strengths and weaknesses</li>
+          <li>- Graphical reporting</li>
+          <li>- Performance reporting & priorotisation</li>
+          <li>- Improvement planner</li>
+          <li>- Full Benchmarking of relevant standards.</li>
+          <li>- Benchmarking of standards.</li>
+          <li>- Integrated compliance and standards management.</li>
+          <li>- Integrated compliance reporting and management.</li>
+        </ul>
+        <dx-button
+          (onClick)="changeAssessmentType(0)"
+          text="CONTINUE"
+          type="success">
+        </dx-button>
+      </div>
+    </div>
+  </div>
+</div>

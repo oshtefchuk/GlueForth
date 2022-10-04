@@ -1,0 +1,3144 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GlueForth.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:BlueNorth.WebApi.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,BlueNorth.WebApi.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,BlueNorth.WebApi.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:BlueNorth.WebApi.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},BlueNorth.WebApi.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.#ctor(BlueNorth.WebApi.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,BlueNorth.WebApi.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:BlueNorth.WebApi.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BlueNorth.WebApi.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BlueNorth.WebApi.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:BlueNorth.WebApi.DTOs.AnswerNoteFilterDTO">
+            <summary>
+            Structure that used for transfer filter selection for AnswerNotes list page (Repository)
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.DTOs.DimensionDTO">
+            <summary>
+            This class represents DTO of Dimension entity for selector on lite assessment capture page
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.DTOs.FullQuestionDTO">
+            <summary>
+            This class represent Question model for Current Unit Assessment type --> Full
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.DTOs.PrimaryDataFieldNoteDTO.#ctor">
+            <summary>
+            This class represent Indicator Node model for Indicator and Indicator DataSet
+            Used in GetPrimaryDataFieldNotesListByIndicator method
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.DTOs.PrimaryDataFieldNotesDTO.#ctor">
+            <summary>
+            This class represent Indicator Notes model for IndicatorNoteDTO
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.DTOs.LiteQuestionDTO">
+            <summary>
+            This class represent Question model for Current Unit Assessment type --> Lite
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.DTOs.PrincipleDTO">
+            <summary>
+            This class represents DTO of Principle entity for selector on lite assessment capture page
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.DTOs.QuestionDTO">
+            <summary>
+            This class represent Question model for FullQuestionDTO
+            </summary>
+        </member>
+        <member name="T:BlueNorth.WebApi.DTOs.SpaDTO">
+            <summary>
+            This class represent SPA DataSet model for strategic assessment => current status page
+            Used in GetSpaDataSetByAssessmentType method
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.FrontendMenuItemController.GetList">
+            <summary>
+            Get FrontendMenuItem list for current User->Framework
+            </summary>
+            <returns>FrontendMenuItems, represented as AnswerNoteFullDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswerNotesController.GetList">
+            <summary>
+            Get AnswerNotes list for current User->Framework->Assessment
+            </summary>
+            <returns>AnswerNotes, represented as AnswerNoteFullDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswerNotesController.GetFilteredList(BlueNorth.WebApi.DTOs.AnswerNoteFilterDTO)">
+            <summary>
+            Get filtered AnswerNotes list for current User->Framework->Assessment
+            </summary>
+            <param name="answerNoteFilter">filters paramethers as AnswerNoteFilterDTO</param>
+            <returns>AnswerNotes, represented as AnswerNoteFullDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswerNotesController.GetByQuestionId(System.Int32,System.Int32)">
+            <summary>
+            Get <code>AnswerNote</code> by OID
+            </summary>
+            <param name="questionOid">OID of <code>Question</code></param>
+            <param name="characteristicOid">OID of <code>Characteristic</code></param>
+            <returns><code>AnswerNote</code> represented as AnswerNoteDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswerNotesController.Post(BlueNorth.WebApi.DTOs.AnswerNoteDTO)">
+            <summary>
+            POST Method for AnswerNote creation/update
+            </summary>
+            <param name="answerNote"><code>AnswerNoteDTO</code> instance</param>
+            <returns>updated AnswerNote</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswerNotesController.Post(BlueNorth.WebApi.DTOs.AnswerNoteAttachmentDTO)">
+            <summary>
+            POST Method for AnswerNote creation/update
+            </summary>
+            <param name="answerNoteAttachmentDto"><code>AnswerNoteDTO</code> instance</param>
+            <returns>updated AnswerNote</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswerNotesController.Delete(System.Int32)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswerNotesController.DeleteAnswerNoteAttachment(System.Int32)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswerNotesController.DownloadAttachment(System.Int32)">
+            <summary>
+            Method for downloading of specific <code>AnswerNoteAttachment</code> attachment
+            </summary>
+            <param name="oid">Oid of <code>AnswerNoteAttachment</code></param>
+            <returns>file stream</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswersController.GetAnswers">
+            <summary>
+            Returns list of all Answers. <code>Answer</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Answers</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswersController.GetAnswer(System.Int32)">
+            <summary>
+            Get <code>Answer</code> by OID
+            </summary>
+            <param name="key">OID of <code>Answer</code></param>
+            <returns><code>Answer</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswersController.Post(BlueNorth.WebApi.DTOs.AnswerDTO)">
+            <summary>
+            POST Method for Answer creation/update
+            </summary>
+            <param name="unit"><code>AnswerDTO</code> instance</param>
+            <returns>updated Answer</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.AnswersController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetCharacteristics">
+            <summary>
+            Returns list of all Characteristics. Characteristic represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Characteristics</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetCharacteristic(System.Int32)">
+            <summary>
+            Get Characteristic by OID
+            </summary>
+            <param name="key">OID of Characteristic</param>
+            <returns>Characteristic represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetShortCharacteristic(System.Int32)">
+            <summary>
+            Get Characteristic by OID
+            </summary>
+            <param name="key">OID of Characteristic</param>
+            <returns>Characteristic represented as <code>CharacteristicShortDTO</code>, including calculated current Status</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetCharacteristicListByStandard">
+            <summary>
+            Returns list of current Framework Characteristics. Characteristic represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of current Framework Characteristics</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetCharacteristicListByStandardAndPrinciple(System.Int32)">
+            <summary>
+            Returns list of Characteristics related with current6 Framewrok and specific Principle. Characteristic represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of Characteristics related with current6 Framewrok and specific Principle</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetByCurrentFrameworkAndPrinciple(System.Int32)">
+            <summary>
+            Returns list of Characteristics related with current6 Framewrok and specific Principle. Each Characteristic represented as <code>CharacteristicDTO</code>
+            </summary>
+            <param name="principleOid">Oid of Principle</param>
+            <returns>list of Characteristics related with current6 Framewrok and specific Principle</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetCharacteristicListByStandardAndDimension(System.Int32)">
+            <summary>
+            Returns list of Characteristics related with current6 Framewrok and specific Dimension. Characteristic represented as root element, withoud referenced entities
+            </summary>
+            <param name="dimensionOid">Oid of Dimension</param>
+            <returns>list of Characteristics related with current6 Framewrok and specific Dimension</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetCharacteristicsByCurrentFrameworkAndPrincipleGroup(System.Int32)">
+            <summary>
+            Returns list of Characteristics related with current6 Framewrok and specific PrincipleGroup. Characteristic represented as root element, withoud referenced entities
+            </summary>
+            <param name="principleGroupOid">Oid of PrincipleGroup</param>
+            <returns>list of Characteristics related with current6 Framewrok and specific PrincipleGroup</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetCharacteristicsByCurFrameworkAndPrincipleGroup(System.Int32)">
+            <summary>
+            Returns list of Characteristics related with current6 Framewrok and specific PrincipleGroup. Each Characteristic represented as CharacteristicDTO
+            </summary>
+            <param name="principleGroupOid">Oid of PrincipleGroup</param>
+            <returns>list of <code>CharacteristicDTO</code></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetPriorCharacteristicsByCurFrameworkAndPrincipleGroup(System.Int32)">
+            <summary>
+            List of prior characteristics by specific PrincipleGroup
+            </summary>
+            <param name="principleGroupOid">Oid of PrincipleGroup</param>
+            <returns><code>PrioritisationCharacteristicDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetPriorCharacteristicsByCurFrameworkPrincipleAndGroup(BlueNorth.WebApi.CharacteristicsController.PriorListFilter)">
+            <summary>
+            List of prior characteristics by specific Principle and PrincipleGroup
+            </summary>
+            <param name="filter"><code>PriorListFilter</code> instance</param>
+            <returns><code>PrioritisationCharacteristicDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.GetTopPriorCharacteristicsByCurFrameworkAndPrincipleGroup(System.Int32)">
+            <summary>
+            Returns ordered PriorCharacteristics list by specific PrincipleGroup
+            </summary>
+            <param name="principleGroupOid">Oid of PrincipleGroup</param>
+            <returns><code>PriorCharacteristicDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.AddPriorCharacteristic(System.Int32)">
+            <summary>
+            POST Method for adding Characteristic to PriorCharacteristics list based on current Unit info
+            </summary>
+            <param name="priorCharacteristicsOid">Oid of Characteristic</param>
+            <returns>Ok - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.SetPriorCharacteristicOrder(BlueNorth.WebApi.PriorCharacteristicDTO)">
+            <summary>
+            POST Method for set Order of PriorCharacteristic
+            </summary>
+            <param name="priorCharacteristic"><code>PriorCharacteristicDTO</code> instance</param>
+            <returns>Ok - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.RecalcCharacteristicUnitScores(System.Guid)">
+            <summary>
+            Method for Characteristic Score recalculation - used by Web Jobs
+            </summary>
+            <param name="unitOid">Oid of <code>Unit</code></param>
+            <returns>Ok - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.RecalcAllCharacteristicScores">
+            <summary>
+            Method for Characteristic Score recalculation for all existed Units - used by Web Jobs
+            </summary>
+            <returns>Ok - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.RemovePriorCharacteristic(System.Int32)">
+            <summary>
+            Method for removing Characteristic to PriorCharacteristics list based on current Unit info
+            </summary>
+            <param name="priorCharacteristicOid">Oid of Characteristic</param>
+            <returns>Ok - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CharacteristicsController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CommoditiesController.GetCommodities">
+            <summary>
+            Returns list of all Commodities. <code>Commodity</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Commodities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CommoditiesController.GetCommoditiesByUnitType(System.Int32)">
+            <summary>
+            Returns list of all Commodities by unitTypeOid. <code>Commodity</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Commodities by unitTypeOid</returns>        
+        </member>
+        <member name="M:BlueNorth.WebApi.CommoditiesController.GetCommodity(System.Int32)">
+            <summary>
+            Get <code>Commodity</code> by OID
+            </summary>
+            <param name="key">OID of <code>Commodity</code></param>
+            <returns><code>Commodity</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CommoditiesController.Post(BlueNorth.WebApi.Commodity)">
+            <summary>
+            Creates or updates existed Commodity. Id OID is empty or 0 - it's new entity.
+            </summary>
+            <param name="commodity">entity for creation/update</param>
+            <returns>Commodity entity</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CommoditiesController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            Deletes entity by OID
+            </summary>
+            <param name="key">Commodity OID</param>
+            <returns>Ok - if succeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CountriesController.GetCountries">
+            <summary>
+            Returns list of all Countries. Country represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Countries</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CountriesController.GetCountry(System.Guid)">
+            <summary>
+            Get Country by OID
+            </summary>
+            <param name="key">OID of Country</param>
+            <returns>Country represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.CountriesController.Post(BlueNorth.WebApi.Country)">
+            <summary>
+            Auto-generated Post method. NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.CountriesController.Patch(System.Guid,System.Web.OData.Delta{BlueNorth.WebApi.Country})">
+            <summary>
+            Auto-generated Patch method. NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.CountriesController.Delete(System.Guid)">
+            <summary>
+            Auto-generated Delete method. NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetImprovementPlanItems">
+            <summary>
+            Returns list of all ImprovementPlanItems. ImprovementPlanItem represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all ImprovementPlanItems</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetCountsForReporting">
+            <summary>
+            Returns prepared counts for MyActions -> Status page (OPEN/COMPLETED/OVERDUE)
+            </summary>
+            <returns>array with 3 int values</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetList(BlueNorth.WebApi.DTOs.ImprovementPlanFilterDTO)">
+            <summary>
+            Returns prepared and filtered data for MyActions->Tasks page - list of <code>ImprovementPlanItem</code>'s (Task's)
+            </summary>
+            <param name="filter"><code>ImprovementPlanFilterDTO</code> instance</param>
+            <returns><code>ImprovementPlanItemDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetQuestionGroupsList">
+            <summary>
+            Returns list of <code>QuestionGroup</code>'s where current User have existed <code>ImprovementPlanItem</code>'s (Task's). For filter at MyActions->Tasks page
+            </summary>
+            <returns>Oid->Title pairs list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetCharacteristicsList">
+            <summary>
+            Returns list of <code>Characteristic</code>'s where current User have existed <code>ImprovementPlanItem</code>'s (Task's). For filter at MyActions->Tasks page
+            </summary>
+            <returns>Oid->Title pairs list</returns>     
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetPrincipleGroupsList">
+            <summary>
+            Returns list of <code>PrincipleGroup</code>'s where current User have existed <code>ImprovementPlanItem</code>'s (Task's). For filter at MyActions->Tasks page
+            </summary>
+            <returns>Oid->Title pairs list</returns>    
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetList">
+            <summary>
+            Returns prepared data for MyActions->Tasks page - list of <code>ImprovementPlanItem</code>'s (Task's)
+            </summary>
+            <returns><code>ImprovementPlanItemDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetImprovementPlanItem(System.Int32)">
+            <summary>
+            Get ImprovementPlanItem by OID
+            </summary>
+            <param name="key">OID of ImprovementPlanItem</param>
+            <returns>ImprovementPlanItem represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetCaptureList(System.Int32)">
+            <summary>
+            Returns prepared data for MyActions->Capture page for currently selected Characteristic
+            </summary>
+            <param name="characteristicOid">Oid of Characteristic</param>
+            <returns><code>ImprovementPlanDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.GetCharacteristics">
+            <summary>
+            Returns prepared data for MyActions->Capture page for current Characteristic selector
+            </summary>
+            <returns>list of Characteristics represented as { Oid, Title, Count (tasks count) } structures</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.CreateOrUpdate(BlueNorth.WebApi.ImprovementPlanItemDTO)">
+            <summary>
+            POST method for <code>ImprovementPlanItem</code> creation/update
+            </summary>
+            <param name="item"><code>ImprovementPlanItemDTO</code> instance</param>
+            <returns>ImprovementPlanItem completion state as string</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.CreateOrUpdateSet(BlueNorth.WebApi.ImprovementPlanItemDTO[])">
+            <summary>
+            POST method for <code>ImprovementPlanItem</code> set creation/update
+            </summary>
+            <param name="items"><code>ImprovementPlanItemDTO</code> list</param>
+            <returns>Ok - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.DownloadAttachment(System.Int32)">
+            <summary>
+            Method for downloading of specific <code>ImprovementPlanItem</code>(Task) attachment
+            </summary>
+            <param name="improvementPlanItemOid">Oid of <code>ImprovementPlanItem</code></param>
+            <returns>file stream</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ImprovementPlanController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            Deletes entity by OID
+            </summary>
+            <param name="key">ImprovementPlanItem OID</param>
+            <returns>Ok - if succeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.FrameworkController.GetFrameworks">
+            <summary>
+            Returns list of all Frameworks. <code>Framework</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Frameworks</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.FrameworkController.GetFramework(System.Int32)">
+            <summary>
+            Get <code>Framework</code> by OID
+            </summary>
+            <param name="key">OID of <code>Framework</code></param>
+            <returns><code>Framework</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.FrameworkController.GetByCommodity(System.Int32)">
+            <summary>
+            Returns list of Commodity-related Frameworks. <code>Framework</code> represented as root element, withoud referenced entities
+            </summary>
+            <param name="commodityOid">Oid of Commodity</param>
+            <returns>list of Frameworks</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.DimensionsController.GetDimensions">
+            <summary>
+            Returns list of all Dimensions. <code>Dimension</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Dimensions</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.DimensionsController.GetDimension(System.Int32)">
+            <summary>
+            Get <code>Dimension</code> by OID
+            </summary>
+            <param name="key">OID of <code>Dimension</code></param>
+            <returns><code>Dimension</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.DimensionsController.GetFullList">
+            <summary>
+            Get list of Dimensions for Full Assessment. Includes AnsweredPersentage value
+            </summary>
+            <returns>list of Dimensions as DimensionDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.DimensionsController.GetDimensionList">
+            <summary>
+            Get list of Dimensions for Full Assessment. Includes AnsweredPersentage value
+            </summary>
+            <returns>list of Dimensions as DimensionDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.DimensionsController.Post(BlueNorth.WebApi.Dimension)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.DimensionsController.Patch(System.Int32,System.Web.OData.Delta{BlueNorth.WebApi.Dimension})">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.DimensionsController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.GetIndicatorDataSets">
+            <summary>
+            Returns list of all IndicatorDataSet. <code>IndicatorDataSet</code> represented as IndicatorDataSetDTO
+            </summary>
+            <returns>list of all IndicatorDataSetDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.GetIndicatorDataSet(System.Int32)">
+            <summary>
+            Get <code>IndicatorDataSet</code> by OID
+            </summary>
+            <param name="key">OID of <code>IndicatorDataSet</code></param>
+            <returns><code>IndicatorDataSet</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.GetIndicatorDataSetsList">
+            <summary>
+            Get list of current User IndicatorDataSet's
+            </summary>
+            <returns>list of current User IndicatorDataSet's represented as IndicatorDataSetDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.GetMaxPeriod(System.Guid)">
+            <summary>
+            Get Maximal PeriodToYear from current User IndicatorDataSets
+            </summary>
+            <param name="unitOid"></param>
+            <returns>PeriodToYear value</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.IsDataSetHaveMapData(System.Int32)">
+            <summary>
+            Checks is specfic IndicatoDataSet already contains Map-specific data
+            </summary>
+            <param name="oid">Oid of IndicatorDataSet</param>
+            <returns>True - if map-related data exists, otherwise - false</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.GetIndicatorDataSetProgress(System.Int32)">
+            <summary>
+            Get percentage of specific IndicatorDataSet (period) data entering
+            </summary>
+            Get percentage of specific IndicatorDataSet (period) data entering
+            <param name="indicatorDataSetOid">Oid of </param>
+            <returns>% of entered data</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.UpdateIndicatorDataSetGradeToUnderReviewState(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Set UnderReview Grade for specified by OID's IndicatorDataSet's
+            </summary>
+            <param name="dataSetOidList">OID's of IndicatorDataSet's</param>
+            <returns>Ok - if succeed</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.PostIndicatorDataSet(BlueNorth.WebApi.IndicatorDataSetDTO)">
+            <summary>
+            POST Method for IndicatorDataSet creation/update
+            </summary>
+            <param name="indicatorDataSetDto"><code>IndicatorDataSetDTO</code> instance</param>
+            <returns>updated IndicatorDataSetDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.IndicatorDataSetsController.DeleteIndicatorDataSet(System.Int32)">
+            <summary>
+            DELETE method for IndicatorDataSets
+            </summary>
+            <param name="id">id of IndicatorDataSet</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataFieldNotesController.GetPrimaryDataFieldNotes">
+            <summary>
+            Returns list of all PrimaryDataFieldNotes. <code>PrimaryDataFieldNote</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all PrimaryDataFieldNotes</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataFieldNotesController.GetPrimaryDataFieldNote(System.Int32)">
+            <summary>
+            Get <code>PrimaryDataFieldNote</code> by OID
+            </summary>
+            <param name="key">OID of <code>PrimaryDataFieldNote</code></param>
+            <returns><code>PrimaryDataFieldNote</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataFieldNotesController.GetPrimaryDataFieldNotesListByIndicator(BlueNorth.WebApi.DTOs.IndicatorIndicatorDataSetsDTO)">
+            <summary>
+            Returns list of filtered PrimaryDataFieldNotes. <code>PrimaryDataFieldNote</code> represented as PrimaryDataFieldNoteDTO
+            </summary>
+            <param name="filter">IndicatorIndicatorDataSetsDTO instance</param>
+            <returns>list of all PrimaryDataFieldNotes repsesented as PrimaryDataFieldNoteDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataFieldNotesController.PostPrimaryDataFieldNote(BlueNorth.WebApi.PrimaryDataFieldNote)">
+            <summary>
+            POST Method for PrimaryDataFieldNote creation/update
+            </summary>
+            <param name="productionArea"><code>PrimaryDataFieldNote</code> instance</param>
+            <returns>Oid of created/updated PrimaryDataFieldNote</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataFieldNotesController.PutPrimaryDataFieldNote(System.Int32,BlueNorth.WebApi.PrimaryDataFieldNote)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataFieldNotesController.DeletePrimaryDataFieldNote(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.ProductionAreasController.GetProductionAreas">
+            <summary>
+            Returns list of all ProductionAreas. <code>ProductionArea</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all ProductionAreas</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.ProductionAreasController.GetProductionArea(System.Int32)">
+            <summary>
+            Get <code>ProductionArea</code> by OID
+            </summary>
+            <param name="id">OID of <code>ProductionArea</code></param>
+            <returns><code>ProductionArea</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.ProductionAreasController.PostProductionArea(BlueNorth.WebApi.DTOs.ProductionAreaDTO)">
+            <summary>
+            POST Method for ProductionArea creation/update
+            </summary>
+            <param name="productionArea"><code>ProductionAreaDTO</code> instance</param>
+            <returns>updated ProductionArea</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.ProductionAreasController.DeleteProductionArea(System.Int32)">
+            <summary>
+            DELETE method for ProductionArea
+            </summary>
+            <param name="id">Oid of ProductionArea</param>
+            <returns></returns>
+        </member>
+        <member name="T:BlueNorth.WebApi.Controllers.PrimaryDataValuesController">
+            <summary>
+            Methods for Indicators capturine and Map Area tool pages
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.GetPrimaryDataValues">
+            <summary>
+            Returns list of all PrimaryDataValues. PrimaryDataValue represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all PrimaryDataValues</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.GetPrimaryDataValue(System.Int32)">
+            <summary>
+            Get PrimaryDataValue by OID
+            </summary>
+            <param name="key">OID of PrimaryDataValue</param>
+            <returns>PrimaryDataValue represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.PostCommodityPDValue(BlueNorth.WebApi.DTOs.CommodityPVValueDTO)">
+            <summary>
+            <code>CommodityPDValue</code> - it's <code>Commodity</code>-dependent <code>PrimariDataValue</code>. So, for one <code>PrimaryDataField</code> we able to have many <code>CommodityPDValue</code>'s - for each <code>Unit Commodity</code>.
+            This POST Method for creation of new or update of exsited CommodityPDValue.
+            If CommodityPDValue for specified Commodity + PrimaryDataField + IndicatorDataSet exists - it will be updated, otherwise - created
+            Also, here we have creation of PrimaryDataValue - if it's not exists for current PrimaryDataField + IndicatorDataSet
+            </summary>
+            <param name="commodityPDValue"><code>CommodityPVValueDTO</code> instance</param>
+            <returns>OID of created/updated entity</returns>        
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.PostCommodityPDMValue(BlueNorth.WebApi.DTOs.CommodityPDMValueDTO)">
+            <summary>
+            <code>CommodityPDMValue</code> - it's <code>Commodity</code>-dependent <code>PrimaryDataMonthValue</code>. So, for one <code>PrimaryDataField</code> we able to have many <code>CommodityPDMValue</code>'s - for each <code>Unit Commodity</code> and each Month.
+            This POST Method for creation of new or update of exsited CommodityPDMValue.
+            If CommodityPDMValue for specified Commodity + PrimaryDataValue + MonthNumber exists - it will be updated, otherwise - created
+            Also, here we have creation of PrimaryDataMonthValue - if it's not exists for current PrimaryDataValue + MonthNumber
+            </summary>
+            <param name="commodityPDMValue"><code>CommodityPDMValueDTO</code> instance</param>
+            <returns>OID of created/updated entity</returns>        
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.GetByPrimaryDataValueOid(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            GET Method for getting list of monthly values. 
+            </summary>
+            <param name="primaryDataValueOids">Array of </param>
+            <returns>list of updated <code>PrimaryDataValue</code></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.PostPrimaryDataMonthValue(BlueNorth.WebApi.PrimaryDataMonthValue)">
+            <summary>
+            POST Method for batch creation/update of <code>PrimaryDataValue</code> list. For each list elenement - if OID == 0 - creation, otherwise - update
+            </summary>
+            <param name="primaryDataValues">list of <code>PrimaryDataValue</code> for creation/update</param>
+            <returns>list of updated <code>PrimaryDataValue</code></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.PostPrimaryDataValue(System.Collections.Generic.List{BlueNorth.WebApi.PrimaryDataValue})">
+            <summary>
+            POST Method for batch creation/update of <code>PrimaryDataValue</code> list. For each list elenement - if OID == 0 - creation, otherwise - update
+            </summary>
+            <param name="primaryDataValues">list of <code>PrimaryDataValue</code> for creation/update</param>
+            <returns>list of updated <code>PrimaryDataValue</code></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.PostPrimaryDataFieldUserEditMode(BlueNorth.WebApi.PrimaryDataFieldUserEditMode)">
+            <summary>
+            POST Method for creation/update of <code>PrimaryDataFieldUserEditMode</code>. if <code>PrimaryDataFieldUserEditMode</code> of specified PrimaryDataField and current User exists - updates, otherwise - creates
+            </summary>
+            <param name="primaryDataFieldUserEditMode"><code>PrimaryDataFieldUserEditMode</code></param>
+            <returns>200 status - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.UpdateValue(System.Collections.Generic.List{BlueNorth.WebApi.PrimaryDataValue})">
+            <summary>
+            POST Method for update of <code>PrimaryDataValue</code> list
+            </summary>
+            <param name="primaryDataValues"><code>PrimaryDataValue</code> list for update</param>
+            <returns>updated <code>PrimaryDataValue</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.PrimaryDataValuesController.DeletePrimaryDataValue(System.Int32)">
+            <summary>
+            Deletes entity by OID
+            </summary>
+            <param name="key">PrimaryDataValue OID</param>
+            <returns>Ok - if succeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.GetSPADataSets">
+            <summary>
+            Returns list of all SPADataSets. <code>SPADataSets</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all SPADataSets</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.GetSPADataSet(System.Int32)">
+            <summary>
+            Get <code>SPADataSets</code> by OID
+            </summary>
+            <param name="id">OID of <code>SPADataSets</code></param>
+            <returns><code>SPADataSets</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.AddNonRelevantCharacteristic(System.Int32)">
+            <summary>
+            Add Characteristic to list of non-relevant Characteristics of current SpaDataSet
+            </summary>
+            <param name="characteristicOid">Oid of Characteristic</param>
+            <returns>Ok - if succeed</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.RemoveNonRelevantCharacteristic(System.Int32)">
+            <summary>
+            Remove Characteristic from list of non-relevant Characteristics of current SpaDataSet
+            </summary>
+            <param name="characteristicOid">Oid of Characteristic</param>
+            <returns>Ok - if succeed</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.GetSpaDataSetByAssessmentType(System.Int32)">
+            <summary>
+            Get SPADataSets list of specific AssessmentType
+            </summary>
+            <param name="assessmentType">0 - Full, 1 - Lite</param>
+            <returns>List of SpaDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.IsCurrentSPACompleted">
+            <summary>
+            Checks is current Assessment completed
+            </summary>
+            <returns>True - if current Assessment completed</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.UpdateSpaDataSetGradeToUnderReviewState(System.Int32)">
+            <summary>
+            Set UnderReview Grade for specified by current SPADataSet by Assessment Type
+            </summary>
+            <param name="assessmentType">0 - Full, 1 - Lite</param>
+            <returns>Ok - if succeed</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.PutSPADataSet(System.Int32,BlueNorth.WebApi.SPADataSet)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.PostSPADataSet(BlueNorth.WebApi.SPADataSet)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.Controllers.SPADataSetsController.DeleteSPADataSet(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.GetIndicators">
+            <summary>
+            Returns list of all Indicators. <code>Indicator</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Indicators</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.GetIndicator(System.Int32)">
+            <summary>
+            Get <code>Indicator</code> by OID
+            </summary>
+            <param name="key">OID of <code>Indicator</code></param>
+            <returns><code>Indicator</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.GetPrincipleGroups">
+            <summary>
+            Returns list of PrincipleGroups where we have Indicator's/PrimaryDataField's for current Framework
+            </summary>
+            <returns>list of PrincipleGroups represented as PrincipleGroupDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.GetCategories">
+            <summary>
+            Returns list of DataFieldCategorie's where we have Indicator's/PrimaryDataField's for current Framework
+            </summary>
+            <returns>list of DataFieldCategories represented as {OId, ShortTitle, Title} structures</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.GetMapDataFieldsCategories">
+            <summary>
+            Returns list of DataFieldCategorie's where we have PrimaryDataField.AreaSizeMode=MapTool for current Framework
+            </summary>
+            <returns>list of DataFieldCategories represented as {OId, ShortTitle, Title} structures</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.GetMapPrimaryDataFields(System.Int32)">
+            <summary>
+            Returns list of PrimaryDataField's where we have PrimaryDataField.AreaSizeMode=MapTool for current Framework
+            </summary>
+            <param name="dataSetOid">Oid of IndicatoDataSet</param>
+            <returns>list of PrimaryDataField represented as MapPrimaryDataFieldDTO, contains current values for specified IndicatoDataSet</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.GetCategoryMapPrimaryDataFields(System.Int32,System.Int32)">
+            <summary>
+            Returns list of PrimaryDataField's where we have PrimaryDataField.AreaSizeMode=MapTool for current Framework and specified DataFieldCategory
+            </summary>
+            <param name="dataSetOid">Oid of IndicatoDataSet</param>
+            <param name="categoryOid">Oid of DataFieldCategory</param>
+            <returns>list of PrimaryDataField represented as MapPrimaryDataFieldDTO, contains current values for specified IndicatoDataSet</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.CopyMapDataValues(System.Int32,System.Int32)">
+            <summary>
+            Method for copying of MapArea-related data from one period (IndicatorDataSet) to other
+            </summary>
+            <param name="dataSetFromOid">Oid of source IndicatorDataSet</param>
+            <param name="dataSetToOid">Oid of target IndicatorDataSet</param>
+            <returns>list of copied values as MapPrimaryDataFieldDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.GetIndicatorListByPrincipleGroupAndDatasetList(BlueNorth.WebApi.Helpers.PrincipleGroupIndicatorDatasetsDTO)">
+            <summary>
+            
+            </summary>
+            <param name="helper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.ByCategoryAndDatasetList(BlueNorth.WebApi.DTOs.CategoryIndicatorDatasetsDTO)">
+            <summary>
+            Prepare data for Indicator->Capture page, entering mode 
+            </summary>
+            <param name="filter">CategoryIndicatorDatasetsDTO instance</param>
+            <returns>PrimaryDataFieldDTO list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.PreparePrimaryDataValues(BlueNorth.WebApi.PrimaryDataField,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Method for autocreation of PrimaryDataValues where it not exists
+            </summary>
+            <param name="dataField"></param>
+            <param name="dataSetsOidList"></param>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.Post(BlueNorth.WebApi.Indicator)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.IndicatorsController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.OrganisationsController.GetOrganisations">
+            <summary>
+            Returns list of all Organisations. <code>Organisation</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Organisations</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.OrganisationsController.GetOrganisation(System.Guid)">
+            <summary>
+            Get <code>Organisation</code> by OID
+            </summary>
+            <param name="key">OID of <code>Organisation</code></param>
+            <returns><code>Organisation</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.OrganisationsController.CloneOrganisation(BlueNorth.WebApi.Organisation)">
+            <summary>
+                Make a copy only of members that participe in data communication
+            </summary>
+            <param name="organisation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.OrganisationsController.Post(BlueNorth.WebApi.Organisation)">
+            <summary>
+            
+            </summary>
+            <param name="organisation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.OrganisationsController.Patch(System.Guid,System.Web.OData.Delta{BlueNorth.WebApi.Organisation})">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.OrganisationsController.Delete(System.Guid)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.GetPrincipleGroups">
+            <summary>
+            Returns list of all PrincipleGroups. PrincipleGroup represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all PrincipleGroups</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.GetPrincipleGroup(System.Int32)">
+            <summary>
+            Get PrincipleGroup by OID
+            </summary>
+            <param name="key">OID of Commodity</param>
+            <returns>PrincipleGroup represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.GetFullPrinciplesList">
+            <summary>
+            Returns list of PrincipleGroups related to current AssessmentType and Framework as DTO's. 
+            Result contains data about current SPA answering state:
+            CharacteristicsCount - count of not completed Characteristics
+            </summary>
+            <returns>list of PrincipleGroup as DTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.GetPrinciplesList">
+            <summary>
+            Returns list of PrincipleGroups related to current AssessmentType and Framework as DTO's. Used for Principle group selector at MyActions->Prioritise page
+            </summary>
+            <returns>list of PrincipleGroup as DTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.GetLitePrinciplesList">
+            <summary>
+            Returns list of PrincipleGroups related to current AssessmentType and Framework as DTO's. 
+            Result contains data about current SPA answering state:
+            CharacteristicsCount - count of not completed Characteristics
+            </summary>
+            <remarks>It's duplicate of GetFullList. Historically, there was different logic, now difference comes inside depends on current Unit.CurrentFramework/Assessmenttype</remarks>
+            <returns>list of PrincipleGroup as DTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.GetFullPrincipleGroupList">
+            <summary>
+            Returns list of PrincipleGroups related to current Full Assessment and current Framework as DTO's. 
+            Result contains data about current SPA answering state:
+            UnAnsweredQuestionsCount - count of non-answered questions of PrincipleGroup
+            AnsweredPercentage - % of answered questions of PrincipleGroup
+            </summary>
+            <returns>list of PrincipleGroup as DTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.GetLiteStatusPrincipleGroupist">
+            <summary>
+            Returns list of PrincipleGroups related to current Lite Assessment and current Framework as DTO's. 
+            Result contains data about current SPA answering state:
+            UnAnsweredQuestionsCount - count of non-answered questions of PrincipleGroup
+            AnsweredPercentage - % of answered questions of PrincipleGroup
+            </summary>
+            <returns>list of PrincipleGroup as DTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.Post(BlueNorth.WebApi.PrincipleGroup)">
+            <summary>
+            Auto-generated POST method. NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.Patch(System.Int32,System.Web.OData.Delta{BlueNorth.WebApi.PrincipleGroup})">
+            <summary>
+            Auto-generated Patch method. NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrincipleGroupsController.Delete(System.Int32)">
+            <summary>
+            Auto-generated Delete method. NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetDimensionSpiderData">
+            <summary>
+            Method returns prepared data for <code>Dimenson</code> Spider charts - Assessment Reporting page
+            </summary>
+            <returns><code>ReportValueDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetSpiderDataPrinciples">
+            <summary>
+            Method returns prepared <code>Principle</code>s list for Spider charts - Assessment Reporting page
+            </summary>
+            <returns>cloned <code>Principle</code>'s list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetPrincipleSpiderData">
+            <summary>
+            Method returns prepared data for <code>Principle</code> Spider charts - Assessment Reporting page
+            </summary>
+            <returns><code>ReportValueDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetSpiderDataDimensions">
+            <summary>
+            Method returns prepared <code>Dimenson</code>s list for Spider charts legends - Assessment Reporting page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetCharacteristicSpiderByDimension(System.Int32)">
+            <summary>
+            Method returns prepared data for <code>Characteristic</code> Spider chart for specific <code>Dimension</code> - Assessment Reporting page
+            </summary>
+            <param name="dimensionId">Dimension OID</param>
+            <returns><code>ReportValueDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetCharacteristicSpiderByPrincipleGroup(System.Int32)">
+            <summary>
+            Method returns prepared data for <code>Characteristic</code> Spider for specific Management Area (<code>PrincipleGroup</code>) charts - Assessment Reporting page
+            </summary>
+            <returns><code>ReportValueDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetCharacteristicsBarChartData">
+            <summary>
+            Method returns prepared data for <code>Characteristic</code> Bar chart - Assessment Reporting page
+            </summary>
+            <returns><code>ReportGroupValueDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetCharacteristicsBarChartGroupedByDimension">
+            <summary>
+            Method returns prepared data for <code>Characteristic</code> Bar chart grouped by <code>Dimension</code>  - Assessment Reporting page
+            </summary>
+            <returns><code>ReportGroupValueDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetCharacteristicsBarChartGroupedByDimensionToLow">
+            <summary>
+            Method returns prepared data for <code>Characteristic</code> Bar chart grouped by <code>Dimension</code> ordered descending by Caracteristic Score  - Assessment Reporting page
+            </summary>
+            <returns><code>ReportGroupValueDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetIndicatorsData(BlueNorth.WebApi.ReportsController.IndicatorReportFilter)">
+            <summary>
+            Method returns prepared data for Indicator Reporting page table
+            </summary>
+            <param name="filter"><code>IndicatorReportFilter</code> instance. { int DimensionOid, int PrincipleGroupOid, int PrincipleOid }. Each filter paramether used if it's != 0</param>
+            <returns><code>ReportIndicatorDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetIndicatorDataSetsProgress(System.Int32)">
+            <summary>
+            Method returns prepared data for DATA COLLECTION PROGRESS Chart at Dashboard page
+            </summary>
+            <param name="categoryOid">Oid of PrimaryDataField Category. If it's set - data will be prepared for specified Category</param>
+            <returns>list of "period"-"answered percent" pairs</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetIndicatorsData(System.Int32)">
+            <summary>
+            NOT IN USE currently
+            </summary>
+            <param name="indicatorOid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetImprovementPlanTrend">
+            <summary>
+            Method returns prepared data for TREND Chart at Dashboard page
+            </summary>
+            <returns><code>ReportPlanTrendDTO</code></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetImprovementPlanOpenProgress">
+            <summary>
+            Method returns calculated value of OPEN (tasks count) indicator at Dashboard page
+            </summary>
+            <returns>Open tasks count</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetImprovementPlanOverdueProgress">
+            <summary>
+            Method returns calculated value of OVERDUE (tasks count) indicator at Dashboard page
+            </summary>
+            <returns>Overdue tasks count</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetCharacteristicIndicatorData(System.Int32)">
+            <summary>
+            Method returns prepared data for pop-up Indicator window at Indicator Reporting data - chart, table etc.
+            </summary>
+            <param name="indicatorOid">OID of <code>Indicator</code></param>
+            <returns><code>ReportIndicatorCharacteristicDTO</code> instance</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetCharIndicatorData(System.Int32)">
+            <summary>
+            Method returns prepared data for pop-up Indicator window at Indicator Reporting data - chart, table etc.
+            </summary>
+            <param name="characteristicOid">OID of <code>Characteristic</code></param>
+            <returns><code>ReportIndicatorCharacteristicDTO</code> instance</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.ReportsController.GetImprovementsData">
+            <summary>
+            Method returns prepared data for MyActions->Reporting data table
+            </summary>
+            <returns><code>PriorReportItemDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrinciplesController.GetPrinciples">
+            <summary>
+            Returns list of all Principles. <code>Principle</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Principles</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrinciplesController.GetPrinciple(System.Int32)">
+            <summary>
+            Get <code>Principle</code> by OID
+            </summary>
+            <param name="key">OID of <code>Principle</code></param>
+            <returns><code>Principle</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrinciplesController.GetFullList">
+            <summary>
+            Returns list of Principles related to current AssessmentType and Framework as <code>PrincipleDTO</code>'s. 
+            Result contains data about current SPA answering state:
+            CharacteristicsCount - count of not completed Characteristics
+            </summary>
+            <returns>list of PrincipleGroup as <code>PrincipleDTO</code>'s</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrinciplesController.GetFullPrincipleGroupList">
+            <summary>
+             <para>Returns list of Principles related to current AssessmentType and Framework as DTO's. </para>
+            <para>Result contains data about current SPA answering state:</para>
+            <para>AnsweredPercentage - percent of answered Principle questions</para>
+            <para>Used at Assessment - Status page</para>
+            </summary>
+            <returns>list of Principleє as <code>PrincipleDTO</code></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrinciplesController.GetLiteList">
+            <summary>
+            Returns list of Principles related to current AssessmentType and Framework as <code>PrincipleDTO</code>'s. 
+            Result contains data about current SPA answering state:
+            CharacteristicsCount - count of not completed Characteristics
+            </summary>
+            <returns>list of PrincipleGroup as <code>PrincipleDTO</code>'s</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrinciplesController.Post(BlueNorth.WebApi.Principle)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrinciplesController.Patch(System.Int32,System.Web.OData.Delta{BlueNorth.WebApi.Principle})">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.PrinciplesController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetQuestions">
+            <summary>
+            Returns list of all Questions. <code>Question</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Questions</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetQuestion(System.Int32)">
+            <summary>
+            Get <code>Question</code> by OID
+            </summary>
+            <param name="key">OID of <code>Question</code></param>
+            <returns><code>Question</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetLowestQuestionGroups">
+            <summary>
+            Get QuestionsGroups from lowest nodes (where we not have child QuestionsGroups). represented as root element, withoud referenced entities
+            </summary>
+            <returns>QuestionsGroups, represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetQuestionsByGroup(System.String)">
+            <summary>
+            Get Questions of specific QuestionGroup
+            </summary>
+            <returns>Questions, represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetLiteQuestionsListByStandardAndPrinciple(System.Int32)">
+            <summary>
+            List of Principle Questions, prepared for Lite Assessment
+            </summary>
+            <param name="principleOid">Oid of Principle</param>
+            <returns>List of Question's represented as LiteQuestionDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetLiteQuestionsGroupGuidances">
+            <summary>
+            Returns List of QuestionsGroup Guidances for Lite assessment
+            </summary>
+            <returns>strings</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetLiteQuestionsListByStandardAndPrincipleGroup(System.Int32)">
+            <summary>
+            List of PrincipleGroup Questions, prepared for Lite Assessment
+            </summary>
+            <param name="principleGroupOid">Oid of PrincipleGroup</param>
+            <returns>List of Question's represented as LiteQuestionDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetLiteQuestionsListByStandardAndDimension(System.Int32)">
+            <summary>
+            List of Dimension Questions, prepared for Lite Assessment
+            </summary>
+            <param name="dimensionOid">Oid of Dimension</param>
+            <returns>List of Question's represented as LiteQuestionDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetFirstNotCapturedCharacteristic">
+            <summary>
+            Get Oid of first Characteristic where we have no Answers for Assessment
+            </summary>
+            <returns>Oid of Characteristic</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetFirstNotCapturedCharacteristicByPrinciple(System.Int32)">
+            <summary>
+            Get Oid of first Characteristic where we have no Answers for current Assessment and specfific Principle
+            </summary>
+            <param name="principleOid">Oid of Principle</param>
+            <returns>Oid of Characteristic</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetFirstNotCapturedCharacteristicByDimension(System.Int32)">
+            <summary>
+            Get Oid of first Characteristic where we have no Answers for current Assessment and specific Dimension
+            </summary>
+            <param name="dimensionOid">Oid of Dimension</param>
+            <returns>Oid of Characteristic</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetFirstNotCapturedCharacteristicByPrincipleGroup(System.Int32)">
+            <summary>
+            Get Oid of first Characteristic where we have no Answers for current Assessment and specific PrincipleGroup
+            </summary>
+            <param name="principleGroupId">Oid of PrincipleGroup</param>
+            <returns>Oid of Characteristic</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.GetQuestionsByCharacteristic(System.Int32)">
+            <summary>
+            List of Characteristic Questions, prepared for Full Assessment
+            </summary>
+            <param name="characteristicOid">Oid of Characteristic</param>
+            <returns>List of Question's represented as FullQuestionDTO's</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.Post(BlueNorth.WebApi.Question)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.QuestionsController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.RetailersController.GetRetailers">
+            <summary>
+            Returns list of all Commodities. <code>Commodity</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Commodities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.RetailersController.GetRetailer(System.Int32)">
+            <summary>
+            Get <code>Commodity</code> by OID
+            </summary>
+            <param name="key">OID of <code>Commodity</code></param>
+            <returns><code>Commodity</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.RetailersController.Post(BlueNorth.WebApi.Retailer)">
+            <summary>
+            POST Method for Retailer update/creation
+            </summary>
+            <param name="retailer"><code>Retailer</code> instance</param>
+            <returns>updated Retailer</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.RetailersController.Delete(System.Int32)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetStandards">
+            <summary>
+            Returns list of all Standards. Standard represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Standards</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetStandard(System.Int32)">
+            <summary>
+            Get Standard by OID
+            </summary>
+            <param name="key">OID of Standard</param>
+            <returns>Standard represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetByCommodity(System.Int32)">
+            <summary>
+            Returns list of speficic Commodity Standards. Standard represented as root element, withoud referenced entities
+            </summary>
+            <param name="key">Commodity OID</param>
+            <returns>list of Commodity Standards</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetByUnit(System.Guid)">
+            <summary>
+            Returns list of speficic Unit Standards. Standard represented as root element, withoud referenced entities
+            </summary>
+            <param name="unitId">Unit OID</param>
+            <returns>list of Unit Standards</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetByByFramework(System.Int32)">
+            <summary>
+            Returns list of speficic Framework Standards. Framework represented as root element, withoud referenced entities
+            </summary>
+            <param name="unitId">Framework OID</param>
+            <returns>list of Framework Standards</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetByCurrentUnit">
+            <summary>
+            Returns list of current User.CurrentUnit Standards. Standard represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of current Unit Standards</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetStatuesesByCurrentUnit">
+            <summary>
+            Returns list of current User.CurrentUnit Standards with calculated Status 
+            </summary>
+            <returns>list of current Unit Standards</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetCurrentUnitStatuses(BlueNorth.WebApi.StandardsStateFilter)">
+            <summary>
+            Returns list of non-compliant current User.CurrentUnit Standards data for Standards page
+            </summary>
+            <param name="filter"><code>StandardsStateFilter</code> instance</param>
+            <returns><code>StandardStatusDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.GetCurrentUnitAllStatuses(BlueNorth.WebApi.StandardsStateFilter)">
+            <summary>
+            Returns list of all current User.CurrentUnit Standards data for Standards page
+            </summary>
+            <param name="filter"><code>StandardsStateFilter</code> instance</param>
+            <returns><code>StandardStatusDTO</code> list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.StandardsController.UpdateCurrentUnitSet(System.Int32[])">
+            <summary>
+            Set current Unit Standards
+            </summary>
+            <param name="standardOids">array of Standard Oids</param>
+            <returns>Ok - if suceeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.SuppliersController.GetSuppliers">
+            <summary>
+            Returns list of all Suppliers. Supplier represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Suppliers</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.SuppliersController.GetSupplier(System.Int32)">
+            <summary>
+            Get Supplier by OID
+            </summary>
+            <param name="key">OID of Supplier</param>
+            <returns>Supplier represented as root element, withoud referenced entities</returns>		
+        </member>
+        <member name="M:BlueNorth.WebApi.SuppliersController.Post(BlueNorth.WebApi.Supplier)">
+            <summary>
+            Auto-generated Post method. NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.SuppliersController.Delete(System.Int32)">
+            <summary>
+            Auto-generated Delete method. NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitTypesController.GetUnitTypes">
+            <summary>
+            Returns list of all UnitTypes. <code>UnitType</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all UnitTypes</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitTypesController.GetUnitType(System.Int32)">
+            <summary>
+            Get <code>UnitType</code> by OID
+            </summary>
+            <param name="key">OID of <code>UnitType</code></param>
+            <returns><code>UnitType</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.GetUnits">
+            <summary>
+            Returns list of all Units. Each Unit represented as UnitDTO
+            </summary>
+            <returns>list of UnitDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.GetOrganisationUnits(System.Guid)">
+            <summary>
+            Returns list of specific Organisation Units. Each Unit represented as UnitDTO
+            </summary>
+            <returns>list of UnitDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.GetCurrentUserUnits">
+            <summary>
+            Returns list of current User Units. Each Unit represented as UnitDTO
+            </summary>
+            <returns>list of UnitDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.GetUnitAssignedUsers(System.Guid)">
+            <summary>
+            Get assigned Users list of specific Unit
+            </summary>
+            <param name="key">Oid of Unit</param>
+            <returns><code>AssignUserDTO</code></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.GetOrganisationUnitsLite(System.Guid)">
+            <summary>
+            Get list of specific Organisation Units
+            </summary>
+            <param name="key">Oid of Organisation</param>
+            <returns>Oid->Name pairs list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.GetByCurrentUserLite">
+            <summary>
+            Get list of currentUser Units
+            </summary>
+            <returns>Oid->Name pairs list</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.GetUnit(System.Guid)">
+            <summary>
+            Get <code>User</code> by OID
+            </summary>
+            <param name="key">OID of <code>User</code></param>
+            <returns><code>User</code> represented as <code>UnitDTO</code></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.Assign(System.String)">
+            <summary>
+            Method for Unit-to-User assignmenet
+            </summary>
+            <param name="token">Token contains Unit Oid and expiration date</param>
+            <returns>Ok - message</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.Post(BlueNorth.WebApi.Unit)">
+            <summary>
+            NOT IN USE
+            </summary>
+            <param name="unit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.Patch(System.Guid,System.Web.OData.Delta{BlueNorth.WebApi.Unit})">
+            <summary>
+            NOT IN USE
+            </summary>
+            <param name="key"></param>
+            <param name="patch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.Delete(System.Guid)">
+            <summary>
+            NOT IN USE
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UnitsController.Post(BlueNorth.WebApi.UnitDTO)">
+            <summary>
+            POST Method for Unit creation/update
+            </summary>
+            <param name="unit"><code>UnitDTO</code> instance</param>
+            <returns>updated Unit</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.GetUsers">
+            <summary>
+            Returns list of all Users. <code>User</code> represented as root element, withoud referenced entities
+            </summary>
+            <returns>list of all Users</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.GetUser(System.Guid)">
+            <summary>
+            Get <code>User</code> by OID
+            </summary>
+            <param name="key">OID of <code>User</code></param>
+            <returns><code>User</code> represented as root element, withoud referenced entities</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.GetUserByName(System.String)">
+            <summary>
+            Get <code>User</code> by UserName
+            </summary>
+            <param name="name">UserName</param>
+            <returns><code>User</code> represented as RegUserDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.GetByOrganisation(System.Guid)">
+            <summary>
+            Returns list of Organisations Users. <code>User</code> represented as simple structure { Oid, UserName, Name (full name) }
+            </summary>
+            <param name="organisationOid">Oid of Organisation</param>
+            <returns>list of Users by Organisation</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.GetIndicatorsLastModified">
+            <summary>
+            Returns datetime of last Indicators'-related modification.
+            </summary>
+            <remarks>Used at Dashboard page</remarks>
+            <returns>DateTime of last Indicator's value modification</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.GetAssessmentLastModified">
+            <summary>
+            Returns datetime of last Assessment'-related modification.
+            </summary>
+            <remarks>Used at Dashboard page</remarks>
+            <returns>DateTime of last Assessment's value modification</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.GetLastModified">
+            <summary>
+            Returns datetime of last data modification (Indicator or Assessment value.
+            </summary>
+            <remarks>Used at Dashboard page</remarks>
+            <returns>DateTime of last data modification</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.GetFullUserByName(System.String)">
+            <summary>
+            Get full <code>User</code> information by UserName as UserDTO
+            </summary>
+            <param name="name">UserName</param>
+            <returns><code>User</code> represented as UserDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.Post(BlueNorth.WebApi.UserDTO)">
+            <summary>
+            POST Method for User update
+            </summary>
+            <param name="user"><code>UserDTO</code> instance</param>
+            <returns>updated UserDTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.Patch(System.Guid,System.Web.OData.Delta{BlueNorth.WebApi.User})">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.Delete(System.Guid)">
+            <summary>
+            NOT IN USE
+            </summary>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.Post(BlueNorth.WebApi.AssignUserDTO)">
+            <summary>
+            Method for User assignment to Unit. If User not exists - it will be created
+            </summary>
+            <param name="regUser">AssignUserDTO instance</param>
+            <returns>Ok - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.UnassignCurrentUnit(System.Guid)">
+            <summary>
+            Method for resetting of User.CurrentUnit
+            </summary>
+            <param name="userOid">Oid of User</param>
+            <returns>Ok - if succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.UnassignUnit(System.Guid,System.Guid)">
+            <summary>
+            Method for unassignment of Unit from User. 
+            </summary>
+            <param name="userOid">Oid of User</param>
+            <param name="unitOid">Oid of Unit</param>
+            <returns>Ok - if Succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.AssignUnitAsAdmin(System.Guid,System.Guid)">
+            <summary>
+            Mathod for assignment of User to Unit as Admin
+            </summary>
+            <param name="userOid">Oid of User</param>
+            <param name="unitOid">Oid of Unit</param>
+            <returns>Ok - if Succeeded</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.Confirm(System.String)">
+            <summary>
+            Method that activate User, it's last step of User registration. Link to this method is part of registration e-mail
+            </summary>
+            <param name="token">token contains User informamtion and Expiration data</param>
+            <returns>Ok - if succeeded, with succes message</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.UsersController.Post(BlueNorth.WebApi.RegUserDTO)">
+            <summary>
+            Method for new User registration. After User creation, also activation e-mail sending proceed
+            </summary>
+            <param name="regUser">RegUserDTO instance</param>
+            <returns>UserDTO instance</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.Helpers.AssessmentHelper.GetPrincipleGroupDtoList(BlueNorth.WebApi.Unit)">
+            <summary>
+            Returns list of PrincipleGroups related to current AssessmentType and Framework as DTO's. 
+            Result contains data about current SPA answering state:
+            CharacteristicsCount - count of not completed Characteristics
+            </summary>
+            <param name="unit"></param>
+            <returns>lsit of PrincipleGroup as DTO</returns>
+        </member>
+        <member name="M:BlueNorth.WebApi.MailingService.SendOrgRegistrationEmail(BlueNorth.WebApi.User,BlueNorth.WebApi.Organisation)">
+            <summary>
+            Sends notification email about new Organisation registration
+            </summary>
+            <param name="user">new user</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.MailingService.SendUserRegistrationEmail(BlueNorth.WebApi.User)">
+            <summary>
+            Sends notification email about new User registration
+            </summary>
+            <param name="user">new user</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.MailingService.SendAssignUserEmail(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Sends email for assigned to unit user
+            </summary>
+            <param name="receiverEmail">Whose password should be reset</param>
+            <param name="emailSubject">Clean and understandable subject</param>
+            <param name="password">user password</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.MailingService.SendResetPasswordEmail(System.String,System.String,System.String,System.String)">
+            <summary>
+            Sends email with link for password resetting
+            </summary>
+            <param name="receiverEmail">Whose user registered</param>
+            <param name="emailSubject">Clean and understandable subject</param>
+            <param name="siteBaseUri">Uri for link in email</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.MailingService.SendResetPasswordLinkEmail(System.String,System.String,System.String,System.String)">
+            <summary>
+            Sends email with link for password resetting
+            </summary>
+            <param name="receiverEmail">Whose password should be reset</param>
+            <param name="passwordResetToken">Security token to confirm that user resets his own password</param>
+            <param name="emailSubject">Clean and understandable subject</param>
+            <param name="siteBaseUri">Uri for link in email</param>
+        </member>
+        <member name="M:BlueNorth.WebApi.MailingService.SendEmailWithInvitationRequest(System.String,System.String,System.String)">
+            <summary>
+            Sends to CC Admin with request to invite new user
+            </summary>
+            <param name="adminEmail">'TechnicalSupportEmail' key in Web.config</param>
+            <param name="inviteeEmail">Who created invitation request</param>
+            <param name="siteBaseUri">Uri for link in email</param>
+        </member>
+        <member name="T:BlueNorth.WebApi.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:BlueNorth.WebApi.Properties.Resources.ResetMailBody">
+             <summary>
+               Looks up a localized string similar to &lt;html&gt;
+            &lt;head&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+               &lt;p&gt;Hello, you made request for password reset for {0} user.&lt;/p&gt;
+               &lt;p&gt;Your new password is {1}. We recommend to change it on Profile page&lt;/p&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;.
+             </summary>
+        </member>
+        <member name="M:BlueNorth.Controllers.AccountController.ForgotPassword(System.String)">
+            <summary>
+            Initiate reset password process by user e-mail
+            </summary>
+            <param name="email">user e-mail (username)</param>
+            <returns>Ok - if succeeded</returns>   
+        </member>
+        <member name="M:BlueNorth.Controllers.AccountController.ResetPassword(System.String,System.String)">
+            <summary>
+            Finally reset password for specified user, using code
+            </summary>
+            <param name="id">user Id</param>
+            <param name="code">token</param>
+            <returns>Ok - if succeded</returns>
+        </member>
+        <member name="T:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3">
+            <summary>
+            Implements a mapping view cache.
+            </summary>
+        </member>
+        <member name="P:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.MappingHashValue">
+            <summary>
+            Gets a hash value computed over the mapping closure.
+            </summary>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView(System.Data.Entity.Core.Metadata.Edm.EntitySetBase)">
+            <summary>
+            Gets a view corresponding to the specified extent.
+            </summary>
+            <param name="extent">The extent.</param>
+            <returns>The mapping view, or null if the extent is not associated with a mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView0">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Address.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView1">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.CharacteristicGuidanceNote.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView2">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.CommodityCategory.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView3">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.CommodityIndicatorGuidance.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView4">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Country.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView5">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Dimension.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView6">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Grade.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView7">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Organization.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView8">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Party.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView9">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PermissionPolicyUser.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView10">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Person.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView11">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PhoneNumber.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView12">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrincipleGroup.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView13">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.QuestionGroup.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView14">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Retailer.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView15">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Standard.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView16">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.StandardChapter.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView17">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.StandardContent.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView18">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.StandardStandards_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView19">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Supplier.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView20">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.SupplierSuppliers_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView21">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Unit.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView22">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitOfMeasure.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView23">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitType.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView24">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Version.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView25">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Organisation.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView26">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PermissionPolicyRole.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView27">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PermissionPolicyUserUsers_PermissionPolicyRoleRoles.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView28">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.CommodityCommodities_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView29">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.DimensionDimensions_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView30">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrinciplePrinciples_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView31">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.SupplierRetailers_RetailerSuppliers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView32">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitUnits_RetailerRetailers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView33">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitOfMeasureUnitsOfMeasure_PrimaryDataFieldPrimaryDataFields.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView34">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrimaryDataType.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView35">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.OrganisationType.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView36">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.SPADataSet.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView37">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Question.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView38">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.IndicatorDataSet.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView39">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Characteristic.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView40">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Answer.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView41">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.SPADataSetSPADataSets_CharacteristicNonRelevantCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView42">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.QuestionGroupQuestionGroups_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView43">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.QuestionQuestions_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView44">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.FrameworkFrameworks_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView45">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.FrameworkFrameworks_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView46">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Scoring.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView47">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.StandardContentStandardContents_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView48">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitUnits_StandardStandards.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView49">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Framework.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView50">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitUnits_SupplierSuppliers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView51">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PriorCharacteristic.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView52">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrimaryDataValue.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView53">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.IndicatorIndicators_FrameworkFrameworks.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView54">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrimaryDataFieldPrimaryDataFields_IndicatorIndicators.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView55">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrimaryDataFieldNote.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView56">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.ProductionArea.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView57">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitUnits_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView58">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UserUsers_IndicatorIndicators.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView59">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrimaryDataField.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView60">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.CommodityPDValue.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView61">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.DataFieldCategory.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView62">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.StandardContentStandardContents_QuestionGroupQuestionGroups.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView63">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.IndicatorIndicators_ConversionFactorConversionFactors.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView64">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.XPObjectType.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView65">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitCharacteristicScore.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView66">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.User.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView67">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.FileData.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView68">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrimaryDataFieldUserEditMode.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView69">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.StandardContentStandardContents_ImprovementPlanItemImprovementPlanItems.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView70">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UserAssignedForUsers_UnitAssignedUnits.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView71">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UserCreatedByUsers_UnitCreatedUnits.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView72">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.AnswerNote.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView73">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.AnswerNoteAttachment.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView74">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.ConversionFactor.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView75">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Indicator.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView76">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Principle.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView77">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.UnitSecondaryUnits_CommoditySecondaryCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView78">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.ImprovementPlanItem.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView79">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.FrameworkFrontMenuItem.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView80">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.FrontMenuItem.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView81">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.PrimaryDataMonthValue.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView82">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.Commodity.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView83">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.CommodityPDMValue.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView84">
+            <summary>
+            Gets the view for BlueNorthEntities.Addresses.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView85">
+            <summary>
+            Gets the view for BlueNorthEntities.CharacteristicGuidanceNotes.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView86">
+            <summary>
+            Gets the view for BlueNorthEntities.CommodityCategories.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView87">
+            <summary>
+            Gets the view for BlueNorthEntities.CommodityIndicatorGuidances.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView88">
+            <summary>
+            Gets the view for BlueNorthEntities.Countries.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView89">
+            <summary>
+            Gets the view for BlueNorthEntities.Dimensions.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView90">
+            <summary>
+            Gets the view for BlueNorthEntities.Grades.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView91">
+            <summary>
+            Gets the view for BlueNorthEntities.Organizations.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView92">
+            <summary>
+            Gets the view for BlueNorthEntities.Parties.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView93">
+            <summary>
+            Gets the view for BlueNorthEntities.PermissionPolicyUsers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView94">
+            <summary>
+            Gets the view for BlueNorthEntities.People.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView95">
+            <summary>
+            Gets the view for BlueNorthEntities.PhoneNumbers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView96">
+            <summary>
+            Gets the view for BlueNorthEntities.PrincipleGroups.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView97">
+            <summary>
+            Gets the view for BlueNorthEntities.QuestionGroups.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView98">
+            <summary>
+            Gets the view for BlueNorthEntities.Retailers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView99">
+            <summary>
+            Gets the view for BlueNorthEntities.Standards.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView100">
+            <summary>
+            Gets the view for BlueNorthEntities.StandardChapters.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView101">
+            <summary>
+            Gets the view for BlueNorthEntities.StandardContents.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView102">
+            <summary>
+            Gets the view for BlueNorthEntities.StandardStandards_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView103">
+            <summary>
+            Gets the view for BlueNorthEntities.Suppliers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView104">
+            <summary>
+            Gets the view for BlueNorthEntities.SupplierSuppliers_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView105">
+            <summary>
+            Gets the view for BlueNorthEntities.Units.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView106">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitOfMeasures.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView107">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitTypes.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView108">
+            <summary>
+            Gets the view for BlueNorthEntities.Versions.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView109">
+            <summary>
+            Gets the view for BlueNorthEntities.Organisations.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView110">
+            <summary>
+            Gets the view for BlueNorthEntities.PermissionPolicyRoles.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView111">
+            <summary>
+            Gets the view for BlueNorthEntities.PermissionPolicyUserUsers_PermissionPolicyRoleRoles.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView112">
+            <summary>
+            Gets the view for BlueNorthEntities.FK_PermissionPolicyUserUsers_PermissionPolicyRoleRoles_Roles.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView113">
+            <summary>
+            Gets the view for BlueNorthEntities.FK_PermissionPolicyUserUsers_PermissionPolicyRoleRoles_Users.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView114">
+            <summary>
+            Gets the view for BlueNorthEntities.CommodityCommodities_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView115">
+            <summary>
+            Gets the view for BlueNorthEntities.DimensionDimensions_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView116">
+            <summary>
+            Gets the view for BlueNorthEntities.PrinciplePrinciples_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView117">
+            <summary>
+            Gets the view for BlueNorthEntities.SupplierRetailers_RetailerSuppliers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView118">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitUnits_RetailerRetailers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView119">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitOfMeasureUnitsOfMeasure_PrimaryDataFieldPrimaryDataFields.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView120">
+            <summary>
+            Gets the view for BlueNorthEntities.PrimaryDataTypes.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView121">
+            <summary>
+            Gets the view for BlueNorthEntities.OrganisationTypes.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView122">
+            <summary>
+            Gets the view for BlueNorthEntities.SPADataSets.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView123">
+            <summary>
+            Gets the view for BlueNorthEntities.Questions.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView124">
+            <summary>
+            Gets the view for BlueNorthEntities.IndicatorDataSets.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView125">
+            <summary>
+            Gets the view for BlueNorthEntities.Characteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView126">
+            <summary>
+            Gets the view for BlueNorthEntities.Answers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView127">
+            <summary>
+            Gets the view for BlueNorthEntities.SPADataSetSPADataSets_CharacteristicNonRelevantCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView128">
+            <summary>
+            Gets the view for BlueNorthEntities.QuestionGroupQuestionGroups_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView129">
+            <summary>
+            Gets the view for BlueNorthEntities.QuestionQuestions_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView130">
+            <summary>
+            Gets the view for BlueNorthEntities.FrameworkFrameworks_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView131">
+            <summary>
+            Gets the view for BlueNorthEntities.FrameworkFrameworks_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView132">
+            <summary>
+            Gets the view for BlueNorthEntities.Scorings.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView133">
+            <summary>
+            Gets the view for BlueNorthEntities.StandardContentStandardContents_CharacteristicCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView134">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitUnits_StandardStandards.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView135">
+            <summary>
+            Gets the view for BlueNorthEntities.Frameworks.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView136">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitUnits_SupplierSuppliers.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView137">
+            <summary>
+            Gets the view for BlueNorthEntities.PriorCharacteristics.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView138">
+            <summary>
+            Gets the view for BlueNorthEntities.PrimaryDataValues.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView139">
+            <summary>
+            Gets the view for BlueNorthEntities.IndicatorIndicators_FrameworkFrameworks.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView140">
+            <summary>
+            Gets the view for BlueNorthEntities.PrimaryDataFieldPrimaryDataFields_IndicatorIndicators.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView141">
+            <summary>
+            Gets the view for BlueNorthEntities.PrimaryDataFieldNotes.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView142">
+            <summary>
+            Gets the view for BlueNorthEntities.ProductionAreas.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView143">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitUnits_CommodityCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView144">
+            <summary>
+            Gets the view for BlueNorthEntities.UserUsers_IndicatorIndicators.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView145">
+            <summary>
+            Gets the view for BlueNorthEntities.PrimaryDataFields.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView146">
+            <summary>
+            Gets the view for BlueNorthEntities.CommodityPDValues.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView147">
+            <summary>
+            Gets the view for BlueNorthEntities.DataFieldCategories.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView148">
+            <summary>
+            Gets the view for BlueNorthEntities.StandardContentStandardContents_QuestionGroupQuestionGroups.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView149">
+            <summary>
+            Gets the view for BlueNorthEntities.IndicatorIndicators_ConversionFactorConversionFactors.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView150">
+            <summary>
+            Gets the view for BlueNorthEntities.XPObjectTypes.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView151">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitCharacteristicScores.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView152">
+            <summary>
+            Gets the view for BlueNorthEntities.Users.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView153">
+            <summary>
+            Gets the view for BlueNorthEntities.FileDatas.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView154">
+            <summary>
+            Gets the view for BlueNorthEntities.PrimaryDataFieldUserEditModes.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView155">
+            <summary>
+            Gets the view for BlueNorthEntities.StandardContentStandardContents_ImprovementPlanItemImprovementPlanItems.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView156">
+            <summary>
+            Gets the view for BlueNorthEntities.UserAssignedForUsers_UnitAssignedUnits.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView157">
+            <summary>
+            Gets the view for BlueNorthEntities.UserCreatedByUsers_UnitCreatedUnits.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView158">
+            <summary>
+            Gets the view for BlueNorthEntities.AnswerNotes.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView159">
+            <summary>
+            Gets the view for BlueNorthEntities.AnswerNoteAttachments.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView160">
+            <summary>
+            Gets the view for BlueNorthEntities.ConversionFactors.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView161">
+            <summary>
+            Gets the view for BlueNorthEntities.Indicators.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView162">
+            <summary>
+            Gets the view for BlueNorthEntities.Principles.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView163">
+            <summary>
+            Gets the view for BlueNorthEntities.UnitSecondaryUnits_CommoditySecondaryCommodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView164">
+            <summary>
+            Gets the view for BlueNorthEntities.ImprovementPlanItems.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView165">
+            <summary>
+            Gets the view for BlueNorthEntities.FrameworkFrontMenuItems.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView166">
+            <summary>
+            Gets the view for BlueNorthEntities.FrontMenuItems.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView167">
+            <summary>
+            Gets the view for BlueNorthEntities.PrimaryDataMonthValues.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView168">
+            <summary>
+            Gets the view for BlueNorthEntities.Commodities.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView169">
+            <summary>
+            Gets the view for BlueNorthEntities.CommodityPDMValues.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView170">
+            <summary>
+            Gets the view for BlueNorthModelStoreContainer.StatusMatrix.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+        <member name="M:Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3.GetView171">
+            <summary>
+            Gets the view for BlueNorthEntities.StatusMatrices.
+            </summary>
+            <returns>The mapping view.</returns>
+        </member>
+    </members>
+</doc>

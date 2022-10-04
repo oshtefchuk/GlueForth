@@ -1,0 +1,60 @@
+<div class="current-status-wrapper">
+  <div class="prioritised-charactheristics-container">
+    <div class="container-header">
+      <span>PRIORITISED CHARACTERISTICS</span>
+    </div>
+
+    <div class="prioritised-charactheristics-content">
+      <dx-load-indicator  class="loader-position"></dx-load-indicator>
+     <bluenorth-prior-characteristics [topPriorByPrincipleGroup]="topPriorByPrincipleGroup"></bluenorth-prior-characteristics>
+
+  </div>
+    <dx-button text="SEE MORE" class="update-btn" routerLink='/my-actions-prioritise'>
+    </dx-button>
+  </div>
+ <bluenorth-action-items [reportingCounts]="reportingCounts" [actionItemBlock]="'action-item-block1'"></bluenorth-action-items>
+  </div>
+<dx-load-panel
+  #loadPanel2
+  shadingColor="rgba(255,255,255,0.4)"
+  [position]="{ of: '#assessment-progress' }"
+  [(visible)]="loadingVisibleprogress"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+>
+</dx-load-panel>
+<div id="assessment-progress" class="progress-tracker-wrapper">
+  <div class="container-header">
+    <span>IMPROVEMENT PROGRESS</span>
+  </div>
+  <div class="progress-tracker-main">
+    <div class="progress-bars-wrapper">
+      <div *ngFor="let item of selfAssesPieChart" class="chart-container">
+        <div class="current-status-top">
+        <div [ngStyle]="{'color': getPieChartColor(item.chart[0].value)}" class="pie-chart-legend">{{item.chart[0].value}}%</div>
+        <dx-pie-chart style="height: 150px; width: 150px;"
+                      type="doughnut"
+                      [innerRadius]="1"
+                      title=""
+                      [palette]="[ getPieChartColor(item.chart[0].value), '#F7F7F7']"
+                      [legend]="{ visible: false }"
+                      [dataSource]="item.chart">
+          <dxi-series
+            argumentField="state"
+            valueField="value">
+            <dxo-label
+              [visible]="false"
+            >
+              <dxo-connector [visible]="true"></dxo-connector>
+            </dxo-label>
+          </dxi-series>
+          <dxo-export [enabled]="false"></dxo-export>
+        </dx-pie-chart>
+        </div>
+        <span class="status-title" [ngStyle]="{'color':  getPieChartColor(item.chart[0].value)}">{{item.title | uppercase}}</span>
+      </div>
+    </div>
+   </div>
+</div>

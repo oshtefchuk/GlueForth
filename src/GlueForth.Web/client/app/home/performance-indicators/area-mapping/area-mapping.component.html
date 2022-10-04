@@ -1,0 +1,194 @@
+<div class="area-maping-wrapper">
+  <div class="period-wrapper">
+    <label>Choose Period: </label>
+    <dx-select-box
+                   [items]="indicatorDataSetList"
+                   [value]="indicatorDataSetList[indicatorDataSetList.length - 1]"
+                   displayExpr="PeriodFrom"
+                   (onSelectionChanged)="setCurrentDataSet($event)">
+    </dx-select-box>
+    <dx-button
+      (click)="addDatasetToCopyValues()"
+      text="Copy values to another period"
+      [width]="240"
+      [height]="36"></dx-button>
+    <h5 *ngIf="unitName">Business unit: {{unitName}}</h5>
+  </div>
+  <span class="area-mapping-title">AREA information</span>
+
+  <dx-load-panel
+    shadingColor="rgba(255,255,255,0.4)"
+    [(visible)]="loadingVisible"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    [closeOnOutsideClick]="false"
+    [position]="{ of: '.area-maping-container' }"
+  >
+  </dx-load-panel>
+  <div class="area-maping-container">
+
+    <div class="area-maping-list">
+      <ul style="overflow-y: auto">
+        <li *ngFor="let category of categories">
+          <div>
+            <div class="links-container">
+            <a style="font-size: 20px;">{{category.Title}}</a>
+            <a (click)="editAllAreas(category)">Edit All</a>
+            </div>
+            <ul style="list-style: none">
+              <li *ngFor="let areaInfo of category.PrimaryDataFields let index = index">
+                <div class="item-list-inner" [style.border-left-color]="getHexColor(areaInfo.Color)">
+                  <span class="item-list-name">{{areaInfo.Name}}
+                    <span id="guidance{{areaInfo.PrimaryDataFieldOid}}"
+                          (mouseenter)="getGuidance(areaInfo)"
+                          (mouseleave)="getGuidance(null)"
+                          class="question-tooltip">?
+                    </span>
+
+                  </span>
+
+                  <dx-popover
+                    target="#guidance{{areaInfo.PrimaryDataFieldOid}}"
+                    position="top"
+                    [width]="400"
+                    [visible]="areaInfo.PrimaryDataFieldOid == isGuidancePopoverVisible">
+                    <div *dxTemplate="let data2 of 'content'">
+                      <span>{{areaInfo.GuidanceNotes}}</span>
+                    </div>
+                  </dx-popover>
+                  <div class="btn-block">
+
+                    <a  class="add-btn" (click)="addArea(areaInfo, category.OID)">ADD</a>
+                    <a>
+                      <i *ngIf="!areaInfo.isShownAreas"
+                         (click)="showSelectedAreas(areaInfo, category.OID)"
+                         [style.visibility]="areaInfo.ProductionAreas.length ? 'visible' : 'hidden'"
+                         class="material-icons view-btn">
+                        visibility
+                      </i>
+                      <i *ngIf="areaInfo.isShownAreas"
+                         (click)="hideSelectedAreas(areaInfo)"
+                         [style.visibility]="areaInfo.ProductionAreas.length ? 'visible' : 'hidden'"
+                         class="material-icons view-btn view-icon-reverse">
+                        visibility_off
+                      </i>
+                    </a>
+                  </div>
+                </div>
+                <ul *ngIf="areaInfo.ProductionAreas.length > 0" class="item-sublist">
+                  <li *ngFor="let productionArea of areaInfo.ProductionAreas"
+                      [ngClass]="{'area-mapping-list-active-state': isSelected === productionArea.OID}">
+                    <span (click)="showSelectedProductionArea(productionArea, areaInfo)">
+                      <a class="item-list-prod-areas"
+                         >{{productionArea.Name}}
+                      </a>
+                      ({{productionArea.Size /10000 | number:'1.1-3'}} ha)
+                    </span>
+                    <a *ngIf="isSelected === productionArea.OID"
+                       (click)="editPoligon(productionArea, areaInfo.Color)"
+                       class="delete-btn">edit</a>
+                       <a *ngIf="isSelected === productionArea.OID" (click)="deleteProductionArea(productionArea)" class="delete-btn">delete</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="map-wrapper">
+      <span *ngIf="isMapActive" class="map-title">Please, choose your area {{currentProductionArea ? currentProductionArea.Name : ''}} on the map and then SAVE the area.</span>
+      <div [className]="mapClass" id="googleMap" #gmap></div>
+      <div *ngIf="isMapActive" class="map-btn-wrapper">
+        <a [ngClass]="{'ready-btn-disabled' : !isPolygonChoosen, ' ready-btn' : isPolygonChoosen}"
+           (click)="saveProductionArea()">Save</a>
+        <a class="cancel-btn" (click)="cancelAddProductionArea()">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>
+<dx-popup
+  [width]="400"
+  [height]="200"
+  [showTitle]="true"
+  [title]="isAddNamePopup ? 'Add new field' : 'Edit field'"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [allowUpdating]="true"
+  [(visible)]="isAddNamePopup">
+  <div *dxTemplate="let data of 'content'">
+    <form class="commodity-create-form supplier-edit-form" (submit)="addAreaName($event)">
+      <dx-form
+        [formData]="currentProductionArea"
+        [readOnly]="false"
+        [showColonAfterLabel]="true"
+        validationGroup="addProductionArea">
+        <dxi-item dataField="Name"
+                  [isRequired]="!isEditPopup"
+                  [disabled]="isEditPopup"
+                  [editorOptions]="{placeholder: 'Enter area name here'}"
+                  [label]="{text: ''}">
+          <dxi-validation-rule type="required" message="Position is required"></dxi-validation-rule>
+        </dxi-item>
+      </dx-form>
+      <dx-button
+        validationGroup="addProductionArea"
+        [useSubmitBehavior]="true"
+        class="continue-btn btn-popup"
+        text="Save"
+        type="success">
+      </dx-button>
+    </form>
+  </div>
+</dx-popup>
+<dx-popup
+  [width]="500"
+  [height]="150"
+  [showTitle]="true"
+  title="Confirmation"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [allowUpdating]="true"
+  [closeOnBackButton]="false"
+  [showCloseButton]="false"
+  [(visible)]="isShowConfirmationPopup">
+  <div *dxTemplate="let data of 'content'">
+
+    <div *ngIf="!isShowCopyValuesPopup" class="confirmation-popup-wrapper">
+      <a class="cancel-confirm-btn" (click)="cancelDelete()">Cancel</a>
+      <a (click)="confirmDeleteProductionArea()" class="confirmation-btn">Delete</a>
+    </div>
+    <div *ngIf="isShowCopyValuesPopup" class="confirmation-popup-wrapper">
+      <span>This Data Set has values. Are you sure you want to rewrite it?</span>
+      <a class="cancel-confirm-btn" (click)="cancelCoping()">Cancel</a>
+      <a (click)="confirmCoping()" class="confirmation-btn">Copy Anyway</a>
+    </div>
+  </div>
+</dx-popup>
+<dx-popup
+  [width]="520"
+  [height]="250"
+  [showTitle]="true"
+  title="Copy all map data values from current period to.."
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [allowUpdating]="true"
+  [(visible)]="isShowCopyValuesPopup">
+  <div *dxTemplate="let data of 'content'">
+    <div>
+      <span>Copy values from period {{currentDataSet.PeriodFrom}}<br><br>
+        Select period to:</span>
+      <dx-select-box *ngIf="isShowCopyValuesPopup"
+        [dataSource]="indicatorDataSetList"
+        displayExpr="PeriodFrom"
+        placeholder="Select Period to copy"
+        (onSelectionChanged)="setPeriodTo($event)">
+      </dx-select-box>
+    </div>
+    <div class="confirmation-popup-wrapper">
+      <a class="confirmation-btn" (click)="confirmCoping()">Copy</a>
+      <a class="cancel-confirm-btn" (click)="cancelCoping()">Cancel</a>
+    </div>
+  </div>
+</dx-popup>

@@ -1,0 +1,55 @@
+@import "../../../../styles/variables";
+@import "../../../../styles/mixins";
+
+.indicator-data-contaner, dx-popup {
+  /deep/ dx-button {
+    margin: 15px;
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 200px);
+  }
+}
+
+.chart-view {
+  background-color: #fff;
+  padding: 25px;
+}
+
+.data-grid-container-header {
+  margin-top: 15px;
+  box-sizing: border-box;
+  height: 50px;
+  padding: 15px;
+  background-color: #ddedfa;
+  color: #3e567a;
+  font-weight: bold;
+}
+
+/deep/ .dx-texteditor-input {
+  padding: 4px 9px 4px;
+  min-height: 27px;
+}
+
+/deep/ .dx-dropdowneditor-button {
+  padding: 0;
+  .dx-dropdowneditor-icon {
+    background-color: #6fc0db !important;
+    width: 34px;
+    border-radius: 0;
+    &:hover {
+      background-color: #6fc0db;
+    }
+    &:before {
+      content: '';
+      background-image: url(../../../../assets/down-arrow.svg);
+      width: 20px;
+      height: 20px;
+      background-size: cover;
+    }
+  }
+  .dx-dropdowneditor-button .dx-dropdowneditor-icon:hover {
+    background-color: #6fc0db!important;
+  }
+}
+
+/deep/ .dx-texteditor-buttons-container {
+  background-color: #6fc0db!important;
+}

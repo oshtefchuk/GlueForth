@@ -1,0 +1,77 @@
+<div class="wrapper" [ngClass]="{'fullscreen' : isFullScreenOpen}">
+  <aside class="sidebar">
+    <div class="form">
+      <div class="user-profile">
+        <i class="material-icons">account_circle</i>
+        <p>Welcome Back,</p>
+      <!--  <a class="user-profile-name to-profile" (click)="goToUserProfile()">{{currentUser?.PermissionPolicyUser?.UserName}}</a>
+        <p class="user-profile-name">{{currentUser?.Person1?.FirstName}} {{currentUser?.Person1?.LastName}}</p>-->
+        <a class="user-profile-name to-profile" (click)="goToUserProfile()">{{currentUser?.Person1?.FirstName}} {{currentUser?.Person1?.LastName}}</a>
+        <a class="user-profile-logout to-profile" (click)="logout()">Logout</a>
+      </div>
+      <dx-tree-view #DxTreeViewComponent
+                    id="simple-treeview"
+                    displayExpr="text"
+                    selectedExpr="isSelected"
+                    [selectByClick]="true"
+                    [items]="menuSidebar"
+                    [animationEnabled]="true"
+                    dataStructure="tree"
+                    (onItemExpanded)="expandItem($event)"
+                    (onItemClick)="selectItem($event)"
+                    itemTemplate="itemTemplate">
+        <div *dxTemplate="let itemObj of 'itemTemplate'" class="sidebar-customization"
+             [ngClass]="{'parentode-style' : itemObj.icon,
+          'parent-selected': itemObj.parentRoute && itemObj.id === currentItem?.id.substring(0, 1)}">
+          <i *ngIf="itemObj.icon && itemObj.icon !== 'heart-pulse'" class="material-icons">{{itemObj.icon}}</i>
+          <span *ngIf="itemObj.icon==='heart-pulse'" class="simple-svg icon:mdi-heart-pulse icon-inline:false"></span>
+          <span >{{itemObj.text}}</span>
+        </div>
+      </dx-tree-view>
+    </div>
+    <div class="sidebar-logo">
+      <img src="../../assets/Blue-North-Logo.png" alt="Logo" >
+    </div>
+  </aside>
+  <article class="content">
+    <div class="main-page-header">
+      <div class="left-content">
+        <h1 class="main-page-title">{{title}}</h1>
+        <div>
+        <h5 class="main-page-subtitle">{{subTitle | uppercase}}</h5>
+        <div *ngIf="lastUpdate" class="date-label">LAST UPDATE: {{lastUpdate | date: 'dd MMMM yyy'}}</div>
+        </div>
+        <span *ngIf="currentUnitName && routerUrl === '/dashboard'" class="main-page-description">{{currentUnitName}}</span>
+      </div>
+      <div class="right-content" [style.visibility]="routerUrl === '/assessment-capture-full' ? 'visible' : 'hidden'">
+        <span>Complete by:</span>
+        <dx-select-box [dataSource]="dataForFilter"
+                       valueExpr="oid"
+                       displayExpr="title"
+                       [value]="completeBy"
+                       (onSelectionChanged)="setCurrentFilter($event)"
+                       placeholder="">
+        </dx-select-box>
+      </div>
+      <div class="right-content" *ngIf="unitsList">
+        <span>Please select business unit:</span>
+        <div class="dx-field-value">
+          <dx-select-box [dataSource]="unitsList"
+                         valueExpr="Oid"
+                         displayExpr="UnitName"
+                         placeholder="SELECT CURRENT UNIT"
+                         [value]="currentUser.CurrentUnitId"
+                         (onSelectionChanged)="setCurrentUnit($event)">
+          </dx-select-box>
+        </div>
+      </div>
+
+    </div>
+    <div class="content-wrapper">
+    <router-outlet></router-outlet>
+    </div>
+  </article>
+</div>
+
+
+

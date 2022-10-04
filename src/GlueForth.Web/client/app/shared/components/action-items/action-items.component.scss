@@ -1,0 +1,102 @@
+@import "../../../../styles/variables";
+@import "../../../../styles/mixins";
+
+.action-items-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.action-item-block1 {
+  padding: 15px 15px 20px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+.action-item-block2 {
+  padding: 15px 15px 20px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+.completed {
+  .action-item-block-title {
+    color: #919177;
+  }
+}
+.action-item-block-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #989898;
+  display: inline-block;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.action-inner-block {
+  width: 100%;
+  height: 78%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 165px;
+  &.due-now {
+    background-color: #6fc0db;
+  }
+  &.open {
+    background-color: #91c74b;
+  }
+  &.overdue {
+    background-color: #d08b90;
+  }
+  span {
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .action-quantity {
+    font-size: 51px;
+    line-height: 42px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+}
+
+.update-btn {
+  margin-top: 10px;
+  @include button-variant(#fff, #91c74b, #91c74b, 100%);
+  transition: all .25s linear;
+  &:hover {
+    @include button-variant(#fff, #91c74b, #91c74b, 100%);
+  }
+}
+
+.add-btn {
+  margin-top: 10px;
+  @include button-variant(#fff, #6fc0db, #6fc0db, 100%);
+  transition: all .25s linear;
+  &:hover {
+    @include button-variant(#fff, #6fc0db, #6fc0db, 100%);
+  }
+}
+
+.close-out-btn {
+  margin-top: 10px;
+  @include button-variant(#fff, #d08b90, #d08b90, 100%);
+  transition: all .25s linear;
+  &:hover {
+    @include button-variant(#fff, #d08b90, #d08b90, 100%);
+  }
+}

@@ -1,0 +1,206 @@
+// Core variables and mixins
+@import 'variables';
+@import 'mixins';
+
+body {
+  margin: 0;
+  font-family: $base-font;
+  background-color: $body-background!important;
+  color: $main-text-color;
+a {
+  color: $main-text-color;
+  &:hover {
+    color: $second-button-font-color;
+  }
+  }
+}
+
+.header {background-color: #fff}
+
+bluenorth-registration label,
+bluenorth-login label,
+bluenorth-user-profile label,
+bluenorth-registration-settings label,
+bluenorth-registration-settings label,
+bluenorth-forgot-password label {
+  width: 20px;
+  .dx-field-item-label-text{
+    font-size: 0px;
+    opacity: 0;
+  }
+}
+bluenorth-registration label .label-for-phones .dx-field-item-label-text{
+  font-size: 14px!important;
+  opacity: 1!important;
+}
+
+bluenorth-user-profile-business-unit-item .dx-field-item-label-location-left {
+  width: 210px;
+ }
+
+bluenorth-user-profile-business-unit-item .dx-field-item-label-text {
+  font-size: 14px !important;
+  opacity: 1 !important;
+ }
+
+bluenorth-registration .label-for-phones {
+  font-size: 14px!important;
+  opacity: 1!important;
+}
+bluenorth-registration,
+bluenorth-login,
+bluenorth-forgot-password
+{
+  form {
+    margin-top: 150px;
+
+  }
+}
+
+.data-grid-wrapper {
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: auto;
+
+  .data-grid-container {
+    //width: 95%;
+    background-color: #fff;
+    margin-bottom: 15px;
+  }
+  .data-grid-container-header {
+    box-sizing: border-box;
+    height: 50px;
+    padding: 15px;
+    background-color: #ddedfa;
+    color: #3b587a;
+    font-weight: bold;
+  }
+}
+
+.right-content .dx-dropdowneditor-button-visible .dx-texteditor-input {
+    min-height: 100%;
+    line-height: 22px;
+    color: #989898;
+    font-size: 12px;
+}
+.dx-dropdowneditor.dx-state-hover .dx-dropdowneditor-icon, .dx-dropdowneditor.dx-state-active .dx-dropdowneditor-icon, .dx-dropdowneditor.dx-dropdowneditor-active .dx-dropdowneditor-icon, .dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+td[role="columnheader"] {
+    text-align: left !important;
+}
+.dx-datagrid-content .dx-datagrid-table .dx-row > td[role="columnheader"] {
+    vertical-align: middle;
+}
+.dx-datagrid-content .dx-datagrid-table .dx-row .dx-editor-cell {
+    overflow: visible;
+}
+.slider-scale span:first-child {
+    text-align: left;
+}
+.slider-scale span:last-child {
+    text-align: right;
+}
+
+
+.assessment-capture-light-container .dx-datagrid-rowsview{
+    min-height: 225px;
+    max-height: calc(100vh - 358px);
+    overflow-y: auto;
+}
+.assessment-capture-light-container .dx-datagrid {
+    padding-top: 15px;
+}
+.assessment-capture-light-container .dx-datagrid-header-panel {
+    height: 0;
+}
+.assessment-capture-light-container .dx-slider .dx-tooltip-wrapper .dx-overlay-content {
+    width: 220px !important;
+    height: 90px !important;
+}
+.assessment-capture-light-container  .dx-tooltip-wrapper .dx-overlay-content .dx-popup-content {
+    white-space: normal;
+    height: 100% !important;
+    padding: 15px 10px 0 15px;
+    line-height: 1.3em;
+    text-align: left;
+    color: #fff;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover[aria-valuenow="0"] .dx-overlay-content .dx-popup-content  {
+    background-color: #B8EDFF;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover[aria-valuenow="1"] .dx-overlay-content .dx-popup-content  {
+  background-color: #FD001A;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover[aria-valuenow="2"] .dx-overlay-content .dx-popup-content  {
+  background-color: #FE962C;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover[aria-valuenow="3"] .dx-overlay-content .dx-popup-content  {
+  background-color: #6BC89F
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover .dx-overlay-content .dx-popover-arrow {
+  width: 15px;
+  height: 10px;
+  background-color: transparent;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover .dx-overlay-content .dx-popover-arrow:after {
+    border-width: 10px 7.5px 0 7.5px;
+    transform: none;
+    background-color: transparent;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover[aria-valuenow="0"] .dx-overlay-content .dx-popover-arrow:after {
+    border-color: #B8EDFF transparent transparent transparent;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover[aria-valuenow="1"] .dx-overlay-content .dx-popover-arrow:after {
+  border-color: #FD001A transparent transparent transparent;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover[aria-valuenow="2"] .dx-overlay-content .dx-popover-arrow:after {
+  border-color: #FE962C transparent transparent transparent;
+}
+.assessment-capture-light-container  .dx-slider-tooltip-on-hover[aria-valuenow="3"] .dx-overlay-content .dx-popover-arrow:after {
+  border-color: #6BC89F transparent transparent transparent;
+}
+.assessment-capture-light-container .dx-datagrid-table-fixed tr:first-child .dx-slider .dx-tooltip-wrapper .dx-overlay-content {
+    top: 32px !important;
+}
+.assessment-capture-light-container .dx-datagrid-table-fixed tr:first-child .dx-slider .dx-tooltip-wrapper .dx-overlay-content .dx-popover-arrow {
+    border-width: 0 7.5px 10px 7.5px;
+    top: -7px !important;
+    transform: none !important;
+    margin-left: 0 !important;
+}
+.assessment-capture-light-container .dx-datagrid-table-fixed tr:first-child .dx-slider .dx-tooltip-wrapper .dx-overlay-content .dx-popover-arrow:after {
+    border-width: 0 7.5px 10px 7.5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: none;
+}
+.top-navigation {
+  position: relative;
+  margin-top: 24px;
+  .nav-item {
+    background: #F3F3F3;
+  }
+}
+.top-navigation:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -56%;
+  width: 100%;
+  height: 1px;
+  background-color: #E7E7E7;
+  z-index: -1;
+}
+.dx-texteditor {
+  border-radius: 0;
+}
+.dx-editor-cell[aria-label~='RELEVANT'] {
+  text-align: right;
+}
+bluenorth-home .wrapper {
+  overflow: hidden;
+}

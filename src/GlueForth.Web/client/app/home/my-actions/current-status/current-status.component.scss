@@ -1,0 +1,140 @@
+@import "../../../../styles/variables";
+@import "../../../../styles/mixins";
+
+.current-status-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 30px;
+  margin-top: 40px;
+}
+
+.container-header {
+  background-color: #ddedfa;
+  text-align: left;
+  padding: 15px;
+  span {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #3b597b;
+  }
+}
+.prioritised-charactheristics-container {
+  position: relative;
+
+  .update-btn {
+    position: absolute;
+    bottom: 0;
+    margin: 5px;
+    //margin-top: 10px;
+    @include button-variant(#84CBFB, #fff, #84CBFB, 95%);
+    transition: all .25s linear;
+    &:hover {
+      @include button-variant(#fff, #84CBFB, #84CBFB, 95%);
+    }
+  }
+}
+.prioritised-charactheristics-content {
+  background-color: #fff;
+  max-height: 250px;
+  min-height: 213px;
+  padding: 0 15px 15px;
+  overflow-y: auto;
+}
+
+ :host /deep/ bluenorth-prior-characteristics {
+    .active-categories-view {
+      padding-bottom: 30px;
+      margin-top: -15px;
+  }
+}
+
+.active-categories-list-item {
+  padding: 8px 0 8px 0;
+  display: grid;
+  grid-template-columns: 20px 2fr 20px;
+  align-items: baseline;
+  transition: all .25s linear;
+  &:not(:last-child) {
+    border-bottom: 1px solid #EEEEEE;
+  }
+  &:hover {
+    background-color: #F3F3F3;
+  }
+  span {
+    color: #999999;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .active-category-name {
+    font-weight: 400;
+    padding-top: 5px;
+    text-transform: none;
+  }
+  i {
+    line-height: 20px;
+    color: #D8D8D8;
+    font-size: 20px;
+  }
+}
+
+.progress-tracker-wrapper {
+  margin-top: 30px;
+}
+
+.progress-tracker-main {
+  background-color: #fff;
+  text-align: right;
+  padding: 70px 15px 30px 100px;
+
+  .progress-bars-wrapper {
+    display: grid;
+    grid-gap: 40px;
+    /* autoprefixer: off */
+    grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+    span {
+      font-size: 12px;
+      font-weight: bold;
+      margin: 0 auto;
+    }
+    .chart-container {
+      display: grid;
+      justify-items: baseline;
+      grid-gap: 15px;
+    }
+
+  }
+  .current-status-top {
+    position: relative;
+    margin: 0 auto;
+    /deep/ dx-pie-chart {
+      padding: 0;
+    }
+    .pie-chart-legend {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 36px;
+      font-weight: 600;
+    }
+  }
+  .update-btn {
+    max-width: 200px;
+    display: inline-block;
+  }
+}
+
+.loader-position {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: auto;
+}
+
+@media screen and (max-width: 1200px) {
+  .current-status-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+

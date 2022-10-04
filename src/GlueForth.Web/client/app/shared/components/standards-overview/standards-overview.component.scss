@@ -1,0 +1,38 @@
+@import "../../../../styles/variables";
+@import "../../../../styles/mixins";
+
+.standards-overview-item-quantity {
+  width: 20px;
+  height: 20px;
+  background-color: #d18a92;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  right: 15px;
+  top: 0;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 19px;
+  margin-bottom: 20px;
+}
+.img-wrapper {
+  width: 100%;
+  text-align: center;
+  height: 71px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    display: block;
+    width: 100%;
+    max-width: 120px;
+    max-height: 100%;
+  }
+}
+.view-btn {
+  margin-top: 20px;
+  @include button-variant(#fff, #6fc0db, #6fc0db, 100%);
+}

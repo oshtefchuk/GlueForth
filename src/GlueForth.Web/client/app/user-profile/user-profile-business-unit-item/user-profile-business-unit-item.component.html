@@ -1,0 +1,322 @@
+<script src="user-profile-business-unit-item.component.ts"></script>
+<div class="user-profile-business-unit-container">
+
+  <form (keydown.enter)="$event.preventDefault()" (submit)="onFormSubmitUpdateUnit($event)">
+    <dx-form
+      labelLocation="left"
+      (onFieldDataChanged)="onFieldDataChanged($event)"
+      [(formData)]="unitInfo"
+      [readOnly]="false"
+      [showColonAfterLabel]="true"
+      [showValidationSummary]="false"
+      validationGroup="businessUnit"
+    >
+      <dxi-item dataField="UnitName"  [label]="{ text: 'Business Unit Name'}"
+                [editorOptions]="{ placeholder: 'BUSINESS UNIT NAME (e.g. Farm name, Packhouse name, etc.)'}">
+        <dxi-validation-rule
+          type="required"
+          message="Business Unit Name is required"
+        >
+        </dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item [label]="{ text: 'Type of Business Unit'}" [template]="'UnitTypeTemplate'">
+      </dxi-item>
+
+      <div *dxTemplate="let data of 'UnitTypeTemplate'">
+        <div class="select-box-container">
+
+          <dx-select-box
+            #unitTypeSelector
+            [dataSource]="bussinesUnitInfo"
+            placeholder="SELECT TYPE OF BUSINESS UNIT"
+            displayExpr="Name"
+            valueExpr="OID"
+            [value]="unitInfo.UnitTypeId"
+            (onValueChanged)="onUnitTypeChanged($event)">
+
+            <dxi-validation-rule  type="required"
+          message="Type of business is required">
+        </dxi-validation-rule>
+          </dx-select-box>
+        </div>
+      </div>
+
+      <dxi-item [label]="{ text: 'Business Unit Structure'}" *ngIf="unitStructureBoxOptions" dataField="UnitStructure"
+                editorType="dxSelectBox"
+                [editorOptions]="unitStructureBoxOptions">
+        <dxi-validation-rule
+          type="required"
+          message="Unit Structure is required">
+        </dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item dataField="ResponsibleName" [label]="{ text: 'First Name'}"
+                [editorOptions]="{ placeholder: 'FIRST NAME'}">
+      </dxi-item>
+      <dxi-item dataField="ResponsibleSurname" [label]="{ text: 'Last Name'}"
+                [editorOptions]="{ placeholder: 'LAST NAME'}">
+      </dxi-item>
+      <dxi-item dataField="ResponsibleEmail" [label]="{ text: 'Email Address'}"
+                [editorOptions]="{ placeholder: 'EMAIL ADDRESS'}">
+
+        <dxi-validation-rule
+          type="pattern"
+          [pattern]="emailPattern"
+          message="Enter valid Email"
+        >
+        </dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{ text: 'Country'}"
+        [template]="'countryTemplate'">
+      </dxi-item>
+      <div *dxTemplate="let data of 'countryTemplate'">
+        <div class="select-box-container">
+          <dx-select-box #countrySelector
+                         [searchEnabled]=true
+                         searchMode="startsWith"
+                         [dataSource]="countriesInfo"
+                         displayExpr="Name"
+                         placeholder="SELECT COUNTRY"
+                         valueExpr="Oid"
+                         [value]="unitInfo.UnitCountryId"
+                         (onValueChanged)="getCountryValueForUnit($event)">
+            <dx-validator validationGroup="businessUnit">
+              <dxi-validation-rule
+                type="required"
+                message="Country is required">
+              </dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+        </div>
+      </div>
+      <dxi-item itemType="group">
+        <dxi-item dataField="ResponsibleMobile" [label]="{ text: 'Mobile Number'}"
+                  helpText="Example: +123(0)814026552"
+                  [editorOptions]="{
+                    placeholder: 'TELEPHONE NUMBER'
+                   }">
+         <!-- <dxi-validation-rule
+            type="pattern"
+            [pattern]="cellPhonePattern"
+            message="The telephone must have a correct format">
+          </dxi-validation-rule>-->
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group">
+        <dxi-item dataField="ResponsiblePhone" [label]="{ text: 'Office Number'}"
+                  [editorOptions]="{
+                    placeholder: 'CELLPHONE NUMBER'
+               }">
+         <!-- <dxi-validation-rule
+            type="pattern"
+            [pattern]="cellPhonePattern"
+            message="The cellphone must have a correct format">
+          </dxi-validation-rule>-->
+        </dxi-item>
+      </dxi-item>
+      <dxi-item [label]="{ text: 'Assessment Type'}"
+        [template]="'assessmentType'">
+      </dxi-item>
+      <div *dxTemplate="let data of 'assessmentType'">
+        <div class="select-box-container">
+          <dx-select-box
+            [items]="assessmentTypesInfo"
+            displayExpr="Name"
+            placeholder="SELECT ASSESSMENT TYPE"
+            valueExpr="Oid"
+            [value]="unitInfo.AssessmentType"
+            (onValueChanged)="getAssessmentTypeForUnit($event)">
+            <dx-validator validationGroup="businessUnit">
+              <dxi-validation-rule
+                type="required"
+                message="Assessment type is required">
+              </dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+          <i class="material-icons" style="padding-left: 6px" id="targetElement"
+             aria-describedby="dx-db52d984-5724-946c-2290-8eeb574b9741" (mouseenter)="toggleDefault()"
+             (mouseleave)="toggleDefault()">help_outline</i>
+          <dx-popover
+            target="#targetElement"
+            position="top"
+            [width]="500"
+            [visible]="tooltipVisible">
+            <div *dxTemplate="let data = data of 'content'">
+              <p>The Lite Assessment allows you to quickly assess your business. It should take less than 1 hour to
+                complete)</p>
+              <p>The Full Assessment is a more detailed assessment that takes 2 to 3 hours to complete and allows all
+                your
+                Standards to be assessed and managed within SHERPA.</p>
+              <p>You can change your preferred assessment here at any stage.</p>
+            </div>
+          </dx-popover>
+        </div>
+      </div>
+
+      <dxi-item [label]="{ text: 'Primary Commodity'}" [template]="'firstCommodityTemplate'">
+      </dxi-item>
+
+      <div *dxTemplate="let data of 'firstCommodityTemplate'">
+        <div class="select-box-container">
+          <dx-select-box
+            #firstCommoditySelector
+            [dataSource]="commodityInfo"
+            placeholder="SELECT PRIMARY COMMODITY"
+            displayExpr="Reference"
+            valueExpr="OID"
+            [value]="isUnitCreate ? (commodityInfo.length === 1 ? commodityInfo[0].OID : '') : unitInfo.UnitCommodityId"
+            (onValueChanged)="onCommodityChanged($event)">
+
+            <dx-validator validationGroup="businessUnit">
+              <dxi-validation-rule
+                type="required"
+                message="Commodity is required">
+              </dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+          <i class="material-icons" style="padding-left: 6px" id="CommodityFirst"
+             (mouseenter)="showPopover($event, 'CommodityFirst')"
+             (mouseleave)="hidePopover()"
+          >help_outline</i>
+        </div>
+      </div>
+      <dxi-item [label]="{ text: 'Other Commodities'}" class="commodities-mulity-select"
+                [template]="'commodityTemplate'">
+      </dxi-item>
+
+      <div *dxTemplate="let data of 'commodityTemplate'">
+        <div class="select-box-container">
+          <dx-tag-box #multySelectorSecondaryCommodity
+                      [dataSource]="secondaryCommodityInfo"
+                      [value]="unitInfo.Commodities"
+                      (onValueChanged)="onSecondaryCommoditiesValueChanged($event)"
+                      displayExpr="Reference"
+                      valueExpr="OID"
+                      placeholder="SELECT OTHER COMMODITIES">
+          </dx-tag-box>
+          <i class="material-icons" style="padding-left: 6px" id="CommoditySecond"
+             (mouseenter)="showPopover($event, 'CommoditySecond')"
+             (mouseleave)="hidePopover()"
+          >help_outline</i>
+        </div>
+      </div>
+      <dxi-item dataField="FrameworkId" [label]="{ text: 'Framework'}"
+                editorType="dxSelectBox"
+                [editorOptions]="frameworkBoxOptions">
+        <dxi-validation-rule
+          type="required"
+          message="Framework is required">
+        </dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item [label]="{ text: 'Standards'}"
+        [template]="'standardTemplate'">
+      </dxi-item>
+
+      <div *dxTemplate="let data of 'standardTemplate'" class="template-wrapper">
+
+        <dx-tag-box #multySelector
+                    [dataSource]="standardsInfo"
+                    [value]="unitInfo.Standards"
+                    displayExpr="Title"
+                    valueExpr="OID"
+                    placeholder="SELECT STANDARDS"
+                    [disabled]="!ifFrameworkSelected"
+                    [showSelectionControls]="true"
+        >
+        </dx-tag-box>
+      </div>
+      <dxi-item [label]="{ text: 'Supply Chain Partners'}"
+        [template]="'supplierTemplate'">
+      </dxi-item>
+      <div *dxTemplate="let data of 'supplierTemplate'">
+        <div class="select-box-container">
+          <dx-tag-box #multySelectorSupplier id="supplier-selector"
+                      [items]="supplierInfo"
+                      [value]="unitInfo.Suppliers"
+                      displayExpr="Title"
+                      placeholder="SELECT SUPPLY CHAIN PARTNERS (e.g. EXPORTERS, IMPORTERS, DISTRIBUTORS, etc.)"
+                      valueExpr="OID"
+                      [showSelectionControls]="true"
+          >
+            <dx-validator validationGroup="businessUnit">
+              <dxi-validation-rule
+                type="required"
+                message="Supplier is required">
+              </dxi-validation-rule>
+            </dx-validator>
+          </dx-tag-box>
+          <i class="material-icons" style="padding-left: 6px" id="Supplier"
+             (mouseenter)="showPopover($event, 'Supplier')"
+             (mouseleave)="hidePopover()"
+          >help_outline</i>
+        </div>
+      </div>
+      <dxi-item [label]="{ text: 'Retailers'}"
+        [template]="'retailerTemplate'">
+      </dxi-item>
+      <div *dxTemplate="let data of 'retailerTemplate'">
+        <div class="select-box-container">
+          <dx-tag-box #multySelectorRetailer
+                      [items]="retailerInfo"
+                      displayExpr="Title"
+                      [value]="unitInfo.Retailers"
+                      placeholder="SELECT RETAILER"
+                      valueExpr="OID"
+                      [showSelectionControls]="true">
+            <dx-validator validationGroup="businessUnit">
+              <dxi-validation-rule
+                type="required"
+                message="Retailer is required">
+              </dxi-validation-rule>
+            </dx-validator>
+          </dx-tag-box>
+          <i class="material-icons" style="padding-left: 6px" id="Retailer"
+             (mouseenter)="showPopover($event, 'Retailer')"
+             (mouseleave)="hidePopover()"
+          >help_outline</i>
+        </div>
+      </div>
+    </dx-form>
+
+    <dx-popover
+      target="#{{targetId}}"
+      position="top"
+      [width]="500"
+      [height]="70"
+      [visible]="isPopoverVisible">
+      <div *dxTemplate="let data = data of 'content'">
+        <p>Please email support@mysherpa.co.za to add a {{currertPopup}}.</p>
+      </div>
+    </dx-popover>
+    <dx-validation-group *ngIf="isUnitCreate"
+                         validationGroup="businessUnit">
+      <dx-validation-summary></dx-validation-summary>
+    </dx-validation-group>
+    <div class="dx-item-content dx-validationsummary-item-content dx-validationsummary-item map-validation-message"
+         *ngIf="isShowValidationMapMessage">Please enter your location by using the Map
+    </div>
+    <h5 class="map-title">BUSINESS UNIT LOCATION</h5>
+    <div class="dx-textbox dx-texteditor dx-widget dx-texteditor-masked map-container">
+
+    </div>
+    <input id="pac-input" class="controls" type="text" placeholder="Search place">
+    <div class="registration-settings-map" id="googleMap" #gmap></div>
+    <br/>
+    <dx-button *ngIf="isUnitCreate"
+               validationGroup="businessUnit"
+               [useSubmitBehavior]="true"
+               class="continue-btn"
+               text="CREATE UNIT"
+               type="success">
+    </dx-button>
+    <dx-button *ngIf="!isUnitCreate"
+               validationGroup="businessUnit"
+               [useSubmitBehavior]="true"
+               class="continue-btn"
+               text="UPDATE UNIT"
+               type="success">
+    </dx-button>
+  </form>
+</div>

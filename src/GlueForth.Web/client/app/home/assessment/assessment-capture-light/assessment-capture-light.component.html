@@ -1,0 +1,505 @@
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(255,255,255,0)"
+  [position]="{ of: '#container' }"
+  [(visible)]="loadingVisible"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+>
+</dx-load-panel>
+<div id="container">
+<div class="assessment-capture-light-container">
+  <div class="assessment-selector-container" [style.visibility]="isCompleteByFilterVisible ? 'visible' : 'hidden'">
+    <span>Complete by:</span>
+    <dx-select-box [dataSource]="dataForFilter"
+      valueExpr="oid"
+      displayExpr="type"
+      [value]="completeBy"
+      (onSelectionChanged)="setCurrentFilter($event)"
+      placeholder="">
+    </dx-select-box>
+  </div>
+
+  <dx-tabs
+    #apiTabs
+    [dataSource]="filterSource"
+    (onItemClick)="selectTab($event)"
+    [selectedIndex]="firstNotAnsweredIndex"
+    [scrollByContent]="true"
+    [showNavButtons]="true"
+    [width]="width"
+    itemTemplate="tabTemplate"
+    keyExpr="id">
+    <div *dxTemplate="let info of 'tabTemplate'">
+      <span>{{info.text}}</span>
+      <span class="unanswered-characteristic-label" *ngIf="info.badge != 0">{{info.badge}}</span>
+      <i *ngIf="info.badge == 0" class="material-icons answered-characteristic-label">done</i>
+    </div>
+  </dx-tabs>
+  <dx-popover
+    target="#managementPopover1"
+    position="top"
+    [width]="450"
+    [(visible)]="popoverHeaderVisible1">
+    <div *dxTemplate="let data = model of 'content'">
+     {{guidanses[0]}}
+    </div>
+  </dx-popover>
+
+  <dx-popover
+    target="#managementPopover2"
+    position="top"
+    [width]="450"
+    [(visible)]="popoverHeaderVisible2">
+    <div *dxTemplate="let data = model of 'content'">
+      {{guidanses[1]}}
+    </div>
+  </dx-popover>
+    <div class="data-grid-wrapper" #dataGridWrapper bluenorthElementWidth (actual-width)="width = $event">
+      <div class="data-grid-container inner-padding">
+
+        <dx-data-grid #dataGrid
+          id="gridContainer"
+          noDataText=""
+          [showColumnLines]="false"
+          [showRowLines]="true"
+          [showBorders]="false"
+          [rowAlternationEnabled]="false"
+          [hoverStateEnabled]="true"
+          [wordWrapEnabled]="true"
+          [dataSource]="questionsArray"
+          keyExpr="QuestionOid1"
+          (onContentReady)="updateTable($event)">
+          <dxo-load-panel [enabled]="true"
+                          [showIndicator]="true"
+                          [showPane]="false"
+                          [shading]="false"
+                          [message]=" "></dxo-load-panel>
+          <dxo-paging [enabled]="false"></dxo-paging>
+          <dxo-editing
+            mode="batch"
+            [allowUpdating]="false">
+          </dxo-editing>
+          <dxi-column [allowSorting]="false"
+                      dataField="CharacteristicReference"
+                      headerCellTemplate="titleHeaderTemplate"
+                      [allowEditing]="false"
+                      [width]="50" caption="REF"
+          ></dxi-column>
+          <dxi-column [allowSorting]="false"
+                      dataField="CharacteristicDescription"
+                      headerCellTemplate="titleHeaderTemplate"
+                      [allowEditing]="false"
+                      caption="{{currentFramework?.Title | uppercase}}"
+                      cellTemplate="descriptionCellTemplate">
+          </dxi-column>
+          <div  class="grid-slider-view"
+            headerCellTemplate="titleHeaderTemplate"
+            *dxTemplate="let data of 'descriptionCellTemplate' let index = index">
+            <div class="characteristic-title">{{data.data.CharacteristicDescription}}</div>
+            <div *ngIf="showCharacteristicGuidance === data.rowIndex"
+                       class="question-guidance" [innerHTML]="data.data?.CharacteristicSummary | replaceLineBreaks">
+          </div>
+            <div class="buttons-container">
+            <div *ngIf="data.data.IsCharacteristicGuidanceExists && showCharacteristicGuidance !== data.rowIndex"
+              (click)="toShowCharacteristicGuidance(data)">
+              <a class="guidance-show">Refer to guidance</a>
+            </div>
+            <div *ngIf="showCharacteristicGuidance === data.rowIndex" (click)="showCharacteristicGuidance = null">
+              <a class="guidance-show">Close guidance</a>
+            </div>
+            <div class="notes-button-container">
+              <div *ngIf="data.data.IsNoteOrFileExist1 || data.data.IsNoteOrFileExist1.IsNoteOrFileExist2"
+                   class="notes-button-label">
+              </div>
+              <dx-button
+                [text]="'Notes'"
+                [width]="70"
+                [height]="32"
+                (click)="showNotesPopup('content3', 'note', data)"
+              >
+              </dx-button>
+            </div>
+            </div>
+          </div>
+          <dxi-column [allowSorting]="false"
+                      dataField="Relevant"
+                      width="100"
+                      caption="RELEVANT"
+                      headerCellTemplate="titleHeaderTemplate"
+                      editCellTemplate="switcherCellTemplate"
+                      [showEditorAlways]="true">
+          </dxi-column>
+
+          <div *dxTemplate="let data of 'switcherCellTemplate'"
+            [ngClass]="{'not-relevant': !data.data.IsRelevantCharacteristic}">
+            <dx-switch [disabled]="(data.data.AnswerOid1 !== 0) || (data.data.AnswerOid2 !== 0)" (onValueChanged)="changeCharacteristicRelevant($event, data)" #switch [value]="data.data.IsRelevantCharacteristic"></dx-switch>
+          </div>
+          <dxi-column [allowSorting]="false" dataField="AnswerChoise1"
+                      caption="LEVEL OF MANAGEMENT COMMITMENT?"
+                      headerCellTemplate="titleHeaderTemplate1"
+                      [showEditorAlways]="true"
+                      editCellTemplate="sliderCellTemplateAnswer1">
+          </dxi-column>
+
+          <div *dxTemplate="let data of 'sliderCellTemplateAnswer1'">
+            <dx-popover class="light-assess-popup-wrapper"
+              target="#unknown1{{data.rowIndex}}"
+              position="top"
+              [width]="300"
+              [visible]="isPopupVisibleDontKnow1 === data.rowIndex">
+              <div *dxTemplate="let data = model of 'content'" class="popover-dontknow-content">
+                <h5>I DON'T KNOW</h5>
+                {{info}}
+              </div>
+              <dxo-animation>
+                <dxo-show
+                  type="pop"
+                  [from]="{ scale: 0 }"
+                  [to]="{ scale: 1 }"></dxo-show>
+                <dxo-hide
+                  type="fade"
+                  [from]="1"
+                  [to]="0"></dxo-hide>
+              </dxo-animation>
+            </dx-popover>
+            <dx-popover class="light-assess-popup-wrapper"
+              target="#no1{{data.rowIndex}}"
+              position="top"
+              [width]="300"
+              [visible]="isPopupVisibleNo1 === data.rowIndex">
+              <div *dxTemplate="let data = model of 'content'" class="popover-yes-content">
+                <h5>LOW</h5>
+                {{info}}
+              </div>
+              <dxo-animation>
+                <dxo-show
+                  type="pop"
+                  [from]="{ scale: 0 }"
+                  [to]="{ scale: 1 }"></dxo-show>
+                <dxo-hide
+                  type="fade"
+                  [from]="1"
+                  [to]="0"></dxo-hide>
+              </dxo-animation>
+            </dx-popover>
+            <dx-popover class="light-assess-popup-wrapper"
+              target="#partially1{{data.rowIndex}}"
+              position="top"
+              [width]="300"
+              [visible]="isPopupVisiblePartially1 === data.rowIndex">
+              <div *dxTemplate="let data = model of 'content'" class="popover-partially-content">
+                <h5>MEDIUM</h5>
+                {{info}}
+              </div>
+              <dxo-animation>
+                <dxo-show
+                  type="pop"
+                  [from]="{ scale: 0 }"
+                  [to]="{ scale: 1 }"></dxo-show>
+                <dxo-hide
+                  type="fade"
+                  [from]="1"
+                  [to]="0"></dxo-hide>
+              </dxo-animation>
+            </dx-popover>
+            <dx-popover class="light-assess-popup-wrapper"
+              target="#high1{{data.rowIndex}}"
+              position="top"
+              [width]="300"
+              [visible]="isPopupVisibleYes1 === data.rowIndex">
+              <div *dxTemplate="let data = model of 'content'" class="popover-no-content">
+                <h5>HIGH</h5>
+                {{info}}
+              </div>
+              <dxo-animation>
+                <dxo-show
+                  type="pop"
+                  [from]="{ scale: 0 }"
+                  [to]="{ scale: 1 }"></dxo-show>
+                <dxo-hide
+                  type="fade"
+                  [from]="1"
+                  [to]="0"></dxo-hide>
+              </dxo-animation>
+            </dx-popover>
+            <div class="slider-scale">
+              <span class="answer-alignment-dont-know">Unanswered</span>
+              <span style="text-align: left;"><span class="answer-alignment-dont-know"
+                    id="unknown1{{data.rowIndex}}"
+                    (mouseenter)="toggleDefault1(data.rowIndex, 1, data.data.UnknownAG1)"
+                    (mouseleave)="toggleDefault1(null, 1)"
+                    [ngClass]="{'dont-know-color': data.data.AnswerChoise1 === 0 && data.data.IsRelevantCharacteristic}">I don't know</span></span>
+              <span style="text-align: center;"><span class="answer-alignment-no"
+                    id="no1{{data.rowIndex}}"
+                    (mouseenter)="toggleDefault1(data.rowIndex, 2, data.data.NoAG1)"
+                    (mouseleave)="toggleDefault1(null, 2)"
+                    [ngClass]="{'low-color':data.data.AnswerChoise1 === 1 && data.data.IsRelevantCharacteristic}">Low</span></span>
+              <span><span class="answer-alignment-partially"
+                    id="partially1{{data.rowIndex}}"
+                    (mouseenter)="toggleDefault1(data.rowIndex, 3, data.data.PartiallyAG1)"
+                    (mouseleave)="toggleDefault1(null, 3)"
+                    [ngClass]="{'medium-color': data.data.AnswerChoise1 === 2 && data.data.IsRelevantCharacteristic}">Medium</span></span>
+              <span><span
+                id="high1{{data.rowIndex}}"
+                (mouseenter)="toggleDefault1(data.rowIndex, 4, data.data.YesAG1)"
+                (mouseleave)="toggleDefault1(null, 4)"
+                [ngClass]="{'high-color': data.data.AnswerChoise1 === 3 && data.data.IsRelevantCharacteristic}">High</span></span>
+            </div>
+            <dx-slider
+              #slider1
+              [min]="-1"
+              [max]="3"
+              [value]="data.data.AnswerChoise1"
+              [showRange]="true"
+              (onValueChanged)="getAnswer($event, data)" [disabled]="!data.data.IsRelevantCharacteristic">
+            </dx-slider>
+            <p class="unanswered-label" *ngIf="data.data.AnswerChoise1 === -1">UNANSWERED</p>
+          </div>
+
+          <dxi-column [allowSorting]="false"
+            dataField="AnswerChoise2"
+            headerCellTemplate="titleHeaderTemplate2"
+            caption="LEVEL OF PRACTICAL ACTIONS?"
+            [showEditorAlways]="true"
+            editCellTemplate="sliderCellTemplateAnswer2">
+          </dxi-column>
+          <div *dxTemplate="let info of 'titleHeaderTemplate' " class="data-grid-header">
+            <p class="data-grid-header">{{info.column.caption}} <span *ngIf="info.column.caption === 'STATUS'"><dx-tooltip
+              target="#fullScrinMode"
+              [(visible)]="showFullScreenTooltip">
+        <div *dxTemplate="let data = data of 'content'">
+          Full ScreenMode
+        </div>
+      </dx-tooltip>
+      <i id="fullScrinMode"
+
+         class="material-icons fullscreen-btn fullscreen-icon"
+         (click)="toggleFullScreenMode(true)"
+         (mouseenter)="toggleFullScreenToolTip()"
+         (mouseleave)="toggleFullScreenToolTip()" >
+        fullscreen
+      </i>
+       <i
+         class="material-icons fullscreen-btn fullscreen-exit-icon"
+         (click)="toggleFullScreenMode(false)">
+        fullscreen_exit
+      </i></span> </p>
+          </div>
+
+          <div *dxTemplate="let info of 'titleHeaderTemplate2' " class="data-grid-header">
+            <span class="data-grid-header"
+               id="managementPopover2"
+               (mouseenter)="togglePopover(2)"
+               (mouseleave)="togglePopover(2)"
+            >{{info.column.caption}}</span>
+          </div>
+          <div *dxTemplate="let info of 'titleHeaderTemplate1' " class="data-grid-header">
+            <span class="data-grid-header"
+               id="managementPopover1"
+               (mouseenter)="togglePopover(1)"
+               (mouseleave)="togglePopover(1)"
+            >{{info.column.caption}}</span>
+          </div>
+          <div *dxTemplate="let data of 'sliderCellTemplateAnswer2' let index = index">
+            <dx-popover class="light-assess-popup-wrapper"
+              target="#unknown2{{data.rowIndex}}"
+              position="top"
+              [width]="300"
+              [visible]="isPopupVisibleDontKnow2 === data.rowIndex">
+              <div *dxTemplate="let data = model of 'content'" class="popover-dontknow-content">
+                <h5>I DON'T KNOW</h5>
+                {{info}}
+              </div>
+              <dxo-animation>
+                <dxo-show
+                  type="pop"
+                  [from]="{ scale: 0 }"
+                  [to]="{ scale: 1 }"></dxo-show>
+                <dxo-hide
+                  type="fade"
+                  [from]="1"
+                  [to]="0"></dxo-hide>
+              </dxo-animation>
+            </dx-popover>
+            <dx-popover class="light-assess-popup-wrapper"
+              target="#no2{{data.rowIndex}}"
+              position="top"
+              [width]="300"
+              [visible]="isPopupVisibleNo2 === data.rowIndex">
+              <div *dxTemplate="let data = model of 'content'" class="popover-yes-content">
+                <h5>LOW</h5>
+                {{info}}
+              </div>
+              <dxo-animation>
+                <dxo-show
+                  type="pop"
+                  [from]="{ scale: 0 }"
+                  [to]="{ scale: 1 }"></dxo-show>
+                <dxo-hide
+                  type="fade"
+                  [from]="1"
+                  [to]="0"></dxo-hide>
+              </dxo-animation>
+            </dx-popover>
+            <dx-popover class="light-assess-popup-wrapper"
+              target="#partially2{{data.rowIndex}}"
+              position="top"
+              [width]="300"
+              [visible]="isPopupVisiblePartially2 === data.rowIndex">
+              <div *dxTemplate="let data = model of 'content'" class="popover-partially-content">
+                <h5>MEDIUM</h5>
+                {{info}}
+              </div>
+              <dxo-animation>
+                <dxo-show
+                  type="pop"
+                  [from]="{ scale: 0 }"
+                  [to]="{ scale: 1 }"></dxo-show>
+                <dxo-hide
+                  type="fade"
+                  [from]="1"
+                  [to]="0"></dxo-hide>
+              </dxo-animation>
+            </dx-popover>
+            <dx-popover class="light-assess-popup-wrapper"
+              target="#high2{{data.rowIndex}}"
+              position="top"
+              [width]="300"
+              [visible]="isPopupVisibleYes2 === data.rowIndex">
+              <div *dxTemplate="let data = model of 'content'" class="popover-no-content thesecond">
+                <h5>HIGH</h5>
+                {{info}}
+              </div>
+              <dxo-animation>
+                <dxo-show
+                  type="pop"
+                  [from]="{ scale: 0 }"
+                  [to]="{ scale: 1 }"></dxo-show>
+                <dxo-hide
+                  type="fade"
+                  [from]="1"
+                  [to]="0"></dxo-hide>
+              </dxo-animation>
+            </dx-popover>
+            <div class="slider-scale">
+              <span class="answer-alignment-dont-know">Unanswered</span>
+              <span style="text-align: left;"><span class="answer-alignment-dont-know"
+                    id="unknown2{{data.rowIndex}}"
+                    (mouseenter)="toggleDefault2(data.rowIndex, 1, data.data.UnknownAG2)"
+                    (mouseleave)="toggleDefault2(null, 1)"
+                    [ngClass]="{'dont-know-color': data.data.AnswerChoise2 === 0 && data.data.IsRelevantCharacteristic}">I don't know</span></span>
+              <span style="text-align: center;"><span class="answer-alignment-no"
+                    id="no2{{data.rowIndex}}"
+                    (mouseenter)="toggleDefault2(data.rowIndex, 2, data.data.NoAG2)"
+                    (mouseleave)="toggleDefault2(null, 2)"
+                    [ngClass]="{'low-color':data.data.AnswerChoise2 === 1 && data.data.IsRelevantCharacteristic}">Low</span></span>
+              <span><span class="answer-alignment-partially"
+                    id="partially2{{data.rowIndex}}"
+                    (mouseenter)="toggleDefault2(data.rowIndex, 3, data.data.PartiallyAG2)"
+                    (mouseleave)="toggleDefault2(null, 3)"
+                    [ngClass]="{'medium-color': data.data.AnswerChoise2 === 2 && data.data.IsRelevantCharacteristic}">Medium</span></span>
+              <span><span [ngClass]="{'high-color': data.data.AnswerChoise2 === 3 && data.data.IsRelevantCharacteristic}"
+                    id="high2{{data.rowIndex}}"
+                    (mouseenter)="toggleDefault2(data.rowIndex, 4, data.data.YesAG2)"
+                    (mouseleave)="toggleDefault2(null, 4)">High</span></span>
+            </div>
+            <dx-slider
+              #slider2
+              [min]="-1"
+              [max]="3"
+              [value]="data.data.AnswerChoise2"
+              [showRange]="true"
+              (onValueChanged)="getAnswer($event, data)"
+              [disabled]="!data.data.IsRelevantCharacteristic"
+            >
+            </dx-slider>
+            <p class="unanswered-label" *ngIf="data.data.AnswerChoise2 === -1" >UNANSWERED</p>
+           <div class="links-block">
+             <a *ngIf="data.data.CharacteristicGuidance" class="guidance-container"
+                (click)="getGuidance(data.data.CharacteristicGuidance, 'content1', 'guidance')"
+                class="guidance-show">Refer to Good Management Practices Guidance</a>
+
+            <!--  <a (click)="showNotesPopup('content3', 'note', data)" class="guidance-show">Add Note</a>-->
+
+            </div>
+
+         </div>
+         <dxi-column [width]="170"
+                     [allowSorting]="false"
+                     caption="STATUS"
+                     headerCellTemplate="titleHeaderTemplate"
+                     cellTemplate="statusCellTemplate"></dxi-column>
+         <div class="status-wrapper" *dxTemplate="let data of 'statusCellTemplate'">
+          <bluenorth-characteristic-status *ngIf="data.data.AnswerChoise1 !== -1 && data.data.AnswerChoise2 !== -1 && data.data.IsRelevantCharacteristic" [status]="data.data.Status" (mouseenter)="popupShown('content2', 'status')" (mouseleave)="closeStatusExplanationTable()"></bluenorth-characteristic-status>
+         </div>
+       </dx-data-grid>
+     </div>
+
+      <dx-popup class="guidance-popup-wrapper" #dxPopupGuidance
+                [width]="currentPopupConfig.width"
+                [height]="currentPopupConfig.height "
+                [showTitle]="currentPopupConfig.showTitle"
+                [title]="currentPopupConfig.title"
+                [dragEnabled]="currentPopupConfig.dragEnabled"
+                [closeOnOutsideClick]="currentPopupConfig.closeOnOutsideClick"
+                [showCloseButton]="currentPopupConfig.showCloseButton"
+                [(visible)]="guidancePopupShow"
+                [shading]="currentPopupConfig.shading"
+                [resizeEnabled]="currentPopupConfig.resizeEnabled"
+                [(contentTemplate)]="currentPopupTemplate"
+                (onHiding)="updateNotes()">
+
+        <div *dxTemplate="let data of 'content1'">
+          <dx-scroll-view
+            [useNative]="false"
+            [scrollByContent]="true"
+            [showScrollbar]="always">
+            <div [innerHTML]="guidanceText" class="guidance-popover"></div>
+          </dx-scroll-view>
+        </div>
+
+        <div *dxTemplate="let data of 'content2'">
+          <img src="../../assets/explanationTable.png" alt="table">
+        </div>
+
+          <div *dxTemplate="let data of 'content3'">
+            <dx-scroll-view>
+              <div class="message-note-container">
+                <dx-text-area
+                  width="500"
+                  [height]="50"
+                  (onFocusIn)="isNoteChanged = true"
+                  (onValueChanged)="onChangeQuestionNote($event)"
+                  [value]="questionNote?.Note">
+                </dx-text-area>
+                <dx-button [disabled]="!isNoteChanged" (onClick)="updateQuestionNote($event)" text="Save"></dx-button>
+
+              </div>
+              <div>
+                <dx-file-uploader
+                  [multiple]="false"
+                  [allowCanceling]="true"
+                  selectButtonText="Attach Files"
+                  labelText=""
+                  (onValueChanged)="addFiles($event)"
+                  [uploadMode]="'useButtons'">
+                </dx-file-uploader>
+              </div>
+              <ng-container *ngIf="questionNote.Attachments && questionNote.Attachments.length; else emptyList">
+                <div class="files-container">
+            <span class="attachment-item" *ngFor="let file of questionNote.Attachments">
+              <span (click)="downloadAttachment(file)">{{file.FileName}}</span>
+              <span (click)="deleteAttachment(file.OID)">x</span>
+            </span>
+                </div>
+              </ng-container>
+              <ng-template #emptyList>No attached files yet..</ng-template>
+            </dx-scroll-view>
+          </div>
+      </dx-popup>
+   </div>
+  </div>
+</div>

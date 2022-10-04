@@ -1,0 +1,431 @@
+<div class="actions-wrapper">
+  <div class="top-actions-wrapper">
+    <div id="characteristic-info"
+         class="characteristic-container">
+      <div class="reference-box">{{currentCharacteristic?.Reference}}</div>
+      <div class="characteristic-info">
+        <div class="characteristic-type-style" *ngIf="currentCharacteristic">
+          {{currentFrameworkTitle}}
+        </div>
+        <div class="characteristic-description">{{currentCharacteristic?.Description}}</div>
+
+        <div *ngIf="showCharacteristicGuidance" [innerHTML]="currentCharacteristic?.Summary | replaceLineBreaks"></div>
+        <div *ngIf="!showCharacteristicGuidance && currentCharacteristic?.Summary"
+             (click)="showCharacteristicGuidance = !showCharacteristicGuidance">
+          <a>Refer to guidance</a>
+        </div>
+        <div *ngIf="showCharacteristicGuidance" (click)="showCharacteristicGuidance = !showCharacteristicGuidance"><a>CLOSE
+          GUIDANCE</a></div>
+      </div>
+    </div>
+    <div *ngIf="characteristicsList.length" class="actions-top-selector-container">
+      <span>Select Characteristic:</span>
+      <dx-select-box [dataSource]="characteristicsList" #characterisricSelectBox
+                     valueExpr="Oid"
+                     displayExpr="Title"
+                     (onSelectionChanged)="setCurrentCharacteristic($event)"
+                     [value]="defaultChoosenCharacteristic"
+                     placeholder="">
+      </dx-select-box>
+    </div>
+    <div class="actions-selector-container">
+      <div class="selector-wrapper">
+        <span>Filter:</span>
+        <dx-select-box [dataSource]="['All', 'Complete', 'Incomplete']" #completeSelectBox
+                       (onSelectionChanged)="setIsCompleted($event)"
+                       [value]="'All'"
+                       placeholder="">
+        </dx-select-box>
+      </div>
+    </div>
+  </div>
+  <div class="actions-table-container">
+    <div class="actions-toolbar-container">
+      <dx-data-grid #dataGrid
+                    id="gridContainer"
+                    noDataText=""
+                    [showColumnLines]="false"
+                    [showBorders]="false"
+                    [showRowLines]="false"
+                    [rowAlternationEnabled]="true"
+                    [hoverStateEnabled]="false"
+                    [wordWrapEnabled]="true"
+                    [dataSource]=characteristicCaptureList
+                    [masterDetail]="{ enabled: false, template: 'tasks', autoExpandAll: true }"
+      >
+        <dxo-paging [enabled]="false"></dxo-paging>
+        <dxo-editing
+          mode="cell"
+          [allowUpdating]="true"
+        >
+        </dxo-editing>
+        <div *dxTemplate="let info of 'titleHeaderTemplate' ">
+          <p class="data-grid-header">{{info.column.caption}} <span *ngIf="info.column.caption === 'MANAGE'">
+            <dx-tooltip
+              target="#fullScrinMode"
+              [(visible)]="showFullScreenTooltip">
+      <div *dxTemplate="let data = data of 'content'">
+        Full ScreenMode
+      </div>
+    </dx-tooltip>
+    <i id="fullScrinMode"
+
+       class="material-icons fullscreen-btn fullscreen-icon"
+       (click)="toggleFullScreenMode(true)"
+       (mouseenter)="toggleFullScreenToolTip()"
+       (mouseleave)="toggleFullScreenToolTip()" >
+      fullscreen
+    </i>
+    <i
+      class="material-icons fullscreen-btn fullscreen-exit-icon"
+      (click)="toggleFullScreenMode(false)">
+      fullscreen_exit
+    </i>
+          </span> </p>
+        </div>
+        <dxi-column dataField="QuestionOid" [visible]="false"></dxi-column>
+        <dxi-column [allowSorting]="true"
+                    dataField="QuestionGroup"
+                    headerCellTemplate="titleHeaderTemplate"
+                    [allowEditing]="false"
+                    cellTemplate="questionsGroupTemplate"
+                    caption="CATEGORY"
+                    [width]="200"
+        ></dxi-column>
+        <dxi-column [allowSorting]="true"
+                    dataField="ImprovementPlanQuestion"
+                    headerCellTemplate="titleHeaderTemplate"
+                    [allowEditing]="false"
+                    cellTemplate="questionsTemplate"
+                    caption="PROMPTING QUESTIONS"
+        ></dxi-column>
+        <div *dxTemplate="let data of 'questionsTemplate'" class="question-text">
+          <p>{{data.data.ImprovementPlanQuestion}}</p>
+          <div *ngIf="showGuidance === data.rowIndex" class="question-guidance"
+               [innerHTML]="data.data?.ImprovementPlanGuidance | replaceLineBreaks"></div>
+          <div *ngIf="data.data.ImprovementPlanGuidance && showGuidance !== data.rowIndex">
+            <a *ngIf="data.data.QuestionGroup === 'Measured Result/Impact'"
+               (click)="getCharacteristicPopup(data)"
+               class="guidance-show">Refer to Performance Indicator Guidance</a>
+            <a *ngIf="data.data.QuestionGroup === 'Adoption of Good Practice'" (click)="showAdoptionOfGoodPracticeGuidancePopup(data)" class="guidance-show">Good Management Practice</a>
+            <a *ngIf="data.data.QuestionGroup !== 'Measured Result/Impact'
+            && data.data.QuestionGroup !== 'Adoption of Good Practice'"
+               (click)="showGuidancePopup(data)" class="guidance-show">Refer to Guidance</a>
+          </div>
+          <!--<div *ngIf="data.data.ImprovementPlanGuidance && showGuidance === data.rowIndex"
+               (click)="showGuidance = null"><a
+            class="guidance-show">Hide guidance</a>
+          </div>-->
+        </div>
+        <div *dxTemplate="let data of 'questionsGroupTemplate'" class="question-text-title">
+          <p>{{data.data.QuestionGroup}}</p>
+        </div>
+
+        <dxi-column [allowSorting]="true"
+                    dataField="IsDisabled"
+                    headerCellTemplate="titleHeaderTemplate"
+                    cellTemplate="isAnsweredTemplate"
+                    [allowEditing]="false"
+                    caption="ANSWER"
+                    [width]="130"
+        ></dxi-column>
+
+        <div *dxTemplate="let data of 'isAnsweredTemplate'" class="template-view"
+             [style.visibility]="data.data.QuestionGroup  ? 'visible' : 'hidden'"
+             [ngClass]="{'not-relevant': data.data.IsDisabled}">
+          <!--<dx-switch (onValueChanged)="updateRow($event, data, answerSwitcher, 'IsDisabled')"
+                     [ngClass]="{'check': !data.data.IsDisabled}"
+                     [value]="!data.data.IsDisabled"
+                     class="answer-switcher"
+                     onText="YES"
+                     offText="NO"
+                     #answerSwitcher></dx-switch>-->
+          <dx-select-box
+            [dataSource]="booleanSelectBox"
+            (onItemClick)="updateRow($event, data, null, 'IsDisabled')"
+            [value]="data.data.State"
+            [displayExpr]="'Name'"
+            [valueExpr]="'State'"
+            placeholder=""></dx-select-box>
+        </div>
+        <dxi-column [allowSorting]="true"
+                    headerCellTemplate="titleHeaderTemplate"
+                    cellTemplate="manageTemplate"
+                    [allowEditing]="false"
+                    caption="MANAGE"
+                    [width]="150"
+        ></dxi-column>
+        <div *dxTemplate="let data of 'manageTemplate'" class="btn-width"
+             [style.visibility]="!data.data.IsDisabled  ? 'visible' : 'hidden'"
+             [ngClass]="{'not-relevant': !data.data.IsCompleted}">
+          <dx-button [style.visibility]="data.data.State === 2 ? 'visible' : 'hidden'"
+                     text="ADD TASK"
+                     type="success"
+                     (onClick)="addTask($event, data)"
+                     class="edit-task">
+          </dx-button>
+        </div>
+
+        <div *dxTemplate="let task of 'tasks'">
+
+          <dx-data-grid *ngIf="task.data.Items.length && !task.data.IsDisabled && task.data.State === 2"
+                        [dataSource]="task.data.Items"
+                        [showBorders]="true"
+                        [columnAutoWidth]="true"
+                        [showRowLines]="true"
+                        (onRowPrepared)="onRowPrepared($event)">
+            <dxi-column dataField="Actions"
+                        caption="ACTIONS"
+                        headerCellTemplate="titleInnerHeaderTemplate"
+            ></dxi-column>
+            <dxi-column dataField="Cost"
+                        caption="ESTIMATED COST TO IMPLEMENT"
+                        headerCellTemplate="titleInnerHeaderTemplate"
+            ></dxi-column>
+            <dxi-column dataField="Resposible"
+                        caption="BY WHOM?"
+                        headerCellTemplate="titleInnerHeaderTemplate"
+                        [width]="140"></dxi-column>
+            <dxi-column dataField="DueDate"
+                        dataType="date"
+                        [format]="{ type: 'dd-MMM-yy' }"
+                        caption="BY WHEN?"
+                        headerCellTemplate="titleInnerHeaderTemplate"
+                        [width]="90">
+            ></dxi-column>
+            <dxi-column dataField="Result"
+                        caption="WHAT EVIDENCE?"
+                        headerCellTemplate="titleInnerHeaderTemplate"
+                        [width]="350"></dxi-column>
+            <dxi-column dataField="IsCompleted"
+                        caption="COMPLETED?"
+                        headerCellTemplate="titleInnerHeaderTemplate"
+                        cellTemplate="isCompletedTemplate"
+                        [allowEditing]="false"
+                        [showEditorAlways]="false"
+                        [width]="100"></dxi-column>
+            <div *dxTemplate="let data of 'isCompletedTemplate'" class="template-view completed-switcher"
+                 [ngClass]="{'not-relevant checked': !data.data.IsCompleted}">
+              <dx-switch (onValueChanged)="changeIsCompleted($event, data)"
+                         #switch
+                         [value]="data.data.IsCompleted"
+              ></dx-switch>
+            </div>
+            <dxi-column caption="MANAGE"
+                        headerCellTemplate="titleInnerHeaderTemplate"
+                        cellTemplate="manageTemplate"
+                        [width]="150"
+                        [allowEditing]="false"></dxi-column>
+            <div *dxTemplate="let data of 'titleInnerHeaderTemplate'">
+              <p  id="targetElement{{data.columnIndex}}{{task.rowIndex}}" class="inner-header" (mouseenter)="togglePopover(data.columnIndex, task.rowIndex)"
+                  (mouseleave)="togglePopover(data, task)">{{data.column.caption}}</p>
+              <dx-popover
+                [width]="220"
+                target="#targetElement{{data.columnIndex}}{{task.rowIndex}}"
+                [visible]="popoverHeaderVisibleIndex  === data.columnIndex && task.rowIndex === popoverHeaderVisibleRow && popupContent[popoverHeaderVisibleIndex] ">
+                <div *dxTemplate="let data of 'content'">
+                  <p>{{popupContent[popoverHeaderVisibleIndex]}}</p>
+                </div>
+              </dx-popover>
+            </div>
+            <div *dxTemplate="let data of 'manageTemplate'" class="grid-edit">
+              <dx-button
+                text="EDIT"
+                type="success"
+                (onClick)="editTask($event, data)">
+              </dx-button>
+              <dx-button
+                text="DELETE"
+                type="success"
+                (onClick)="deleteRow($event, data)">
+              </dx-button>
+            </div>
+          </dx-data-grid>
+        </div>
+
+      </dx-data-grid>
+      <dx-popup #dxForm
+                [width]="600"
+                [height]="450"
+                [showTitle]="true"
+                [title]="getTitle()"
+                [dragEnabled]="false"
+                [closeOnOutsideClick]="true"
+                [allowUpdating]="true"
+                [showCloseButton]="true"
+                [(visible)]="isAddTaskPopupVisible"
+                class="add-task-popup"
+      >
+        <div *dxTemplate="let data of 'content'">
+          <form class="indicator-set-form" (submit)="onFormSubmitCreateTask($event)">
+            <dx-form #createTaskForm
+                     [(formData)]="newTask"
+                     [readOnly]="false"
+                     [showColonAfterLabel]="true">
+              <dxi-item dataField="Actions" editorType="dxTextArea"
+                        [editorOptions]="{placeholder: 'Enter your action required here'}"
+                        [label]="{text: 'What Action?'}">
+              </dxi-item>
+              <dxi-item dataField="Cost"
+                        editorType="dxNumberBox"
+                        [label]="{text: 'Estimated Cost To Implement'}"
+              ></dxi-item>
+              <dxi-item dataField="Resposible"
+                        [editorOptions]="{placeholder: 'Who should be completing these actions?'}"
+                        [label]="{text: 'Complete by whom?'}">
+              </dxi-item>
+
+              <dxi-item dataField="DueDate" editorType="dxDateBox"
+                        [editorOptions]="{ value: date, width: '100%', displayFormat: 'dd-MMM-yy' }"
+                        [label]="{text: 'By When?'}">
+              </dxi-item>
+
+              <dxi-item dataField="Result" editorType="dxTextArea"
+                        [editorOptions]="{placeholder: 'What evidence for there to support that these actions have been taken?'}"
+                        [label]="{text: 'What Evidence?'}">
+              </dxi-item>
+              <dxi-item dataField="IsCompleted" editorType="dxSwitch"
+
+                        [label]="{text: 'Completed?'}">
+              </dxi-item>
+
+              <dxi-item dataField="CharacteristicOid" [visible]="false">
+              </dxi-item>
+
+            </dx-form>
+            <dx-button
+              [disabled]="isFormSubmited"
+              [useSubmitBehavior]="true"
+              class="continue-btn"
+              text="Save"
+              type="success">
+            </dx-button>
+          </form>
+        </div>
+      </dx-popup>
+    </div>
+  </div>
+</div>
+
+<dx-popup #Chart
+          [width]="1200"
+          [height]="'90%'"
+          [showTitle]="true"
+          titleTemplate="title"
+          [dragEnabled]="false"
+          [(visible)]="isPopupVisible"
+          class="indicator-reporting-popup"
+>
+  <div class="title_template" *dxTemplate="let data of 'title'">
+    <div class="popup-title-wrapper">
+      <span class="popup-title">Performance Indicator Detail</span>
+      <span class="popup-subtitle">{{indicatorData.Characteristic}}</span>
+    </div>
+    <div class="close-btn">
+      <a (click)="closePopup()"><i class="dx-icon dx-icon-close"></i></a>
+    </div>
+  </div>
+  <div *dxTemplate="let data of 'content'">
+    <div class="popup-reporting">
+      <dx-chart style="width: 550px"
+                [palette]="['#D49290', '#7FD03E']"
+                [dataSource]="graphData"
+                [series]="{
+              argumentField: 'Period',
+              valueField: 'Value',
+              name: 'New',
+              type: 'spline'
+              }"
+      >
+      </dx-chart>
+      <div class="popup-reporting-text-content">
+        <span class="popup-reporting-text-content-title">FORMULA</span>
+        <span [innerHTML]="indicatorData.Relevance | replaceLineBreaks" class="popup-reporting-text-content-info"></span>
+        <span class="popup-reporting-text-content-title">RELEVANCE</span>
+        <span [innerHTML]="indicatorData.Markup | replaceLineBreaks" class="popup-reporting-text-content-info"></span>
+        <span class="popup-reporting-text-content-title">INTEPRETATION</span>
+        <span [innerHTML]="indicatorData.Interpretation | replaceLineBreaks" class="popup-reporting-text-content-info"></span>
+      </div>
+    </div>
+    <div class="first-data-grid">
+      <dx-data-grid
+        [showBorders]="true"
+        [showColumnHeaders]="false"
+        [columnAutoWidth]="true"
+        [columnWidth]="200"
+        [dataSource]="indicatorData.Results"
+        [scrolling]='{
+        columnRenderingMode: "standard",
+        mode: "standard",
+        preloadEnabled: false,
+        rowRenderingMode: "standard",
+        scrollByContent: true,
+        scrollByThumb: false,
+        showScrollbar: "onScroll",
+        useNative: null}'
+        [showRowLines]="true">
+      </dx-data-grid>
+    </div>
+    <div class="second-data-grid">
+      <dx-data-grid
+        [showBorders]="true"
+        [showColumnHeaders]="false"
+        [columnAutoWidth]="true"
+        [columnWidth]="200"
+        [dataSource]="indicatorData.PrimaryData"
+        [scrolling]='{
+        columnRenderingMode: "standard",
+        mode: "standard",
+        preloadEnabled: false,
+        rowRenderingMode: "standard",
+        scrollByContent: true,
+        scrollByThumb: false,
+        showScrollbar: "onScroll",
+        useNative: null}'
+        [showRowLines]="true">
+      </dx-data-grid>
+    </div>
+  </div>
+</dx-popup>
+
+<dx-popup class="guidance-popup-wrapper" #dxPopupGuidance
+          [width]="700"
+          [height]="250"
+          [showTitle]="true"
+          [dragEnabled]="true"
+          [closeOnOutsideClick]="true"
+          [closeOnBackButton]="true"
+          [showCloseButton]="true"
+          [(visible)]="isShowPopupGuidance"
+          [shading]="false"
+          [title]="'Possible Actions'"
+          [resizeEnabled]="true"
+>
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view #scrollView [showScrollbar]="always" [useNative]="false">
+      <div [innerHTML]="guidance" class="guidance-popover characteristic-guidance characteristic-guidance-popup"></div>
+    </dx-scroll-view>
+  </div>
+</dx-popup>
+
+
+<dx-popup class="guidance-popup-wrapper" #dxPopupGuidance2
+          [width]="700"
+          [showTitle]="true"
+          [dragEnabled]="true"
+          [closeOnOutsideClick]="true"
+          [closeOnBackButton]="true"
+          [showCloseButton]="true"
+          [(visible)]="isShowAdoptionOfGoodPracticePopupGuidance"
+          [shading]="false"
+          [resizeEnabled]="true"
+>
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view #scrollView [showScrollbar]="always" [useNative]="false">
+      <div [innerHTML]="guidance" class="guidance-popover characteristic-guidance characteristic-guidance-popup"></div>
+    </dx-scroll-view>
+  </div>
+</dx-popup>
+
+
+

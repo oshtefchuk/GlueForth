@@ -1,0 +1,121 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.login-background {
+  background: url("../../../assets/login-background.jpg");
+  background-size: cover;
+  width: 100%;
+  height: calc(100vh - 0px);
+}
+
+.login-container {
+  @include form-container();
+  .login-form {
+    padding-top: 44px;
+    width: 500px;
+  }
+  .notation-alignment {
+    font-size: 11px;
+    justify-self: right;
+    margin-right: 20px;
+    .asterisk {
+      color: red;
+    }
+  }
+  .login-text {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  h4 {
+    color: $title-color;
+    margin-bottom: 22px;
+  }
+
+  .form-position {
+    margin: 30px 0;
+  }
+  /deep/ form {
+    @include form-style();
+    display: grid;
+    overflow: hidden;
+    max-width: 655px;
+    padding: 50px;
+    .dx-layout-manager .dx-field-item:not(.dx-first-row) {
+      padding-top: 0;
+    }
+  }
+  @media all and (max-width: 768px) {
+    /deep/ form {
+      max-width: 400px;
+      padding: 30px;
+    }
+  }
+  @media all and (max-width: 500px) {
+    /deep/ form {
+      max-width: 100%;
+      padding: 20px;
+    }
+  }
+
+  /deep/ dx-button {
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 170px);
+    justify-self: right;
+    margin-right: 20px;
+    margin-top: -6px;
+    margin-bottom: 12px;
+    height: 33px;
+    .button-text {
+      font-size: 14px;
+      padding: 0;
+    }
+
+  }
+  /deep/ dx-load-indicator {
+    vertical-align: top;
+    .dx-loadindicator-icon {
+      display: inline-flex;
+      .dx-loadindicator-segment {
+        background: #fff;
+        left: 0;
+        top: 0;
+      }
+    }
+  }
+  .forgot-password-container {
+    dxi-item {
+      padding-top: 0;
+    }
+
+    .forgot-password {
+      font-size: 11px;
+      display: block;
+      margin-top: 15px;
+      justify-self: right;
+      text-decoration: none;
+      float: right;
+      margin-right: 20px;
+    }
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .login-container {
+    //margin: 0;
+    //width: 100%!important;
+  }
+  /deep/ form {
+    margin: 0;
+    width: 100% !important;
+  }
+
+}
+
+.wrapper {
+  display: grid;
+  justify-content: center;
+}
+
+.dx-button .dx-button-content {
+  padding: 0 !important;
+}

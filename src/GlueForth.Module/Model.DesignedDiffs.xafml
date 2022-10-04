@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Title="BlueNorth">
+  <ActionDesign>
+    <Actions>
+      <Action Id="DialogOK" ValidationContexts="ChangePassword" />
+    </Actions>
+    <ActionToContainerMapping>
+      <ActionContainer Id="FormulaEditor" IsNewNode="True" />
+    </ActionToContainerMapping>
+  </ActionDesign>
+  <BOModel>
+    <Class Name="BlueNorth.Model.Characteristic" IsCloneable="True">
+      <OwnMembers>
+        <Member Name="Description" Caption="Statement" />
+        <Member Name="GuidanceText" Caption="Good Practices Guidance" />
+        <Member Name="LiteSPAQuestions" Caption="Lite SPA" />
+        <Member Name="NonFulfilmentRisks" RowCount="6" />
+        <Member Name="PrincipleGroup" Caption="Management Focus Area" />
+        <Member Name="Questions" Caption="Full SPA" />
+        <Member Name="Summary" Caption="Characteristic Guidance" RowCount="6" />
+      </OwnMembers>
+    </Class>
+    <Class Name="BlueNorth.Model.CharacteristicGuidanceNote" IsCloneable="True" />
+    <Class Name="BlueNorth.Model.Commodity">
+      <OwnMembers>
+        <Member Name="Category" Caption="Commodity Category" />
+      </OwnMembers>
+    </Class>
+    <Class Name="BlueNorth.Model.Dimension">
+      <OwnMembers>
+        <Member Name="GuidanceText" RowCount="15" />
+      </OwnMembers>
+    </Class>
+    <Class Name="BlueNorth.Model.Framework" IsCloneable="True" />
+    <Class Name="BlueNorth.Model.Indicator" IsCloneable="True">
+      <OwnMembers>
+        <Member Name="Conversion" Caption="Trend Correction Factor" />
+        <Member Name="Interpretaion" Caption="Interpretation" />
+        <Member Name="Markup" Caption="Rationale" />
+        <Member Name="Relevance" Caption="Formula" />
+        <Member Name="TresholdValue" EditMask="n" DisplayFormat="{0:n}" />
+        <Member Name="UnitOfMeasure" LookupEditorMode="AllItems" />
+      </OwnMembers>
+    </Class>
+    <Class Name="BlueNorth.Model.PrimaryDataField">
+      <OwnMembers>
+        <Member Name="UnitsOfMeasure" Caption="Units Of Measure Options" />
+      </OwnMembers>
+    </Class>
+    <Class Name="BlueNorth.Model.Principle">
+      <OwnMembers>
+        <Member Name="GuidanceText" RowCount="15" />
+      </OwnMembers>
+    </Class>
+    <Class Name="BlueNorth.Model.Question" IsCloneable="True">
+      <OwnMembers>
+        <Member Name="DefaultAnswer" Caption="Ideal Answer" />
+        <Member Name="GuidanceText" Caption="Question Guidance" />
+        <Member Name="NoAnswerGuidance" Caption="No" />
+        <Member Name="PartiallyAnswerGuidance" Caption="Partially" />
+        <Member Name="Title" Caption="Question" />
+        <Member Name="UnknownAnswerGuidance" Caption="I don't know" />
+        <Member Name="YesAnswerGuidance" Caption="Yes" />
+      </OwnMembers>
+    </Class>
+    <Class Name="BlueNorth.Model.Unit">
+      <OwnMembers>
+        <Member Name="Commodities" Caption="Secondary Commodities" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <NavigationItems StartupNavigationItem="Characteristic_ListView">
+    <Items>
+      <Item Id="Default" Index="0">
+        <Items>
+          <Item Id="Country" ViewId="Country_ListView" IsNewNode="True" />
+          <Item Id="StandardControl_ListView" Removed="True" />
+          <Item Id="UnitResult_ListView" Removed="True" />
+        </Items>
+      </Item>
+      <Item Id="SPA Structure" Index="1">
+        <Items>
+          <Item Id="CommodityCategory_ListView" Index="0" />
+          <Item Id="Commodity_ListView" Index="1" />
+          <Item Id="Dimension_ListView" Index="2" />
+          <Item Id="Principle_ListView" Index="3" />
+          <Item Id="Characteristic_ListView" Index="4" />
+          <Item Id="Framework_ListView" Index="5" />
+          <Item Id="Standard_ListView" Index="6" Removed="True" />
+          <Item Id="StandardChapter_ListView" Index="7" Removed="True" />
+          <Item Id="StandardContent_ListView" Index="8" Removed="True" />
+          <Item Id="Question_ListView" Index="9" />
+          <Item Id="PrincipleGroup_ListView" Caption="Management Focus Area" />
+        </Items>
+      </Item>
+      <Item Id="Indicators">
+        <Items>
+          <Item Id="Indicator_ListView" Index="0" />
+          <Item Id="PrimaryDataType" ViewId="PrimaryDataType_ListView" Index="1" IsNewNode="True" />
+          <Item Id="PrimaryDataField_ListView" Index="2" />
+          <Item Id="UnitOfMeasure_ListView" Index="3" />
+          <Item Id="DataFieldCategory_ListView" Index="4" />
+          <Item Id="IndicatorDataSet_ListView" Index="5" />
+          <Item Id="ConversionFactor_ListView" Index="6" />
+          <Item Id="CommodityPDValue_ListView" Index="7" />
+          <Item Id="PrimaryDataFieldNote_ListView" Index="8" />
+          <Item Id="PrimaryDataValue_ListView" Index="9" />
+        </Items>
+      </Item>
+      <Item Id="SPA Results">
+        <Items>
+          <Item Id="Answer_ListView" Index="0" />
+          <Item Id="AnswerNote_ListView" Index="1" />
+          <Item Id="AnswerNoteAttachment_ListView" Index="2" />
+          <Item Id="Scoring_ListView" Index="3" />
+          <Item Id="SPADataSet_ListView" Index="4" />
+          <Item Id="@6dbcef01-9907-4abb-b262-9b4245cc1fb8" Caption="Unit Results" ViewId="UnitResult_ListView" Index="5" IsNewNode="True" />
+        </Items>
+      </Item>
+      <Item Id="Standards" Caption="Standards" IsNewNode="True">
+        <Items IsNewNode="True">
+          <Item Id="Standard_ListView" Index="6" ViewId="Standard_ListView" ObjectKey="" IsNewNode="True" />
+          <Item Id="StandardChapter_ListView" Index="7" ObjectKey="" ViewId="StandardChapter_ListView" IsNewNode="True" />
+          <Item Id="StandardContent_ListView" Index="8" ObjectKey="" ViewId="StandardContent_ListView" IsNewNode="True" />
+          <Item Id="QualityControl" ViewId="StandardControl_ListView" IsNewNode="True" />
+        </Items>
+      </Item>
+      <Item Id="Units">
+        <Items>
+          <Item Id="Unit_ListView" Caption="Business Unit" />
+          <Item Id="UnitType_ListView" Caption="Business Unit Type" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
+  <Options>
+    <LayoutManagerOptions RequiredFieldMark="*" />
+  </Options>
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="18.2.6.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="18.2.7.0" IsNewNode="True" />
+  </SchemaModules>
+  <Validation>
+    <Rules>
+      <RuleRequiredField Id="Commodity.UnitType_Required" TargetType="BlueNorth.Model.Commodity" TargetPropertyName="UnitType" TargetContextIDs="Save" IsNewNode="True" />
+    </Rules>
+  </Validation>
+  <Views>
+    <ListView Id="Answer_ListView">
+      <Columns>
+        <ColumnInfo Id="DataSet" PropertyName="DataSet.Unit.Name" Caption="Unit Name" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Characteristic_DetailView">
+      <Items>
+        <PropertyEditor Id="PrincipleGroup" LookupEditorMode="AllItemsWithSearch" View="" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="General" Index="0" IsNewNode="True">
+              <LayoutGroup Id="Description" Index="0" ShowCaption="True" IsNewNode="True">
+                <LayoutItem Id="Description" ViewItem="Description" ShowCaption="False" Index="0" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Summary" Index="1" ShowCaption="True" IsNewNode="True">
+                <LayoutItem Id="Summary" ViewItem="Summary" ShowCaption="False" Index="0" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="NonFulfilmentRisks" Index="2" ShowCaption="True" Caption="Non-Fulfilment Risks" IsNewNode="True">
+                <LayoutItem Id="NonFulfilmentRisks" ViewItem="NonFulfilmentRisks" ShowCaption="False" Index="0" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="GuidanceText" Index="3" ShowCaption="True" IsNewNode="True">
+                <LayoutItem Id="GuidanceText" ViewItem="GuidanceText" ShowCaption="False" Index="0" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="LiteSPAQuestions" Index="1" Caption="Lite SA">
+              <LayoutItem Id="LiteSPAQuestions" Index="1" />
+            </LayoutGroup>
+            <LayoutGroup Id="Questions" Index="2" Caption="Full SA" />
+            <LayoutGroup Id="Frameworks" Index="3" />
+            <LayoutGroup Id="Scoring" Index="4" />
+            <LayoutGroup Id="Question Groups" Caption="Question Groups" Index="5" IsNewNode="True">
+              <LayoutItem Id="QuestionGroups" ViewItem="QuestionGroups" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="StandardContents" Index="6" ShowCaption="True" IsNewNode="True" Removed="True">
+              <LayoutItem Id="StandardContents" ViewItem="StandardContents" ShowCaption="False" Index="0" IsNewNode="True" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <TabbedGroup Id="General">
+            <LayoutGroup Id="Description" Removed="True" />
+            <LayoutGroup Id="GuidanceText" Removed="True" />
+            <LayoutGroup Id="NonFulfilmentRisks" Removed="True" />
+            <LayoutGroup Id="Summary" Removed="True" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Characteristic_ListView">
+      <Columns>
+        <ColumnInfo Id="FrameworksList" Caption="Frameworks" />
+      </Columns>
+    </ListView>
+    <ListView Id="Characteristic_LiteSPAQuestions_ListView" AllowLink="False" AllowNew="False" AllowUnlink="False">
+      <Columns>
+        <ColumnInfo Id="Reference" Index="-1" />
+        <ColumnInfo Id="Title" Index="-1" />
+      </Columns>
+    </ListView>
+    <ListView Id="Characteristic_LookupListView">
+      <Columns>
+        <ColumnInfo Id="ShortTitle" PropertyName="ShortTitle" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="CommodityCategory" PropertyName="CommodityCategory" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="OrganisationType" PropertyName="OrganisationType" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Characteristic_Questions_ListView" AllowDelete="False" AutoExpandAllGroups="True" AllowUnlink="True">
+      <Columns>
+        <ColumnInfo Id="Group" GroupIndex="0" />
+      </Columns>
+    </ListView>
+    <ListView Id="Characteristic_Scoring_ListView">
+      <Columns>
+        <ColumnInfo Id="Characteristic" Index="-1" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Commodity_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Suppliers" Removed="True" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Commodity_Frameworks_ListView" AllowDelete="False" AllowUnlink="True" />
+    <ListView Id="Commodity_Standards_ListView" AllowDelete="False" AllowUnlink="True" />
+    <ListView Id="CommodityCategory_Commodities_ListView" AllowLink="False" AllowUnlink="False" />
+    <DetailView Id="CommodityCategory_DetailView">
+      <Items>
+        <PropertyEditor Id="Commodities" AllowEdit="False" />
+      </Items>
+    </DetailView>
+    <DetailView Id="ConversionFactor_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="25.495049504950494">
+            <LayoutGroup Id="ConversionFactor" RelativeSize="82.524271844660191">
+              <LayoutGroup Id="ConversionFactor_col1" RelativeSize="50.0595947556615">
+                <LayoutItem Id="Reference" RelativeSize="23.529411764705884" />
+                <LayoutItem Id="Name" RelativeSize="17.647058823529413" />
+                <LayoutItem Id="DataType" RelativeSize="17.647058823529413" />
+                <LayoutItem Id="SourceUoM" Index="3" RelativeSize="17.647058823529413" />
+                <LayoutItem Id="TargetUoM" ViewItem="TargetUoM" Index="4" RelativeSize="23.529411764705884" IsNewNode="True" />
+                <LayoutItem Id="Country" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="ConversionFactor_col2" RelativeSize="49.9404052443385">
+                <LayoutItem Id="Value" RelativeSize="23.529411764705884" Index="0" />
+                <LayoutItem Id="Country" ViewItem="Country" Index="1" RelativeSize="17.647058823529413" IsNewNode="True" />
+                <LayoutItem Id="StartYear" Index="2" RelativeSize="17.647058823529413" />
+                <LayoutItem Id="EndYear" Index="3" RelativeSize="41.1764705882353" />
+                <LayoutItem Id="TargetUoM" RelativeSize="23.529411764705884" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" RelativeSize="17.475728155339805">
+              <LayoutItem Id="Oid" RelativeSize="100" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" RelativeSize="74.5049504950495">
+            <LayoutItem Id="Description" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Dimension_DetailView">
+      <Items>
+        <PropertyEditor Id="GuidanceText" RowCount="10" />
+      </Items>
+    </DetailView>
+    <ListView Id="Framework_Characteristics_ListView" AllowDelete="False" AllowUnlink="True">
+      <Columns>
+        <ColumnInfo Id="PrincipleGroup" Index="-1" />
+        <ColumnInfo Id="ShortTitle" Index="-1" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Framework_DetailView" AllowDelete="False" />
+    <ListView Id="Framework_ListView" AllowDelete="False" />
+    <DetailView Id="FrameworkFrontMenuItem_DetailView">
+      <Items>
+        <PropertyEditor Id="DisplayName" Removed="True" />
+      </Items>
+    </DetailView>
+    <ListView Id="FrameworkFrontMenuItem_ListView">
+      <Columns>
+        <ColumnInfo Id="DisplayName" Index="-1" />
+      </Columns>
+    </ListView>
+    <DetailView Id="FrontMenuItem_DetailView">
+      <Items>
+        <PropertyEditor Id="Text" RowCount="1" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="FrontMenuItem">
+              <LayoutItem Id="Text" ViewItem="Text" ShowCaption="" Index="0" IsNewNode="True" />
+              <LayoutItem Id="DisplayName" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors">
+            <LayoutItem Id="Text" Removed="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="FrontMenuItem_ListView">
+      <Columns>
+        <ColumnInfo Id="DisplayName" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="FrontMenuItem_LookupListView" AllowNew="False" />
+    <DetailView Id="Indicator_DetailView">
+      <Items>
+        <ActionContainerViewItem Id="FormulaEditor" ActionContainer="FormulaEditor" Caption="Formula Editor" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SizeableEditors">
+            <LayoutItem Id="Markup" Index="0" />
+            <LayoutItem Id="Relevance" Index="1" />
+            <LayoutItem Id="Interpretaion" Index="2" />
+          </LayoutGroup>
+          <TabbedGroup Id="General">
+            <LayoutGroup Id="Formula">
+              <LayoutItem Id="FormulaEditor" ViewItem="FormulaEditor" Index="0" ShowCaption="True" IsNewNode="True" />
+              <LayoutItem Id="Formula" Index="1" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Organisation_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Organization" ShowCaption="False" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="PermissionPolicyRole_Users_ListView" AllowDelete="False" AllowUnlink="True" ClassName="BlueNorth.Model.User" />
+    <ListView Id="PermissionPolicyUser_ListView" AllowNew="False" AllowLink="True" />
+    <ListView Id="PermissionPolicyUser_Roles_ListView" AllowDelete="False" AllowUnlink="True" />
+    <DetailView Id="PrimaryDataField_DetailView">
+      <Items>
+        <PropertyEditor Id="DefaultUOM" LookupEditorMode="AllItems" />
+      </Items>
+    </DetailView>
+    <DetailView Id="Question_DetailView">
+      <Items>
+        <PropertyEditor Id="ImprovementPlanQuestion" RowCount="2" />
+        <PropertyEditor Id="Title" RowCount="2" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Question_row" Direction="Vertical" Index="0" IsNewNode="True">
+              <LayoutItem Id="Title" ViewItem="Title" ShowCaption="" Index="0" RelativeSize="100" IsNewNode="True" />
+              <LayoutItem Id="ImprovementPlanQuestion" ViewItem="ImprovementPlanQuestion" ShowCaption="" Index="2" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Question" Index="1" ShowCaption="False">
+              <LayoutGroup Id="Question_col1" Index="1">
+                <LayoutItem Id="Reference" Index="0" ViewItem="Reference" ShowCaption="" IsNewNode="True" Removed="True" />
+                <LayoutItem Id="DefaultAnswer" ViewItem="DefaultAnswer" Index="1" ShowCaption="" IsNewNode="True" Removed="True" />
+                <LayoutItem Id="Group" Removed="True" />
+                <LayoutItem Id="UnknownAnswerGuidance" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Question_col2" Index="2">
+                <LayoutItem Id="Group" ViewItem="Group" ShowCaption="" Index="1" IsNewNode="True" />
+                <LayoutItem Id="NoAnswerGuidance" Removed="True" />
+                <LayoutItem Id="PartiallyAnswerGuidance" Removed="True" />
+                <LayoutItem Id="YesAnswerGuidance" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Index="2" />
+            <LayoutGroup Id="AnswersGuidance" Direction="Horizontal" ShowCaption="False" IsNewNode="True">
+              <LayoutGroup Id="col0" IsNewNode="True">
+                <LayoutItem Id="YesAnswerGuidance" ViewItem="YesAnswerGuidance" ShowCaption="" Index="0" IsNewNode="True" />
+                <LayoutItem Id="NoAnswerGuidance" ViewItem="NoAnswerGuidance" ShowCaption="" Index="1" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="col1" IsNewNode="True">
+                <LayoutItem Id="PartiallyAnswerGuidance" ViewItem="PartiallyAnswerGuidance" ShowCaption="" Index="0" IsNewNode="True" />
+                <LayoutItem Id="UnknownAnswerGuidance" ViewItem="UnknownAnswerGuidance" ShowCaption="" Index="1" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Question_LookupListView">
+      <Columns>
+        <ColumnInfo Id="Reference" PropertyName="Reference" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Title" Index="1" />
+        <ColumnInfo Id="Group" PropertyName="Group" Index="2" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="QuestionGroup_ListView" AutoExpandAllGroups="True">
+      <Columns>
+        <ColumnInfo Id="ParentGroup" SortIndex="0" SortOrder="Ascending" />
+        <ColumnInfo Id="ParentIndex" SortIndex="1" SortOrder="Ascending" />
+        <ColumnInfo Id="ShortTitle" SortIndex="-1" SortOrder="None" />
+      </Columns>
+    </ListView>
+    <ListView Id="StandardControl_ListView" Caption="Quality Control" AllowDelete="False" AllowNew="False">
+      <Columns>
+        <ColumnInfo Id="StandardChapter" Index="-1" />
+        <ColumnInfo Id="Standard" LookupProperty="ShortTitle" />
+        <ColumnInfo Id="Reference" PropertyName="Standard.Reference" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Standard Content" PropertyName="StandardContent.Reference" Caption="Standard Content" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="StandardContent" Index="3" LookupProperty="Description" Caption="Standard Content Ref" />
+        <ColumnInfo Id="Characteristic" Index="4" />
+        <ColumnInfo Id="CharacteristicShortTitle" PropertyName="Characteristic" View="" Width="70" Index="4" LookupProperty="ShortTitle" Caption="Characteristic Title" IsNewNode="True" />
+        <ColumnInfo Id="QuestionGroupRef" Index="5" />
+        <ColumnInfo Id="Question" Index="6" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Unit_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="52.548330404217928">
+            <LayoutGroup Id="Unit" ShowCaption="False" RelativeSize="36.789297658862878" Index="0">
+              <LayoutGroup Id="Unit_col1" RelativeSize="50.074515648286138">
+                <LayoutItem Id="UnitType" RelativeSize="29.09090909090909" />
+                <LayoutItem Id="Organisation" RelativeSize="21.818181818181817" />
+                <LayoutItem Id="ContactPerson" RelativeSize="21.818181818181817" />
+                <LayoutItem Id="UnitStructure" RelativeSize="27.272727272727273" />
+              </LayoutGroup>
+              <LayoutGroup Id="Unit_col2" RelativeSize="49.925484351713862">
+                <LayoutItem Id="LocationLongtitude" RelativeSize="21.818181818181817" />
+                <LayoutItem Id="LocationLattitude" RelativeSize="21.818181818181817" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="Organization" Index="1" ShowCaption="False" Direction="Horizontal" RelativeSize="28.093645484949832" IsNewNode="True" Removed="True">
+              <LayoutGroup Id="Organization_col1" Index="0" RelativeSize="50.074515648286138" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="Name" ViewItem="Name" Index="0" RelativeSize="35.714285714285715" IsNewNode="True" />
+                <LayoutItem Id="Profile" ViewItem="Profile" Index="1" RelativeSize="28.571428571428573" IsNewNode="True" />
+                <LayoutItem Id="Email" Index="2" ShowCaption="" ViewItem="Email" RelativeSize="35.714285714285715" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Organization_col2" ShowCaption="False" Index="1" RelativeSize="49.925484351713862" IsNewNode="True">
+                <LayoutItem Id="WebSite" Index="0" ShowCaption="" ViewItem="WebSite" RelativeSize="35.714285714285715" IsNewNode="True" />
+                <LayoutItem Id="FullName" ViewItem="FullName" Index="1" RelativeSize="64.285714285714292" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="Party" RelativeSize="35.11705685618729">
+              <LayoutItem Id="Photo" RelativeSize="25.714285714285715" />
+              <LayoutItem Id="Address1" RelativeSize="22.857142857142858" />
+              <LayoutItem Id="Address2" RelativeSize="22.857142857142858" />
+              <LayoutItem Id="DisplayName" RelativeSize="28.571428571428573" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" RelativeSize="23.725834797891036">
+            <LayoutItem Id="Description" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="UnitResult_ListView" AllowDelete="False" AllowLink="False" AllowNew="False">
+      <Columns>
+        <ColumnInfo Id="Country" PropertyName="Unit" Width="70" Index="0" LookupProperty="Address1.Country" IsNewNode="True" />
+        <ColumnInfo Id="Characteristic_ShortTitle" PropertyName="Characteristic" Width="70" Index="2" Caption="Short Title" LookupProperty="ShortTitle" IsNewNode="True" />
+        <ColumnInfo Id="Management Focus Area" PropertyName="Characteristic" Width="70" Index="2" LookupProperty="PrincipleGroup" Caption="Management Focus Area" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="User_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Roles" Index="0" />
+            <LayoutGroup Id="CreatedUnits" Index="1" />
+            <LayoutGroup Id="AssignedUnits" Index="2" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="User_ListView">
+      <Columns>
+        <ColumnInfo Id="AutoLoginUrl" SortIndex="0" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

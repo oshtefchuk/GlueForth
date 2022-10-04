@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="BlueNorth.Model.ConversionFactor">
+      <OwnMembers>
+        <Member Name="Description" Caption="Reference / Notes / Source" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <NavigationItems>
+    <Items>
+      <Item Id="Reports" Visible="False" />
+    </Items>
+  </NavigationItems>
+  <Options>
+    <PopupWindowOptions WindowWidth="1000" WindowHeight="400" />
+  </Options>
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="18.2.6.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerAspNetModule" Version="18.2.6.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="18.2.6.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="18.2.6.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="18.2.6.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <ListView Id="Standard_ListView">
+      <Columns>
+        <ColumnInfo Id="Edition" Index="3" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

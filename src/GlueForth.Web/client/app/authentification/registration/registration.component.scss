@@ -1,0 +1,118 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+.registration-background {
+  background: url("../../../assets/login-background.jpg");
+  background-size: cover;
+  width: 100%;
+}
+.registration-container {
+  @include form-container();
+
+  h4, .material-icons {
+    color: $title-color;
+    margin-bottom: 15px;
+  }
+
+  /deep/ dx-select-box[placeholder="SELECT COUNTRY"]{
+    margin-right: 20px;
+    position: relative;
+  }
+
+  /deep/ dx-select-box[placeholder="SELECT COUNTRY"]:after {
+    content: " *";
+    position: absolute;
+    right: -20px;
+    top: 5px;
+    color: #ea4444;
+    display: inline-block;
+  }
+
+  /deep/ form {
+    @include form-style();
+    max-width: 720px;
+    overflow: hidden;
+  }
+
+  .login-text {
+    width: 597px;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .registration-mandatory {
+    float: left;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+
+  dx-form /deep/ {
+    .dx-form-group-caption {
+      color: $main-text-color;
+    }
+    .dx-form-group-caption {
+      margin-left: 0;
+    }
+  }
+
+  /deep/ dx-button {
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 100%);
+  }
+  .dx-item {
+    margin-bottom: 15px;
+  }
+  .rc-anchor .rc-anchor-normal .rc-anchor-light {
+    margin-top: 15px;
+  }
+
+  .registration-terms-conditions {
+    font-size: 12px;
+    margin-bottom: 15px;
+    display: block;
+    margin-top: 15px;
+  }
+}
+
+/deep/ dx-form {
+  .dx-form-group-caption {
+    font-size: 14px;
+    margin-left: 20px;
+  }
+
+  .dx-form-group-with-caption > .dx-form-group-content {
+    border-top: none;
+  }
+
+  .dx-form-group-with-caption .dx-form-group-content {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .dx-field-item-help-text {
+    color: $main-text-color;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .registration-container form {
+    max-width: 500px;
+    padding: 20px;
+  }
+
+}
+
+.checkbox-styles {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-styles-position {
+  display: flex;
+  align-items: baseline;
+  dx-check-box {
+    margin-right: 15px;
+  }
+}
+
+.dx-field-value:not(.dx-switch):not(.dx-checkbox):not(.dx-button), .dx-field-value-static {
+  width: 22px;
+  margin-right: 25px;
+}

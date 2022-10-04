@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e8a3c7678f214f49911b3b07e08bef88" Name="Diagram1" ZoomLevel="65">
+        <EntityTypeShape EntityType="BlueNorthModel.Address" Width="1.5" PointX="1.5" PointY="76.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.CharacteristicGuidanceNote" Width="1.5" PointX="10.5" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.CommodityCategory" Width="1.5" PointX="3" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.CommodityIndicatorGuidance" Width="1.5" PointX="12.75" PointY="34.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Country" Width="1.5" PointX="1.5" PointY="81.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Dimension" Width="1.5" PointX="3" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Grade" Width="1.5" PointX="3" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Organization" Width="1.5" PointX="3" PointY="73.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Party" Width="1.5" PointX="0.75" PointY="72.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.PermissionPolicyUser" Width="1.875" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Person" Width="1.5" PointX="3" PointY="84.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.PhoneNumber" Width="1.5" PointX="3" PointY="87.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrincipleGroup" Width="1.5" PointX="3" PointY="43.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.QuestionGroup" Width="1.5" PointX="3" PointY="50.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Retailer" Width="1.5" PointX="3" PointY="54.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Standard" Width="1.5" PointX="3" PointY="58" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.StandardChapter" Width="1.5" PointX="8.25" PointY="44.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.StandardContent" Width="1.5" PointX="13.5" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.StandardStandards_CommodityCommodities" Width="1.5" PointX="10.75" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Supplier" Width="1.5" PointX="3" PointY="62.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.SupplierSuppliers_CommodityCommodities" Width="1.5" PointX="10.5" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Unit" Width="1.5" PointX="5.25" PointY="69.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitOfMeasure" Width="1.5" PointX="3" PointY="65.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitType" Width="1.5" PointX="3" PointY="69.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlueNorthModel.Version" Width="1.5" PointX="0.75" PointY="32.625" IsExpanded="true" />
+        <AssociationConnector Association="BlueNorthModel.FK_Address_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Party_Address1" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Party_Address2" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_CharacteristicGuidanceNote_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityCategory_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityIndicatorGuidance_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Dimension_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Grade_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Organization_Oid" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Unit_Oid" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Person_Oid" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_PhoneNumber_Party" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrincipleGroup_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_QuestionGroup_Parent" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_QuestionGroup_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Retailer_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Standard_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardChapter_Standard" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardStandards_CommodityCommodities_Standards" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardChapter_Parent" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardChapter_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardContent_StandardChapter" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardContent_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Supplier_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_SupplierSuppliers_CommodityCommodities_Suppliers" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_Unit_UnitType" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitOfMeasure_Version" ManuallyRouted="false" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitType_Version" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BlueNorthModel.Organisation" Width="1.5" PointX="8.875" PointY="75.375" />
+        <AssociationConnector Association="BlueNorthModel.FK_Organisation_Oid" />
+        <AssociationConnector Association="BlueNorthModel.FK_Unit_Organisation" />
+        <AssociationConnector Association="BlueNorthModel.FK_Unit_ContactPerson" />
+        <EntityTypeShape EntityType="BlueNorthModel.PermissionPolicyRole" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="BlueNorthModel.PermissionPolicyUserUsers_PermissionPolicyRoleRoles" Width="1.5" PointX="3" PointY="5.625" />
+        <AssociationConnector Association="BlueNorthModel.FK_PermissionPolicyUserUsers_PermissionPolicyRoleRoles_Roles" />
+        <AssociationConnector Association="BlueNorthModel.FK_PermissionPolicyUserUsers_PermissionPolicyRoleRoles_Users" />
+        <EntityTypeShape EntityType="BlueNorthModel.CommodityCommodities_CharacteristicCharacteristics" Width="1.5" PointX="7.5" PointY="40" />
+        <EntityTypeShape EntityType="BlueNorthModel.DimensionDimensions_CommodityCommodities" Width="1.5" PointX="7.5" PointY="31.375" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrinciplePrinciples_CommodityCommodities" Width="1.5" PointX="10.5" PointY="33.75" />
+        <EntityTypeShape EntityType="BlueNorthModel.SupplierRetailers_RetailerSuppliers" Width="1.5" PointX="5.25" PointY="58.875" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitUnits_RetailerRetailers" Width="1.5" PointX="7.5" PointY="63.125" />
+        <AssociationConnector Association="BlueNorthModel.FK_DimensionDimensions_CommodityCommodities_Dimensions" />
+        <AssociationConnector Association="BlueNorthModel.FK_SupplierRetailers_RetailerSuppliers_Suppliers" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitUnits_RetailerRetailers_Retailers" />
+        <AssociationConnector Association="BlueNorthModel.FK_SupplierRetailers_RetailerSuppliers_Retailers" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitUnits_RetailerRetailers_Units" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitOfMeasureUnitsOfMeasure_PrimaryDataFieldPrimaryDataFields" Width="1.5" PointX="7.5" PointY="57.625" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitOfMeasureUnitsOfMeasure_PrimaryDataFieldPrimaryDataFields_UnitsOfMeasure" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrimaryDataType" Width="1.5" PointX="3" PointY="36" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataType_Version" />
+        <EntityTypeShape EntityType="BlueNorthModel.OrganisationType" Width="1.5" PointX="3" PointY="21" />
+        <EntityTypeShape EntityType="BlueNorthModel.SPADataSet" Width="1.5" PointX="10.5" PointY="52.5" />
+        <AssociationConnector Association="BlueNorthModel.FK_SPADataSet_Grade" />
+        <AssociationConnector Association="BlueNorthModel.FK_OrganisationType_Version" />
+        <AssociationConnector Association="BlueNorthModel.FK_SPADataSet_Unit" />
+        <EntityTypeShape EntityType="BlueNorthModel.Question" Width="1.5" PointX="5.25" PointY="39.375" />
+        <AssociationConnector Association="BlueNorthModel.FK_Question_Group" />
+        <AssociationConnector Association="BlueNorthModel.FK_Question_Version" />
+        <EntityTypeShape EntityType="BlueNorthModel.IndicatorDataSet" Width="1.5" PointX="7.5" PointY="51.375" />
+        <AssociationConnector Association="BlueNorthModel.FK_IndicatorDataSet_Grade" />
+        <AssociationConnector Association="BlueNorthModel.FK_IndicatorDataSet_Unit" />
+        <EntityTypeShape EntityType="BlueNorthModel.Characteristic" Width="1.5" PointX="13.5" PointY="27.75" />
+        <AssociationConnector Association="BlueNorthModel.FK_Characteristic_CommodityCategory" />
+        <AssociationConnector Association="BlueNorthModel.FK_Characteristic_OrganisationType" />
+        <AssociationConnector Association="BlueNorthModel.FK_Characteristic_PrincipleGroup" />
+        <AssociationConnector Association="BlueNorthModel.FK_Characteristic_Version" />
+        <AssociationConnector Association="BlueNorthModel.FK_CharacteristicGuidanceNote_Characteristic" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityCommodities_CharacteristicCharacteristics_Characteristics" />
+        <EntityTypeShape EntityType="BlueNorthModel.Answer" Width="1.5" PointX="15.75" PointY="46.125" />
+        <AssociationConnector Association="BlueNorthModel.FK_Answer_DataSet" />
+        <AssociationConnector Association="BlueNorthModel.FK_Answer_Question" />
+        <EntityTypeShape EntityType="BlueNorthModel.SPADataSetSPADataSets_CharacteristicNonRelevantCharacteristics" Width="1.5" PointX="15.75" PointY="41.125" />
+        <AssociationConnector Association="BlueNorthModel.FK_SPADataSetSPADataSets_CharacteristicNonRelevantCharacteristics_NonRelevantCharacteristics" />
+        <AssociationConnector Association="BlueNorthModel.FK_SPADataSetSPADataSets_CharacteristicNonRelevantCharacteristics_SPADataSets" />
+        <EntityTypeShape EntityType="BlueNorthModel.QuestionGroupQuestionGroups_CharacteristicCharacteristics" Width="1.5" PointX="15.75" PointY="38" />
+        <AssociationConnector Association="BlueNorthModel.FK_QuestionGroupQuestionGroups_CharacteristicCharacteristics_Characteristics" />
+        <AssociationConnector Association="BlueNorthModel.FK_QuestionGroupQuestionGroups_CharacteristicCharacteristics_QuestionGroups" />
+        <AssociationConnector Association="BlueNorthModel.FK_Answer_Characteristic" />
+        <EntityTypeShape EntityType="BlueNorthModel.QuestionQuestions_CharacteristicCharacteristics" Width="1.5" PointX="15.75" PointY="34.625" />
+        <AssociationConnector Association="BlueNorthModel.FK_QuestionQuestions_CharacteristicCharacteristics_Characteristics" />
+        <AssociationConnector Association="BlueNorthModel.FK_QuestionQuestions_CharacteristicCharacteristics_Questions" />
+        <EntityTypeShape EntityType="BlueNorthModel.FrameworkFrameworks_CharacteristicCharacteristics" Width="1.5" PointX="15.75" PointY="30" />
+        <EntityTypeShape EntityType="BlueNorthModel.FrameworkFrameworks_CommodityCommodities" Width="1.5" PointX="7.5" PointY="27.75" />
+        <EntityTypeShape EntityType="BlueNorthModel.Scoring" Width="1.5" PointX="15.75" PointY="51.25" />
+        <EntityTypeShape EntityType="BlueNorthModel.StandardContentStandardContents_CharacteristicCharacteristics" Width="1.5" PointX="18.75" PointY="33.875" />
+        <AssociationConnector Association="BlueNorthModel.FK_FrameworkFrameworks_CharacteristicCharacteristics_Characteristics" />
+        <AssociationConnector Association="BlueNorthModel.FK_Scoring_Characteristic" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardContentStandardContents_CharacteristicCharacteristics_Characteristics" />
+        <AssociationConnector Association="BlueNorthModel.FK_Scoring_UnitType" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardContentStandardContents_CharacteristicCharacteristics_StandardContents" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitUnits_StandardStandards" Width="1.5" PointX="7.5" PointY="66.25" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitUnits_StandardStandards_Standards" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitUnits_StandardStandards_Units" />
+        <EntityTypeShape EntityType="BlueNorthModel.Framework" Width="1.5" PointX="5.25" PointY="26" />
+        <AssociationConnector Association="BlueNorthModel.FK_Framework_OrganisationType" />
+        <AssociationConnector Association="BlueNorthModel.FK_Framework_Version" />
+        <AssociationConnector Association="BlueNorthModel.FK_FrameworkFrameworks_CharacteristicCharacteristics_Frameworks" />
+        <AssociationConnector Association="BlueNorthModel.FK_FrameworkFrameworks_CommodityCommodities_Frameworks" />
+        <AssociationConnector Association="BlueNorthModel.FK_Unit_PrimaryFramework" />
+        <AssociationConnector Association="BlueNorthModel.FK_IndicatorDataSet_Framework" />
+        <AssociationConnector Association="BlueNorthModel.FK_SPADataSet_Framework" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitUnits_SupplierSuppliers" Width="1.5" PointX="7.5" PointY="69.5" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitUnits_SupplierSuppliers_Suppliers" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitUnits_SupplierSuppliers_Units" />
+        <EntityTypeShape EntityType="BlueNorthModel.PriorCharacteristic" Width="1.5" PointX="18.75" PointY="44.125" />
+        <AssociationConnector Association="BlueNorthModel.FK_PriorCharacteristic_Characteristic" />
+        <AssociationConnector Association="BlueNorthModel.FK_PriorCharacteristic_DataSet" />
+        <EntityTypeShape EntityType="BlueNorthModel.StatusMatrix" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrimaryDataValue" Width="1.5" PointX="12.75" PointY="56.875" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataValue_DataSet" />
+        <EntityTypeShape EntityType="BlueNorthModel.IndicatorIndicators_FrameworkFrameworks" Width="1.5" PointX="18.75" PointY="37.5" />
+        <AssociationConnector Association="BlueNorthModel.FK_IndicatorIndicators_FrameworkFrameworks_Frameworks" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrimaryDataFieldPrimaryDataFields_IndicatorIndicators" Width="1.5" PointX="12.75" PointY="47" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrimaryDataFieldNote" Width="1.5" PointX="15.75" PointY="55.875" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataFieldNote_DataSet" />
+        <EntityTypeShape EntityType="BlueNorthModel.ProductionArea" Width="1.5" PointX="15" PointY="60.125" />
+        <AssociationConnector Association="BlueNorthModel.FK_ProductionArea_PrimaryDataValue" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitUnits_CommodityCommodities" Width="1.5" PointX="10.5" PointY="58.625" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataField_DependendOn" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitUnits_CommodityCommodities_Units" />
+        <EntityTypeShape EntityType="BlueNorthModel.UserUsers_IndicatorIndicators" Width="1.5" PointX="12.75" PointY="43.25" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrimaryDataField" Width="1.5" PointX="5.25" PointY="49" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataField_DefaultUOM" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataField_PrimaryDataType" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataField_Version" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataFieldNote_PrimaryDataField" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataFieldPrimaryDataFields_IndicatorIndicators_PrimaryDataFields" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataValue_PrimaryDataField" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitOfMeasureUnitsOfMeasure_PrimaryDataFieldPrimaryDataFields_PrimaryDataFields" />
+        <EntityTypeShape EntityType="BlueNorthModel.CommodityPDValue" Width="1.5" PointX="15" PointY="64.25" />
+        <EntityTypeShape EntityType="BlueNorthModel.DataFieldCategory" Width="1.5" PointX="5.375" PointY="1.125" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityPDValue_PrimaryDataValue" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataField_Category" />
+        <EntityTypeShape EntityType="BlueNorthModel.StandardContentStandardContents_QuestionGroupQuestionGroups" Width="1.5" PointX="18.75" PointY="48.375" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardContentStandardContents_QuestionGroupQuestionGroups_QuestionGroups" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardContentStandardContents_QuestionGroupQuestionGroups_StandardContents" />
+        <EntityTypeShape EntityType="BlueNorthModel.IndicatorIndicators_ConversionFactorConversionFactors" Width="1.5" PointX="18.75" PointY="41.125" />
+        <EntityTypeShape EntityType="BlueNorthModel.XPObjectType" Width="1.5" PointX="0.75" PointY="37.625" />
+        <AssociationConnector Association="BlueNorthModel.FK_Party_ObjectType" />
+        <AssociationConnector Association="BlueNorthModel.FK_PermissionPolicyRole_ObjectType" />
+        <AssociationConnector Association="BlueNorthModel.FK_PermissionPolicyUser_ObjectType" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitCharacteristicScore" Width="1.5" PointX="18.75" PointY="52.125" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitCharacteristicScore_Characteristic" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitCharacteristicScore_Framework" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitCharacteristicScore_Unit" />
+        <EntityTypeShape EntityType="BlueNorthModel.User" Width="1.5" PointX="21.125" PointY="54.5" />
+        <AssociationConnector Association="BlueNorthModel.FK_Answer_User" />
+        <AssociationConnector Association="BlueNorthModel.FK_User_Organisation" />
+        <AssociationConnector Association="BlueNorthModel.FK_User_Oid" />
+        <AssociationConnector Association="BlueNorthModel.FK_User_Person" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataFieldNote_User" />
+        <AssociationConnector Association="BlueNorthModel.FK_User_CurrentUnit" />
+        <AssociationConnector Association="BlueNorthModel.FK_UserUsers_IndicatorIndicators_Users" />
+        <AssociationConnector Association="BlueNorthModel.FK_Version_CreatedBy" />
+        <AssociationConnector Association="BlueNorthModel.FK_Version_ModifiedBy" />
+        <EntityTypeShape EntityType="BlueNorthModel.FileData" Width="1.5" PointX="5.75" PointY="5" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrimaryDataFieldUserEditMode" Width="1.5" PointX="23.375" PointY="52.375" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataFieldUserEditMode_PrimaryDataField" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataFieldUserEditMode_User" />
+        <EntityTypeShape EntityType="BlueNorthModel.StandardContentStandardContents_ImprovementPlanItemImprovementPlanItems" Width="1.5" PointX="21.75" PointY="46.875" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardContentStandardContents_ImprovementPlanItemImprovementPlanItems_StandardContents" />
+        <EntityTypeShape EntityType="BlueNorthModel.UserAssignedForUsers_UnitAssignedUnits" Width="1.5" PointX="23.375" PointY="61" />
+        <EntityTypeShape EntityType="BlueNorthModel.UserCreatedByUsers_UnitCreatedUnits" Width="1.5" PointX="23.375" PointY="64" />
+        <AssociationConnector Association="BlueNorthModel.FK_UserAssignedForUsers_UnitAssignedUnits_AssignedUnits" />
+        <AssociationConnector Association="BlueNorthModel.FK_UserCreatedByUsers_UnitCreatedUnits_CreatedUnits" />
+        <AssociationConnector Association="BlueNorthModel.FK_UserAssignedForUsers_UnitAssignedUnits_AssignedForUsers" />
+        <AssociationConnector Association="BlueNorthModel.FK_UserCreatedByUsers_UnitCreatedUnits_CreatedByUsers" />
+        <EntityTypeShape EntityType="BlueNorthModel.AnswerNote" Width="1.5" PointX="18.375" PointY="56.875" />
+        <EntityTypeShape EntityType="BlueNorthModel.AnswerNoteAttachment" Width="1.5" PointX="20.625" PointY="30" />
+        <AssociationConnector Association="BlueNorthModel.FK_AnswerNote_Answer" />
+        <AssociationConnector Association="BlueNorthModel.FK_AnswerNoteAttachment_AnswerNote" />
+        <AssociationConnector Association="BlueNorthModel.FK_AnswerNoteAttachment_Attachment" />
+        <EntityTypeShape EntityType="BlueNorthModel.ConversionFactor" Width="1.5" PointX="10.25" PointY="61.5" />
+        <EntityTypeShape EntityType="BlueNorthModel.Indicator" Width="1.5" PointX="21.75" PointY="39.75" />
+        <AssociationConnector Association="BlueNorthModel.FK_Indicator_Characteristic" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityIndicatorGuidance_Indicator" />
+        <AssociationConnector Association="BlueNorthModel.FK_ConversionFactor_Country" />
+        <AssociationConnector Association="BlueNorthModel.FK_ConversionFactor_DataType" />
+        <AssociationConnector Association="BlueNorthModel.FK_ConversionFactor_SourceUoM" />
+        <AssociationConnector Association="BlueNorthModel.FK_ConversionFactor_TargetUoM" />
+        <AssociationConnector Association="BlueNorthModel.FK_ConversionFactor_Version" />
+        <AssociationConnector Association="BlueNorthModel.FK_IndicatorIndicators_ConversionFactorConversionFactors_ConversionFactors" />
+        <AssociationConnector Association="BlueNorthModel.FK_Indicator_UnitOfMeasure" />
+        <AssociationConnector Association="BlueNorthModel.FK_Indicator_Version" />
+        <AssociationConnector Association="BlueNorthModel.FK_IndicatorIndicators_ConversionFactorConversionFactors_Indicators" />
+        <AssociationConnector Association="BlueNorthModel.FK_IndicatorIndicators_FrameworkFrameworks_Indicators" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataFieldPrimaryDataFields_IndicatorIndicators_Indicators" />
+        <AssociationConnector Association="BlueNorthModel.FK_UserUsers_IndicatorIndicators_Indicators" />
+        <EntityTypeShape EntityType="BlueNorthModel.Principle" Width="1.5" PointX="10.25" PointY="27.75" />
+        <AssociationConnector Association="BlueNorthModel.FK_Characteristic_Principle" />
+        <AssociationConnector Association="BlueNorthModel.FK_Principle_Dimension" />
+        <AssociationConnector Association="BlueNorthModel.FK_Principle_Version" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrinciplePrinciples_CommodityCommodities_Principles" />
+        <EntityTypeShape EntityType="BlueNorthModel.UnitSecondaryUnits_CommoditySecondaryCommodities" Width="1.5" PointX="13.5" PointY="52" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitSecondaryUnits_CommoditySecondaryCommodities_SecondaryUnits" />
+        <EntityTypeShape EntityType="BlueNorthModel.ImprovementPlanItem" Width="1.5" PointX="15.75" PointY="23.125" />
+        <AssociationConnector Association="BlueNorthModel.FK_ImprovementPlanItem_Characteristic" />
+        <AssociationConnector Association="BlueNorthModel.FK_ImprovementPlanItem_Attachment" />
+        <AssociationConnector Association="BlueNorthModel.FK_ImprovementPlanItem_DataSet" />
+        <AssociationConnector Association="BlueNorthModel.FK_ImprovementPlanItem_Question" />
+        <AssociationConnector Association="BlueNorthModel.FK_ImprovementPlanItem_StandardContent" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardContentStandardContents_ImprovementPlanItemImprovementPlanItems_ImprovementPlanItems" />
+        <EntityTypeShape EntityType="BlueNorthModel.FrameworkFrontMenuItem" Width="1.5" PointX="7.5" PointY="23.875" />
+        <EntityTypeShape EntityType="BlueNorthModel.FrontMenuItem" Width="1.5" PointX="5.25" PointY="22" />
+        <AssociationConnector Association="BlueNorthModel.FK_FrameworkFrontMenuItem_Framework" />
+        <AssociationConnector Association="BlueNorthModel.FK_FrameworkFrontMenuItem_FrontMenuItem" />
+        <EntityTypeShape EntityType="BlueNorthModel.PrimaryDataMonthValue" Width="1.5" PointX="15" PointY="68.25" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataMonthValue_PrimaryDataValue" />
+        <EntityTypeShape EntityType="BlueNorthModel.Commodity" Width="1.5" PointX="5.25" PointY="32.75" />
+        <AssociationConnector Association="BlueNorthModel.FK_Commodity_Category" />
+        <AssociationConnector Association="BlueNorthModel.FK_Commodity_UnitType" />
+        <AssociationConnector Association="BlueNorthModel.FK_Commodity_Version" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityCommodities_CharacteristicCharacteristics_Commodities" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityIndicatorGuidance_Commodity" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityPDValue_Commodity" />
+        <AssociationConnector Association="BlueNorthModel.FK_DimensionDimensions_CommodityCommodities_Commodities" />
+        <AssociationConnector Association="BlueNorthModel.FK_FrameworkFrameworks_CommodityCommodities_Commodities" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrinciplePrinciples_CommodityCommodities_Commodities" />
+        <AssociationConnector Association="BlueNorthModel.FK_Scoring_Commodity" />
+        <AssociationConnector Association="BlueNorthModel.FK_StandardStandards_CommodityCommodities_Commodities" />
+        <AssociationConnector Association="BlueNorthModel.FK_SupplierSuppliers_CommodityCommodities_Commodities" />
+        <AssociationConnector Association="BlueNorthModel.FK_Unit_PrimaryCommodity" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitSecondaryUnits_CommoditySecondaryCommodities_SecondaryCommodities" />
+        <AssociationConnector Association="BlueNorthModel.FK_UnitUnits_CommodityCommodities_Commodities" />
+        <EntityTypeShape EntityType="BlueNorthModel.CommodityPDMValue" Width="1.5" PointX="24.25" PointY="48.5" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityPDMValue_Commodity" />
+        <AssociationConnector Association="BlueNorthModel.FK_CommodityPDMValue_PrimaryDataMonthValue" />
+        <AssociationConnector Association="BlueNorthModel.FK_PrimaryDataFieldUserEditMode_Commodity" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

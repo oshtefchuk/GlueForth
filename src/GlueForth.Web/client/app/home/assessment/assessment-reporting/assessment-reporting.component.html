@@ -1,0 +1,281 @@
+<dx-load-panel
+  #loadPanel1
+  shadingColor="rgba(255,255,255,0.4)"
+  [position]="{ of: '#reporting' }"
+  [(visible)]="loadingVisible"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+>
+</dx-load-panel>
+<dx-load-panel
+  #loadPanel2
+  shadingColor="rgba(255,255,255,0.4)"
+  [position]="{ of: '#ranked-res' }"
+  [(visible)]="loadingVisibleRanked"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+>
+</dx-load-panel>
+<div class="top-navigation-wrapper" [ngClass]="{'fixed' : isNavFixed}" #navigation>
+  <div class="top-navigation" *ngIf="dataSourseForDimensionSpider">
+    <div class="nav-item" pageScroll href="#strength" (click)="isActive=1"
+         [ngClass]="{'top-navigation-active' : isActive===1}">
+      OVERVIEW
+    </div>
+    <div class="nav-item" pageScroll href="#dimensions" (click)="isActive=2"
+         [ngClass]="{'top-navigation-active' : isActive===2}">
+      DIMENSIONS
+    </div>
+    <div class="nav-item" pageScroll href="#managementAreas" (click)="isActive=3"
+         [ngClass]="{'top-navigation-active' : isActive===3}">
+      MANAGEMENT FOCUS AREAS
+    </div>
+    <div class="nav-item" pageScroll href="#rankedResults" (click)="isActive=4"
+         [ngClass]="{'top-navigation-active' : isActive===4}">
+      RANKED RESULTS
+    </div>
+  </div>
+  <dx-button text="Recalculate Data" class="recalc-btn" (onClick)="recalcData()"></dx-button>
+  <dx-button [visible]="isCurrentSPACompleted" [disabled]="true" class='status-complete' text="Completed"></dx-button>
+  <dx-button [visible]="!isCurrentSPACompleted" [disabled]="true" class='status-in-progress' text="In Progress"></dx-button>
+  <dx-button [visible]="false" text="PRINT PDF" class='print-btn'>
+  </dx-button>
+</div>
+<div class="assessment-reporting-container" id="reporting">
+  <div class="chart-container" >
+    <div class="container-header">
+      <div class="anckor" id="strength"></div>
+      <p class="header-title">STRENGTH OF DIMENSION</p>
+    </div>
+    <div class="chart-view-gauge">
+      <dx-bar-gauge id="gauge1" style="height: 400px"
+                    [startValue]="0"
+                    [endValue]="100"
+                    [values]="dimensionsValues"
+                    [palette]="dimensionsColor"
+                    [backgroundColor]="'#DAECF7'">
+        <dxo-label
+          [visible]="false"
+        ></dxo-label>
+        <dxo-tooltip target="#gauge1"
+                     [enabled]="true" [zIndex]="10000"
+                     [customizeTooltip]="customizeGauge1Tooltip"
+        >
+          <dxo-format
+            type="fixedPoint"
+            [precision]="1"
+          ></dxo-format>
+        </dxo-tooltip>
+      </dx-bar-gauge>
+      <div class="legend-container">
+        <div *ngFor="let dimension of dimentionsList let index = index">
+          <div class="color" [ngStyle]="{'background-color':  getHexColor(dimension.Color)}"></div>
+          <span id="guidanseD{{index}}" (mouseenter)="toggleDimPopup(index)"
+                (mouseleave)="toggleDimPopup(null)" class="legend ">{{dimension.ShortTitle}}</span>
+          <dx-popover target="#guidanseD{{index}}"
+                      position="top"
+                      [width]="600"
+                      [visible]="isDemensionsPopupVisible === index">
+            <div *dxTemplate="let data = model of 'content'" [innerHTML]="dimension.GuidanceText | replaceLineBreaks"></div>
+            <dxo-animation>
+              <dxo-show
+                type="pop"
+                [from]="{ scale: 0 }"
+                [to]="{ scale: 1 }"></dxo-show>
+              <dxo-hide
+                type="fade"
+                [from]="1"
+                [to]="0"></dxo-hide>
+            </dxo-animation>
+          </dx-popover>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-container">
+    <div class="container-header">
+      <p class="header-title">STRENGTH OF PRINCIPLE</p>
+    </div>
+    <div class="chart-view-gauge">
+      <dx-bar-gauge #gauge id="gauge2" style="height: 400px"
+                    [startValue]="0"
+                    [endValue]="100"
+                    [palette]="principlesColor2"
+                    [values]="principlesValues"
+                    [backgroundColor]="'#DAECF7'">
+        <dxo-label
+          [visible]="false"
+        ></dxo-label>
+        <dxo-tooltip target="#gauge2"
+                     [enabled]="true" [zIndex]="10000"
+                     [customizeTooltip]="customizeGauge2Tooltip">
+          <dxo-format
+            type="fixedPoint"
+            [precision]="1"
+          ></dxo-format>
+        </dxo-tooltip>
+      </dx-bar-gauge>
+      <div class="legend-container">
+        <div *ngFor="let principle of principleList; let index = index"
+             class="legend-content">
+          <div class="color"
+               [ngStyle]="{'background-color': getHexColor(principle.Color)}"
+               ></div>
+          <span id="guidanse{{index}}" (mouseenter)="togglePrinciplePopup(index)"
+                (mouseleave)="togglePrinciplePopup(null)" class="legend ">{{principle.ShortTitle}}</span>
+          <dx-popover target="#guidanse{{index}}" style="height: auto"
+                      position="top"
+                      [width]="600"
+                      [visible]="isPrinciplesPopupVisible === index">
+            <div  *dxTemplate="let data = model of 'content'" [innerHTML]="principle.GuidanceText | replaceLineBreaks">
+
+            </div>
+            <dxo-animation>
+              <dxo-show
+                type="pop"
+                [from]="{ scale: 0 }"
+                [to]="{ scale: 1 }"></dxo-show>
+              <dxo-hide
+                type="fade"
+                [from]="1"
+                [to]="0"></dxo-hide>
+            </dxo-animation>
+          </dx-popover>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="assessment-tile-container1" >
+  <div class="chart-container" *ngFor="let source of dataSources let index = index">
+    <div class="container-header">
+      <div class="anckor" id="dimensions"></div>
+      <p class="header-title">{{source.title}} Dimension</p>
+    </div>
+    <dx-polar-chart
+      [useSpiderWeb]="true"
+      [dataSource]="source.data"
+      [legend]="{ visible: false }"
+      [valueAxis]="{max: 100, min: 0}">
+      <dxi-series valueField="Value" name="Value"></dxi-series>
+      <dxo-argument-axis>
+        <dxo-label
+          [customizeText]="spiderText">
+        </dxo-label>
+      </dxo-argument-axis>
+      <dxo-common-axis-settings [visible]="false"></dxo-common-axis-settings>
+      <dxo-common-series-settings argumentField="Name"
+                                  type="area"
+                                  [area]="{color: source.color}"
+                                  [border]="{visible: true}"
+                                  [point]="{visible: true}">
+      </dxo-common-series-settings>
+      <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeSpiderTooltip">
+        <dxo-format
+          type="fixedPoint"
+        ></dxo-format>
+      </dxo-tooltip>
+    </dx-polar-chart>
+  </div>
+</div>
+
+<div style="min-height: 500px">
+  <div class="container-header container-header-top">
+    <p class="header-title">MANAGEMENT FOCUS AREAS</p>
+    <div class="anckor3" id="managementAreas"></div>
+  </div>
+  <div class="assessment-tile-container2">
+    <div class="chart-container" *ngFor="let source of dataSourcesByPrinciplesGroup">
+      <div class="container-header">
+        <p class="header-title">{{source.title}}</p>
+      </div>
+      <dx-polar-chart
+        [useSpiderWeb]="true"
+        [dataSource]="source.data"
+        [legend]="{ visible: false }"
+        [valueAxis]="{max: 100, min: 0}">
+        <dxi-series valueField="Value" name="Value"></dxi-series>
+        <dxo-argument-axis>
+          <dxo-label
+            [customizeText]="spiderText">
+          </dxo-label>
+        </dxo-argument-axis>
+        <dxo-common-axis-settings [visible]="false"></dxo-common-axis-settings>
+        <dxo-common-series-settings argumentField="Name"
+                                    type="area"
+                                    [area]="{color: colorsArr1[0]}"
+                                    [border]="{visible: true}"
+                                    [point]="{visible: true}"> >
+        </dxo-common-series-settings>
+        <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeSpiderTooltip">
+          <dxo-format
+            type="fixedPoint"
+          ></dxo-format>
+        </dxo-tooltip>
+      </dx-polar-chart>
+    </div>
+  </div>
+</div>
+
+<div id="ranked-res" class="chart-container" *ngIf="characteristicsBarChartDataSource">
+  <div class="container-header">
+    <p class="header-title">RANKED RESULTS</p>
+    <div class="anckor3" id="rankedResults"></div>
+  </div>
+  <div class="chart-view">
+    <div class="sort-container">
+      <span>SORT BY</span>
+      <dx-select-box [dataSource]="['Dimension', 'Dimension High To Low', 'Low To High', 'High To Low']"
+                     (onSelectionChanged)="getSortedValues($event)">
+      </dx-select-box>
+    </div>
+    <dx-chart [ngStyle]="{'height': heigth}" style="width: 80%" [dataSource]="characteristicsBarChartDataSource"
+              [rotated]="true"
+              [customizePoint]="customizeSeriesByGroup1"
+              [equalBarWidth]="false"
+              [backgroundColor]="'#DAECF7'"
+              [customizeLabel]="customizeCharacteristicBarChartLabel"
+              [argumentAxis]="{placeholderSize: 400}"
+              (onArgumentAxisClick)="tooltipShow($event)"
+              [valueAxis]="{max: 100, min: 0, label:{customizeText: customizeValueLabel}}"
+    >
+      <dxi-series></dxi-series>
+      <dxo-common-series-settings
+        argumentField="Name"
+        type="bar"
+        valueField="Value">
+        <dxo-label
+          [visible]="true"
+          [customizeText]="barChartText"
+          >
+        </dxo-label>
+      </dxo-common-series-settings>
+      <dxo-legend [visible]="false"></dxo-legend>
+    </dx-chart>
+  </div>
+
+  <dx-popup #dxPopup
+            [width]="500"
+            [height]="400"
+            [showTitle]="true"
+            title="{{guidanceTitle}}"
+            [dragEnabled]="true"
+            [closeOnOutsideClick]="true"
+            [closeOnBackButton]="true"
+            [showCloseButton]="true"
+            [(visible)]="guidanceShow"
+            [shading]="false"
+            [resizeEnabled]="true"
+  >
+    <div *dxTemplate="let data of 'content'">
+      <dx-scroll-view>
+        <p [innerHTML]="guidanceText | replaceLineBreaks"></p>
+      </dx-scroll-view>
+    </div>
+  </dx-popup>
+</div>

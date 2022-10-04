@@ -1,0 +1,45 @@
+<div class="indicator-data-contaner">
+  <div class="data-grid-container-header">DATA COLLECTION PROGRESS</div>
+
+  <div class="chart-view">
+
+    <dx-select-box style="margin-bottom: 10px;"
+                   [items]="categories"
+                   [value]="currentCategory"
+                   [width]="300"
+                   displayExpr="Title"
+                   (onSelectionChanged)="setCategory($event)">
+    </dx-select-box>
+
+    <div class="chart-view-inner">
+      <dx-load-panel
+        [visible]="!isLoaded"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        [closeOnOutsideClick]="false"
+      ></dx-load-panel>
+
+      <dx-chart
+                class="data-collection-chart" [style.width.%]="80"
+                [palette]="['#558FCC', '#B7CCE1', '#6CCDFA', '#77DDF9']"
+                [rotated]="true"
+                id="chart"
+                [dataSource]="sales"
+                [equalBarWidth]="false"
+                [valueAxis]="{max: 100, min: 0}"
+                [backgroundColor]="'#DAECF7'"
+      >
+        <dxo-common-series-settings
+          argumentField="year"
+          type="bar"
+          valueField="sales">
+        </dxo-common-series-settings>
+        <dxo-series-template nameField="year"></dxo-series-template>
+        <dxo-legend [visible]="false"></dxo-legend>
+      </dx-chart>
+      <dx-button text="UPDATE" class="update-btn" (onClick)="navigateToPerfomanceIndicatorsCapture()"></dx-button>
+
+    </div>
+  </div>
+</div>

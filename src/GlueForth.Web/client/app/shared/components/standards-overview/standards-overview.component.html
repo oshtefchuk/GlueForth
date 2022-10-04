@@ -1,0 +1,11 @@
+<span *ngIf="logo && logo.LogoImage"
+      class="standards-overview-item-quantity">{{logo.GCRecord}}</span>
+<div *ngIf="logo && logo.LogoImage"
+     class="img-wrapper"><img
+     [src]="'data:image/png;base64,' + logo.LogoImage" alt="">
+</div>
+<dx-button *ngIf="logo && logo.LogoImage"
+           text="VIEW" class="view-btn"
+           [routerLink]="['/standards-management-control-points']">
+</dx-button>
+

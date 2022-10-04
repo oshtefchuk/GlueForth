@@ -1,0 +1,356 @@
+<div class="top-navigation">
+  <div class="nav-item" [hidden]="currentUnit?.AssessmentType === 0"  [ngClass]="{'top-navigation-active' : isActive===1}" (click)="isActive=1" pageScroll href="#liteAssessment">
+    LITE ASSESSMENT
+  </div>
+  <div class="nav-item" [hidden]="currentUnit?.AssessmentType === 1"  [ngClass]="{'top-navigation-active' : isActive===2}" (click)="isActive=2" pageScroll href="#fullAssessment">
+    FULL ASSESSMENT
+  </div>
+</div>
+<dx-load-panel
+  #loadPanel1
+  shadingColor="rgba(255,255,255,0.4)"
+  [position]="{ of: '#current-status' }"
+  [visible]="loadingVisible1"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+></dx-load-panel>
+<dx-load-panel
+  #loadPanel2
+  shadingColor="rgba(255,255,255,0)"
+  [position]="{ of: '#report-container2' }"
+  [visible]="loadingVisible3"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+></dx-load-panel>
+<dx-load-panel
+  #loadPanel3
+  shadingColor="rgba(255,255,255,0)"
+  [position]="{ of: '#report-container3' }"
+  [visible]="loadingVisible5  && loadingVisible4"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+></dx-load-panel>
+<dx-load-panel
+  #loadPanel4
+  shadingColor="rgba(255,255,255,0)"
+  [position]="{ of: '#report-container4' }"
+  [visible]="loadingVisible6"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+></dx-load-panel>
+<div class="assessment-state-container" id="current-status">
+  <div *ngIf="currentUnit?.AssessmentType === 1" class="chart-container" id="report-container1">
+     <div class="container-header" id="liteAssessment">
+      <p class="header-title">LIGHT ASSESSMENT OVERALL PROGRESS</p>
+      <div [ngSwitch]="spaDatasetLite?.State">
+        <p class="pie-chart-label header-label" style="background: #FD001A" *ngSwitchCase="SpaDataSetState.NotStarted">
+          Not Started</p>
+        <p class="pie-chart-label header-label" style="background: #91c74b" *ngSwitchCase="SpaDataSetState.InProgress">
+          In Progress</p>
+        <p class="pie-chart-label header-label" style="background: #6BCDFA" *ngSwitchCase="SpaDataSetState.Completed">
+          Completed</p>
+      </div>
+    </div>
+    <div class="chart-view">
+      <div class="review-container">
+       <!-- <div class="review-container-top">
+          <div class="pie-chart-legend"
+               [ngClass]="{'pie-chart-legend-empty' : spaDatasetLite.AnsweredPercentage === 0 }"
+               *ngIf="false">{{spaDatasetLite.AnsweredPercentage}}%
+          </div>
+          <dx-pie-chart style="height: 200px; width: 200px;"
+                        type="doughnut"
+                        [innerRadius]="1"
+                        title=""
+                        [palette]="[ '#232a3c', '#F7F7F7']"
+                        [legend]="{ visible: false }"
+                        [dataSource]="spaDataSetLitePieChart">
+            <dxi-series
+              argumentField="state"
+              valueField="value">
+              <dxo-label
+                [visible]="false">
+                <dxo-connector [visible]="true"></dxo-connector>
+              </dxo-label>
+            </dxi-series>
+            <dxo-export [enabled]="false"></dxo-export>
+          </dx-pie-chart>
+
+        <div *ngIf="spaDatasetLite">
+          <p class="pie-chart-grade">
+            BLUE NORTH REVIEW
+          </p>
+          <p class="pie-chart-label"  *ngIf="spaDatasetLite?.Grade !==''">{{spaDatasetLite?.Grade}}</p>
+          <dx-button *ngIf="spaDatasetLite?.Grade === 'Not Reviewed'"
+                     text="SUBMIT FOR REVIEW"
+                     type="success"
+                     (onClick)="updateGrade(1, 'Lite')">
+          </dx-button>
+        </div>
+        </div>-->
+      </div>
+      <div class="chart-content" *ngIf="spaDataSetByDimentionsBarChartLite">
+        <dx-chart style="height: 300px; width: 400px;"
+                  [dataSource]="spaDataSetByDimentionsBarChartLite"
+                  (onSeriesClick)="dimentionsBar($event)"
+                  [equalBarWidth]="true"
+                  [barWidth]="5"
+                  [valueAxis]="{max: 100, label: {customizeText: customizeValueLabel}}"
+                  accesskey="OID"
+                  [palette]="['#5fafd4', '#75c936', '#ce8785']">
+          <dxo-tooltip
+            [enabled]="true"
+            location="edge"
+            [customizeTooltip]="customizeToolTip"
+          ></dxo-tooltip>
+          <dxo-common-series-settings
+            argumentField="ShortTitle"
+            type="bar"
+            valueField="AnsweredPercentage">
+          </dxo-common-series-settings>
+          <dxo-legend
+            [verticalAlignment]="bottom"
+            [horizontalAlignment]="center"
+            [markerSize]="10"
+            [customizeText]="customizeTextLegendDimensionsLite"
+          ></dxo-legend>
+          <dxo-value-axis>
+            <dxo-label
+              [customizeText]="customizeValueLabel">
+            </dxo-label>
+          </dxo-value-axis>
+          <dxo-argument-axis>
+            <dxo-label
+              (click)="redirect($event)"
+              [customizeText]="customizeTextLabel"
+            >
+            </dxo-label>
+          </dxo-argument-axis>
+          <dxo-series-template nameField="ShortTitle"></dxo-series-template>
+        </dx-chart>
+        <div class="dimensions-button-container">
+          <dx-button *ngIf="!loadingVisible2"
+                     text="UPDATE"
+                     [routerLink]="['/assessment-capture-light']"
+                     type="success"
+          ></dx-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="currentUnit?.AssessmentType === 1" class="statistics-container" id="report-container2">
+    <div class="container-header">
+      <p class="header-title"> LIGHT ASSESSMENT DETAILED PROGRESS</p>
+      <div [ngSwitch]="spaDatasetLite?.State">
+        <p class="pie-chart-label header-label" style="background: #FD001A" *ngSwitchCase="SpaDataSetState.NotStarted">
+          Not Started</p>
+        <p class="pie-chart-label header-label" style="background: #91c74b" *ngSwitchCase="SpaDataSetState.InProgress">
+          In Progress</p>
+        <p class="pie-chart-label header-label" style="background: #6BCDFA" *ngSwitchCase="SpaDataSetState.Completed">
+          Completed</p>
+      </div>
+    </div>
+    <dx-tabs class="tabs-switcher" [dataSource]="dataForFilter"
+             #apiTabsLite
+             (onItemClick)="selectLiteAssessmentDetailedProgress($event)"
+             [selectedIndex]="0"
+             keyExpr="id"
+    ></dx-tabs>
+
+    <div class="detail-chart-container" [ngClass]="{'focus-area' : isFocusAriaActive}">
+      <dx-chart style="height: 400px; width: 500px;"
+                [dataSource]="spaDataSetByPrinciplesOrQuestionGroupeBarChartLite"
+                [rotated]="true"
+                (onArgumentAxisClick)="onArgumentValueAxisClick($event, 'light', apiTabsLite.selectedIndex + 1)"
+                [equalBarWidth]="false"
+                [argumentAxis]="{placeholderSize: 230}"
+                [size]="1000"
+                [palette]="['#558FCC', '#B7CCE1', '#6CCDFA', '#77DDF9']"
+                [valueAxis]="{max: 100 ,label: {customizeText: customizeValueLabel}}">
+        <dxo-legend [visible]="false"></dxo-legend>
+
+        <dxo-common-series-settings
+          argumentField="ShortTitle"
+          type="bar"
+          valueField="AnsweredPercentage">
+        </dxo-common-series-settings>
+        <dxo-value-axis>
+          <dxo-label
+            [customizeText]="customizeValueLabel">
+          </dxo-label>
+        </dxo-value-axis>
+        <dxo-argument-axis
+          type="discrete"
+        ></dxo-argument-axis>
+        <dxo-series-template nameField="ShortTitle"></dxo-series-template>
+      </dx-chart>
+
+     <!-- <div class="button-container">
+        <dx-button class="update-button" *ngFor="let item of spaDataSetByPrinciplesOrQuestionGroupeBarChartLiteButtons"
+                   text="UPDATE"
+                   (onClick)="redirectToCurrentPrincipleOrPrincipleGroup(item, 'light',  apiTabsLite.selectedIndex + 1 )"
+                   type="success">
+        </dx-button>
+      </div>-->
+    </div>
+  </div>
+  <div *ngIf="currentUnit?.AssessmentType === 0" class="chart-container" id="report-container3">
+    <div class="container-header" id="fullAssessment">
+      <p class="header-title">FULL ASSESSMENT OVERALL PROGRESS</p>
+      <div [ngSwitch]="spaDatasetFull?.State">
+        <p class="pie-chart-label header-label" style="background: #FD001A" *ngSwitchCase="SpaDataSetState.NotStarted">
+          Not Started</p>
+        <p class="pie-chart-label header-label" style="background: #91c74b" *ngSwitchCase="SpaDataSetState.InProgress">
+          In Progress</p>
+        <p class="pie-chart-label header-label" style="background: #6BCDFA" *ngSwitchCase="SpaDataSetState.Completed">
+          Completed</p>
+      </div>
+    </div>
+    <div class="chart-view">
+      <div class="review-container">
+        <!--<div class="review-container-top">
+          <div class="pie-chart-legend" [ngClass]="{'pie-chart-legend-empty' : spaDatasetFull.AnsweredPercentage === 0 }"
+               *ngIf="spaDatasetFull">{{spaDatasetFull.AnsweredPercentage}}%</div>
+          <dx-pie-chart style="height: 200px; width: 200px;"
+                        type="doughnut"
+                        [innerRadius]="1"
+                        title=""
+                        [palette]="[ '#232a3c', '#F7F7F7']"
+                        [legend]="{ visible: true }"
+                        [dataSource]="spaDataSetFullPieChart">
+            <dxi-series
+              argumentField="state"
+              valueField="value">
+              <dxo-label
+                [visible]="false"
+              >
+                <dxo-connector [visible]="true"></dxo-connector>
+              </dxo-label>
+            </dxi-series>
+            <dxo-export [enabled]="false"></dxo-export>
+          </dx-pie-chart>
+        </div>-->
+        <div *ngIf="spaDatasetFull">
+          <p class="pie-chart-grade">
+            BLUE NORTH REVIEW
+          </p>
+          <p *ngIf="spaDatasetFull?.Grade !==''" class="pie-chart-label">{{spaDatasetFull?.Grade}}</p>
+          <dx-button *ngIf="spaDatasetFull?.Grade === 'Not Reviewed'"
+                     text="SUBMIT FOR REVIEW"
+                     (onClick)="updateGrade(0, 'Full')"
+                     type="success">
+          </dx-button>
+        </div>
+      </div>
+
+      <div class="chart-content">
+        <dx-chart style="height: 300px; width: 400px;"
+                  [dataSource]="spaDataSetByDimentionsBarChartFull"
+                  (onSeriesClick)="dimentionsBar($event)"
+                  [equalBarWidth]="true"
+                  [barWidth]="5"
+                  [valueAxis]="{max: 100, label: {customizeText: customizeValueLabel}}"
+                   accesskey="OID"
+                  [palette]="['#5fafd4', '#75c936', '#ce8785']">
+          <dxo-tooltip
+            [enabled]="true"
+            location="edge"
+            [customizeTooltip]="customizeToolTip"
+          ></dxo-tooltip>
+          <dxo-common-series-settings
+            argumentField="ShortTitle"
+            type="bar"
+            valueField="AnsweredPercentage">
+          </dxo-common-series-settings>
+          <dxo-label
+            displayMode="percent"
+            [staggeringSpacing]="30">
+          </dxo-label>
+          <dxo-legend
+            [markerSize]="10"
+          ></dxo-legend>
+
+          <dxo-value-axis>
+            <dxo-label
+              [customizeText]="customizeValueLabel">
+            </dxo-label>
+          </dxo-value-axis>
+          <dxo-argument-axis>
+            <dxo-label
+              (onClick)="redirect($event)"
+              [customizeText]="customizeTextLabel">
+            </dxo-label>
+          </dxo-argument-axis>
+          <dxo-series-template nameField="ShortTitle"></dxo-series-template>
+        </dx-chart>
+        <div class="dimensions-button-container">
+          <dx-button *ngIf="!loadingVisible5"
+                     text="UPDATE"
+                     [routerLink]="['/assessment-capture-full']"
+                     type="success"
+          ></dx-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="currentUnit?.AssessmentType === 0" class="statistics-container" id="report-container4">
+    <div class="container-header">
+      <p class="header-title">FULL ASSESSMENT DETAILED PROGRESS</p>
+      <div [ngSwitch]="spaDatasetFull?.State">
+        <p class="pie-chart-label header-label" style="background: #FD001A" *ngSwitchCase="SpaDataSetState.NotStarted">
+          Not Started</p>
+        <p class="pie-chart-label header-label" style="background: #91c74b" *ngSwitchCase="SpaDataSetState.InProgress">
+          In Progress</p>
+        <p class="pie-chart-label header-label" style="background: #6BCDFA" *ngSwitchCase="SpaDataSetState.Completed">
+          Completed</p>
+      </div>
+    </div>
+    <dx-tabs class="tabs-switcher" [dataSource]="dataForFilter"
+             #apiTabsFull
+             (onItemClick)="selectFullAssessmentDetailedProgress($event)"
+             [selectedIndex]="0"
+             keyExpr="id"
+    ></dx-tabs>
+    <div class="detail-chart-container" [ngClass]="{'focus-area' : isFocusAriaActive}">
+      <dx-chart style="height: 400px; width: 500px;"
+                [dataSource]="spaDataSetByPrinciplesOrQuestionGroupeBarChartFull"
+                [rotated]="true"
+                [equalBarWidth]=false
+                (onLegendClick)="onLegendClick($event)"
+                [argumentAxis]="{placeholderSize: 230}"
+                [size]="1000"
+                (onArgumentAxisClick)="onArgumentValueAxisClick($event, 'full', apiTabsFull.selectedIndex + 1)"
+                [valueAxis]="{max: 100, label: {customizeText: customizeValueLabel}}"
+                [palette]="['#558FCC', '#B7CCE1', '#6CCDFA', '#77DDF9']">
+        <dxo-legend [visible]="false"></dxo-legend>
+        <dxo-common-series-settings
+          argumentField="ShortTitle"
+          type="bar"
+          valueField="AnsweredPercentage">
+        </dxo-common-series-settings>
+        <dxo-value-axis>
+          <dxo-label
+            [customizeText]="customizeValueLabel">
+          </dxo-label>
+        </dxo-value-axis>
+        <dxo-series-template nameField="ShortTitle"></dxo-series-template>
+      </dx-chart>
+    <!--  <div class="button-container">
+        <dx-button class="update-button" *ngFor="let item of spaDataSetByPrinciplesOrQuestionGroupeBarChartFullButtons.reverse()"
+                   text="UPDATE"
+                   (onClick)="redirectToCurrentPrincipleOrPrincipleGroup(item, 'full', apiTabsFull.selectedIndex + 1)"
+                   type="success">
+        </dx-button>
+      </div>-->
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,777 @@
+@import "../../../../styles/variables";
+@import "../../../../styles/mixins";
+
+.indicator-title-container h5 {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 20px;
+  align-items: center;
+  color: #666666;
+  font-size: 15px;
+  margin: 24px 0;
+  &:after {
+    display: block;
+    content: '';
+    height: 5px;
+    border-radius: 1px;
+    background: rgba(234, 224, 222, 0.2);
+  }
+}
+.googleMap {
+  height: 400px;
+  width: 100%;
+}
+
+.title-for-selector {
+  font-size: 12px;
+}
+
+.left-content {
+  /deep/ dx-button {
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 200px);
+    font-size: 14px;
+    }
+}
+
+.control-panel-container {
+  display: grid;
+  grid-template-columns: auto 5fr 1fr;
+  align-items: center;
+}
+
+.datasets-submit-popup {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 3fr 1fr;
+
+  dx-tag-box{
+    width: 100%;
+    margin-right: 15px;
+  }
+}
+
+
+
+.dx-template-wrapper {
+  /deep/ dx-button.trend-btn {
+    @include button-variant(#fff, #84CBFB, #84CBFB, 100%);
+    transition: all .25s linear;
+    width: 100%;
+    max-width: 130px;
+    &:hover {
+      background-color: #fff;
+      color: #84CBFB;
+    }
+    .dx-button-content {
+      text-align: right;
+      position: relative;
+      font-size: 11px;
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      &:before {
+        content: '';
+        background-image: url(../../../../assets/trend-ico.png);
+        width: 21px;
+        height: 17px;
+        background-repeat: no-repeat;
+        -webkit-background-size: 100%;
+        background-size: 100%;
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+    }
+
+  }
+
+  /deep/ dx-button {
+    @include button-variant($second-button-font-color, $second-button-background-color, $main-button-border-color, 100%);
+    font-size: 10px;
+    text-align: left;
+  }
+  /deep/ dx-button:hover {
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 100%);
+  }
+
+  /deep/ dx-button.zero-notes-style {
+    @include button-variant(#6FCBFB, #fff, #6FCBFB, 70px);
+  }
+  /deep/ dx-button.zero-notes-style:hover {
+    @include button-variant(#fff, #6FCBFB, #6FCBFB, 70px);
+  }
+  .notes-button-label-zero {
+    background-color: #D8D8D8 !important;
+    border: none;
+  }
+}
+
+.indicator-title {
+  box-sizing: border-box;
+  padding-top: 10px;
+  font-size: 14px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 0px;
+  i {
+    color: #c0c0c0;
+    font-size: 22px;
+    cursor: pointer;
+  }
+}
+
+.left-content {
+  width: 80%;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: auto auto auto 6fr auto;;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 15px;
+  span {
+    /* margin-bottom: 15px;*/
+  }
+  .dx-field-value {
+    width: 100%;
+  }
+}
+
+/deep/ dx-data-grid {
+  .dx-toolbar-after {
+    top: 5px;
+    right: 5px;
+  }
+
+  .dx-datagrid-rowsview .dx-data-row .dx-cell-modified .dx-highlight-outline::after {
+    border: none;
+  }
+}
+
+.chart-container {
+  height: 380px !important;
+  overflow: auto !important;
+}
+/deep/ .dx-accordion-item {
+  .chart-container {
+    height: auto !important;
+  }
+}
+::ng-deep #chart {
+  width: 90%;
+  padding-left: 20px;
+  height: 500px;
+}
+
+/deep/ .dxc-tooltip {
+  z-index: 10000;
+}
+
+/deep/ .dxc-legend {
+  display: none;
+}
+
+.text-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.accordion-title {
+  font-size: 13px;
+  color: $second-button-font-color;
+  .notes-button-label {
+    position: absolute;
+    bottom: 26%;
+    right: 15%;
+    width: 25px;
+    height: 17px;
+    border-radius: 40px;
+    background-color: red;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+.accordion-message {
+  width: 90%;
+  background-color: rgba(243, 243, 243, .8);
+  padding: 10px;
+  margin: 10px;
+}
+
+.accordion-name {
+  font-size: 12px;
+  color: silver;
+}
+.message-info-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 68px 10px 0;
+}
+
+.admin-message {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+.text-container {
+  position: relative;
+  .button-container {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #5FB13F;
+    position: absolute;
+    right: 5px;
+    bottom: 30%;
+    cursor: pointer;
+    text-align: center;
+    line-height: 25px;
+    .send-button {
+      font-size: 10px;
+      color: #fff;
+      line-height: 25px;
+    }
+  }
+}
+
+.message-note-container {
+  display: flex;
+  /deep/ dx-text-area {
+    .dx-texteditor-container {
+      padding: 7px 9px 8px;
+    }
+    textarea {
+      padding: 0;
+    }
+    &.dx-state-focused {
+      border-color: transparent;
+      .dx-texteditor-container {
+        box-shadow: inset 0px 1px 5px 0px rgb(194,194,194);
+      }
+      & + .update-note-btn {
+        color: #5FB13F;
+      }
+    }
+  }
+}
+
+.delete-note-btn {
+  color: #5FB13F;
+  cursor: pointer;
+}
+.update-note-btn {
+  color: #ccc;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.notes-button-container {
+  position: relative;
+  text-align: center;
+  .notes-button-label {
+    position: absolute;
+    bottom: 26%;
+    right: 15%;
+    width: 25px;
+    height: 16px;
+    border-radius: 40px;
+    background-color: red;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+.dataset-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .dataset-item {
+    color: #fff;
+    padding: 5px;
+    span {
+      margin-right: 5px;
+      background-color: #6BCA70;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    }
+
+  }
+  .dataset-item:hover {
+    span:first-child {
+      background-color: silver;
+    }
+    span:nth-child(2) {
+      background-color: #6BCDFD;
+    }
+    span:last-child {
+      background-color: red;;
+    }
+  }
+  .edit-dataset {
+    font-size: 12px;
+  }
+}
+/deep/ .dx-datagrid-rowsview .dx-row > .dx-master-detail-cell:first-child {
+  padding: 0;
+  border-top: none;
+  border-bottom: none;
+}
+.dx-datagrid-content .dx-datagrid-table .dx-row .dx-data-row .dx-column-lines .dx-selection > tr[aria-selected="true"] {
+  background-color: black;
+}
+
+.data-grid-wrapper  .table-wrapper > /deep/ #gridContainer {
+  min-height: 400px;
+  height: calc(100vh - 320px);
+  overflow: auto;
+}
+.indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row[aria-selected="true"] {
+  .open-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 18px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    font-weight: 300;
+    position: relative;
+    &:after {
+      content: '-';
+    }
+  }
+}
+.open-btn {
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
+  border-radius: 50%;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  font-weight: 300;
+  position: relative;
+  &:after {
+    content: '+';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #000;
+  }
+}
+.indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row[aria-selected="true"] > td, .indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row[aria-selected="true"] > td .dx-texteditor .dx-texteditor-input, .indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row[aria-selected="true"] > td .dx-texteditor {
+  background-color: #6DCBFB;
+  font-size: 13px;
+  color: #fff;
+  font-weight: 700;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  vertical-align: middle;
+  border-left: none;
+  border-right: none;
+  border-top-color: #fff;
+}
+
+.indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row.dx-row-modified[aria-selected="false"] > td,
+.indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row.dx-row-modified[aria-selected="false"] > td .dx-texteditor .dx-texteditor-input,
+.indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row.dx-row-modified[aria-selected="false"] > td .dx-texteditor {
+ // background-color: #D8D8D8;
+  font-size: 13px;
+  color: #000;
+  font-weight: 700;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  border: none !important;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #f6f6f6 70%, #f6f6f6 77%, #ededed 120%);
+}
+
+.indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row.dx-state-hover.dx-row-modified[aria-selected="false"] > td,
+.indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row.dx-state-hover.dx-row-modified[aria-selected="false"] > td .dx-texteditor .dx-texteditor-input, .indicator-data-grid-wrapper /deep/ .dx-datagrid-rowsview .dx-row.dx-state-hover.dx-row-modified[aria-selected="false"] > td .dx-texteditor {
+  background: linear-gradient(to bottom, #ededed 70%, #ededed 77%, #f6f6f6 120%);
+  font-size: 13px;
+  color: #6DCBFB !important;
+  font-weight: 700;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  border: none !important;
+}
+
+/deep/ .dx-datagrid-rowsview .dx-row[aria-selected="false"] {
+  border: none !important;
+}
+.indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row[aria-selected="false"] > td,
+.indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row[aria-selected="false"] > td .dx-texteditor .dx-texteditor-input, .indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row[aria-selected="false"] > td .dx-texteditor {
+  background-color: #fff;
+  font-size: 12px;
+  color: #333;
+  font-weight: 400;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  vertical-align: middle;
+  border: none;
+}
+.indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row.dx-state-hover[aria-selected="false"] > td,
+.indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row.dx-state-hover[aria-selected="false"] > td .dx-texteditor {
+  background-color: transparent!important;
+  vertical-align: middle;
+  font-size: 12px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 400;
+}
+.indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row[aria-selected="false"] > td .dx-numberbox {
+  /*border: 1px solid #C7C7C7 !important;*/
+  /*[style.border]="Value.data.PrimaryDataValue[Value.columnIndex -2].Value === ''? '1px solid #fd001126!important':'1px solid #C7C7C7!important'"*/
+}
+
+.number-box-border-red {
+  .indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row.dx-state-hover[aria-selected="false"] > td,
+  .indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row.dx-state-hover[aria-selected="false"] > td .dx-texteditor .dx-texteditor-input, .indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row.dx-state-hover[aria-selected="false"] > td .dx-texteditor {
+    background-color: transparent !important;
+    vertical-align: middle;
+    font-size: 12px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 400;
+  }
+  /deep/ .dx-texteditor-input {
+    background-color: #fd001126 !important;
+    border-radius: initial;
+    &:hover {
+      background-color: #fd001126 !important;
+      border-radius: initial;
+    }
+  }
+}
+
+.number-box-border-red {
+  margin: 5px!important;
+}
+
+::ng-deep dx-popup {
+  .dx-datagrid .dx-column-lines > td {
+    border-left-width: 0px!important;
+    border-right:  0px!important;
+  }
+}
+
+
+.number-box-border-grey {
+  border: 1px solid #C7C7C7!important;
+  margin: 5px!important;
+}
+
+.indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row[aria-selected="false"] > td .dx-selectbox {
+  border: 1px solid #C7C7C7 !important;
+  margin-left: 1px;
+}
+
+.dx-template-wrapper {
+  margin-right: 5px!important;
+}
+.indicator-data-grid-wrapper /deep/ .dx-datagrid .dx-column-lines .dx-freespace-row > td {
+  border: none;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+
+::ng-deep .dx-datagrid .dx-column-lines > td {
+    border-left: 0px solid #ddd;
+    border-right: 0px solid #ddd;
+  }
+
+.indicator-data-grid-wrapper /deep/ .main-datagrid .dx-datagrid-rowsview .dx-row[aria-selected="false"] > td .dx-state-focused {
+  border: 1px solid #6FCBFB !important;
+}
+.indicator-data-grid-wrapper /deep/ .dx-datagrid-focus-overlay {
+  border-color: transparent !important;
+}
+.dx-template-wrapper /deep/ dx-button.continue-btn {
+  margin-top: 30px;
+  color: #fff;
+  background-color: #6BCDFD;
+  border: 2px solid #6BCDFD;
+  width: 100%;
+  border-radius: 7px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 14px;
+}
+
+
+.chart-container {
+  height: 100px;
+}
+/deep/ .indicator-popup {
+  .dx-toolbar {
+    background-color: #6DCBFB;
+    .dx-icon.dx-icon-close {
+      color: #fff;
+    }
+    .dx-closebutton.dx-state-hover {
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+}
+agm-map {
+  height: 300px;
+}
+
+
+.data-grid-wrapper {
+  overflow: auto;
+}
+
+.indicator-data-grid-wrapper /deep/ .dx-scrollbar-horizontal {
+  display: none !important;
+}
+
+.dx-widget {
+  width: 100% !important;
+}
+
+#map {
+  height: 500px;
+}
+
+.table-wrapper { max-width: min-content;
+  display: inline-block; }
+
+.confirmation-popup-wrapper {
+  .cancel-confirm-btn {
+    float: left;
+    color: #fff;
+    background-color: silver;
+    padding: 5px 15px;
+    font-weight: 600;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    line-height: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .confirmation-btn {
+    float: right;
+    color: #fff;
+    background-color: red;
+    padding: 5px 15px;
+    font-weight: 600;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    line-height: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .confirmation-btn-update {
+    float: right;
+    color: #fff;
+    background-color: #6BCDFD;
+    padding: 5px 15px;
+    font-weight: 600;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    line-height: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+}
+.data-grid-wrapper > .table-wrapper > /deep/ #grid-container > .dx-datagrid > .dx-datagrid-rowsview > .dx-datagrid-content > .dx-datagrid-table > tbody > .dx-row > td > .dx-template-wrapper{
+  margin-right: 0 !important;
+}
+/deep/ dx-switch.dx-switch-on-value .dx-switch-handle:before {
+  background-color: #5fc874;
+}
+/deep/ dx-switch .dx-switch-handle:before {
+  background-color: #989898;
+}
+.chart-wrapper {
+  position: relative;
+  .chart-hover-element {
+    position: absolute;
+    width: 30px;
+    left: 17px;
+    top: 0;
+    height: 100%;
+    &:hover {
+      .chart-tooltip-title {
+        display: block;
+      }
+    }
+    .chart-tooltip-title {
+      position: absolute;
+      top: 0;
+      left: 25px;
+      padding: 20px;
+      color: #000;
+      width: 300px;
+      display: none;
+      border: 1px solid #ddd;
+      background: #fff;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      border-radius: 6px;
+    }
+  }
+}
+
+.create-dataset-note {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.map-selector {
+  display: flex;
+  align-items: center;
+  p {
+    margin-right: 5px;
+  }
+}
+
+.total-line-bold {
+  font-weight: 700;
+  padding-left: 15px;
+}
+
+.total-line-lite {
+  padding-left: 25px;
+}
+
+.checkbox-list {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin: 5px;
+}
+
+/deep/ dx-popup-content{
+  @include button-variant($second-button-font-color, $second-button-background-color, $main-button-border-color, 50);
+  font-size: 12px!important;
+}
+
+/* Customize the label (the container) */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+ // background-color: $main-button-background-color;
+  background-color: #6BCA70;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 6px;
+  top: 3px;
+  width: 7px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+ transform: rotate(45deg);
+
+}
+
+#checkboxList {
+  height: 225px;
+}
+
+/deep/ .dx-popup-content {
+    padding: 10px 5px;
+  }
+
+::ng-deep .monthly-popup-wrapper {
+  .dx-popup-title {
+    background-color: #6BCDFA;
+    color: #fff;
+    margin: 0!important;
+    i {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+    }
+    .dx-closebutton.dx-state-hover {
+      background-color: transparent;
+      border-color: transparent;
+    }
+    .dx-closebutton .dx-icon {
+      color: #fff;
+    }
+  }
+}
+
+::ng-deep .dx-toolbar-label > div {
+  font-size: 16px;
+}
+
+.month-table-header {
+  color: #000;
+  font-size: 15px;
+}
+
+.total-style {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+::ng-deep.dx-datagrid-nowrap.dx-datagrid-headers .dx-header-row > td:last-child > .dx-datagrid-text-content {
+  display: flex;
+  justify-content: center;
+}

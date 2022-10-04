@@ -1,0 +1,29 @@
+<div class="action-items-wrapper" >
+  <div [class]="actionItemBlock">
+    <span class="action-item-block-title">open</span>
+    <div class="action-inner-block due-now">
+      <span class="action-quantity">{{reportingCounts[0]}}</span>
+      <span>items</span>
+    </div>
+    <dx-button text="ADD" class="add-btn" routerLink='/my-actions-capture'>
+    </dx-button>
+  </div>
+  <div class="completed action-item-block2">
+    <span class="action-item-block-title">completed</span>
+    <div class="action-inner-block open">
+      <span class="action-quantity">{{reportingCounts[1]}}</span>
+      <span>items</span>
+    </div>
+    <dx-button text="UPDATE" class="update-btn" routerLink='/my-actions-capture'>
+    </dx-button>
+  </div>
+  <div [class]="actionItemBlock">
+    <span class="action-item-block-title">overdue</span>
+    <div class="action-inner-block overdue">
+      <span class="action-quantity">{{reportingCounts[2]}}</span>
+      <span>items</span>
+    </div>
+    <dx-button text="CLOSE OUT" class="close-out-btn" routerLink='/my-actions-capture'>
+    </dx-button>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.header {
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  justify-items: start;
+  width: 100%;
+  //z-index: 10000;
+  .logo {
+  	margin-left: 10px;
+  }
+}

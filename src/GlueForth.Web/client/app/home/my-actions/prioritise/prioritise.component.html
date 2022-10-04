@@ -1,0 +1,357 @@
+<div class="prioritise-wrapper">
+  <div class="prioritise-table-container">
+  <div class="prioritise-toolbar-container">
+    <div class="prioritise-selector-container">
+      <span>Filter by:</span>
+      <dx-select-box [dataSource]="principleGroupsList" #dxSelectBox
+                     valueExpr="OID"
+                     displayExpr="Title"
+                     [value]="principleGroupsList.length ? principleGroupsList[0].OID : ''"
+                     (onSelectionChanged)="changeFilter($event, 'principleGroup')"
+                     placeholder="">
+      </dx-select-box>
+      <dx-select-box style="margin-left: 15px" [dataSource]="principleList" #dxSelectBox2
+                     valueExpr="OID"
+                     [width]="315"
+                     displayExpr="ShortTitle"
+                     [value]="principleList.length ? principleList[0].OID : ''"
+                     placeholder=""
+                     (onSelectionChanged)="changeFilter($event, 'principle')">
+      </dx-select-box>
+    </div>
+    <dx-button
+      text="RESET LAYOUT"
+      type="success"
+      [disabled]="dxSelectBox.value === 0 && dxSelectBox2.value === 0"
+      (onClick)="resetFilters()"
+    >
+    </dx-button>
+  </div>
+    <dx-popover
+      target="#managementPopover3"
+      position="top"
+      [width]="300"
+      [visible]="popoverHeaderVisible == 3">
+      <div *dxTemplate="let data = model of 'content'">
+        Business risks associated with non-fulfilment of the characteristic
+      </div>
+    </dx-popover>
+    <dx-popover
+      target="#managementPopover4"
+      position="top"
+      [width]="300"
+      [visible]="popoverHeaderVisible === 4">
+      <div *dxTemplate="let data = model of 'content'">
+        Self Assessment Rating results
+      </div>
+    </dx-popover>
+    <dx-popover
+      target="#managementPopover5"
+      position="top"
+      [width]="300"
+      [visible]="popoverHeaderVisible === 5">
+      <div *dxTemplate="let data = model of 'content'">
+        Performance Indicator Dashboard results
+      </div>
+    </dx-popover>
+    <dx-popover
+      target="#managementPopover6"
+      position="top"
+      [width]="300"
+      [visible]="popoverHeaderVisible === 6">
+      <div *dxTemplate="let data = model of 'content'">
+        Select to include characteristic in the improvement planning process
+      </div>
+    </dx-popover>
+<dx-data-grid #dataGrid
+              id="gridContainer"
+              noDataText=""
+              [showColumnLines]="false"
+              [showBorders]="false"
+              [showRowLines]="true"
+              [hoverStateEnabled]="true"
+              [wordWrapEnabled]="true"
+              [dataSource]=priorCharacteristicsByPrincipleGroup
+              keyExpr="OID"
+>
+  <dxo-paging [enabled]="false"></dxo-paging>
+  <dxi-column [allowSorting]="true"
+              dataField="Reference"
+              headerCellTemplate="titleHeaderTemplate"
+              cellTemplate="characteristicRefTemplate"
+              [allowEditing]="false"
+              [width]="5+'%'" caption="REF"
+  ></dxi-column>
+  <dxi-column [allowSorting]="true"
+              dataField="Title"
+              headerCellTemplate="titleHeaderTemplate"
+              cellTemplate="characteristicTemplate"
+              [allowEditing]="false"
+              caption="CHARACTERISTIC"
+              [width]="32+'%'"  >
+  </dxi-column>
+  <div *dxTemplate="let data of 'characteristicTemplate'" >
+    <p class="characteristic-style">{{data.data.Title}}</p>
+  </div>
+  <div *dxTemplate="let data of 'characteristicRefTemplate'" >
+    <p class="characteristic-style">{{data.data.Reference}}</p>
+  </div>
+  <dxi-column [allowSorting]="true"
+              dataField="Risks"
+              cellTemplate="riskCellTemplate"
+              headerCellTemplate="titleHeaderTemplate"
+              [allowEditing]="false"
+              [width]="10+'%'"
+              caption="BUSINESS RISKS"
+  >
+  </dxi-column>
+  <dxi-column [allowSorting]="true"
+              dataField="AssessmentScore"
+              cellTemplate="assessmentScoreCellTemplate"
+              headerCellTemplate="titleHeaderTemplate"
+              [allowEditing]="false"
+              caption="ASSESSMENT RATING"
+              [width]="30+'%'"  >
+  </dxi-column>
+  <dxi-column [allowSorting]="true"
+              dataField="IndicatorScore"
+              cellTemplate="indicatorScoreCellTemplate"
+              headerCellTemplate="titleHeaderTemplate"
+              [allowEditing]="false"
+              caption="INDICATOR RATING"
+              [width]="30+'%'"
+  >
+  </dxi-column>
+  <dxi-column [allowSorting]="true"
+              dataField="IsPrior"
+              cellTemplate="isPriorCellTemplate"
+              headerCellTemplate="titleHeaderTemplate"
+              [allowEditing]="false"
+              caption="PRIORITISE"
+              [width]="15+'%'"
+  >
+  </dxi-column>
+  <div *dxTemplate="let info of 'titleHeaderTemplate' "  >
+    <p id="managementPopover{{info.columnIndex+1}}"  (mouseenter)="togglePopover(info.columnIndex+1)"
+        (mouseleave)="togglePopover(null)" class="data-grid-header">{{info.column.caption}}</p>
+  </div>
+  <div *dxTemplate="let data of 'riskCellTemplate'" >
+    <div style="display: inline-block;max-width: 100%;">
+    <a (click)="toggleRiskPopup(data.rowIndex, data.data?.Risks)"  class="risk-column" id="risk{{data.rowIndex}}" [innerHTML]="'See Risks'"></a>
+      <!--<div class="popOver" *ngIf="data.rowIndex >= 0 && isPopupVisibleRisk === data.rowIndex">{{riskStatement}}</div>-->
+    <dx-popup
+                target="#risk{{data.rowIndex}}"
+                title="POTENTIAL BUSINESS RISKS"
+                [width]="400"
+                [height]="180"
+                (onHidden)="isPopupVisibleRisk = null"
+                [visible]="data.rowIndex >= 0 && isPopupVisibleRisk === data.rowIndex">
+      <div *dxTemplate="let data2 of 'content'" class="popover-risk-content">
+        <dx-scroll-view [useNative]="false">
+          <ul class="statement-list">
+            <li *ngFor="let statement of riskStatement">{{statement}}</li>
+          </ul>
+        </dx-scroll-view>
+      </div>
+    </dx-popup>
+    </div>
+  </div>
+  <div *dxTemplate="let data of 'characteristicTemplate'">
+    <span id="char{{data.rowIndex}}" class="characteristic-style">{{data.data.Title}}</span>
+  </div>
+
+    <div *dxTemplate="let data of 'assessmentScoreCellTemplate'" class="self-assess-col">
+        <dx-bullet *ngIf="!data.data.IsRelevant"
+                   [endScaleValue]="100"
+                   [showZeroLevel]="false"
+                   [value]="roundedValue(data.data.AssessmentScore)"
+                   [color]="bulletColor(data.data.AssessmentScore)"
+                   [tooltip]="{'enabled': false}">
+        </dx-bullet>
+      <span *ngIf="!data.data.IsRelevant">{{roundedValue(data.data.AssessmentScore)}}%</span>
+      <div *ngIf="data.data.IsRelevant">
+        <span class="risk-column">Marked as not relevant</span>
+      </div>
+    </div>
+  <div *dxTemplate="let data of 'indicatorScoreCellTemplate' " class="assessment-score-wrapper">
+    <div class="assessment-score-item red" *ngIf="!data.data.IsRelevant && !isTrendDictionaryNaN(data)">
+      <dx-bullet *ngIf="data.data.IndicatorScore < 0"
+                 [endScaleValue]="0"
+                 [startScaleValue]="-50"
+                 [value]="getScoreChartValue(data.data)"
+                 [color]="'#f00'">
+        <dxo-tooltip
+          [enabled]="true"
+          [customizeTooltip]="customizeTooltipText">
+        </dxo-tooltip>
+      </dx-bullet>
+    </div>
+    <div class="assessment-score-item bullet-trend-nan" *ngIf="!data.data.IsRelevant && isTrendDictionaryNaN(data)">
+      <dx-bullet *ngIf="data.data.IndicatorScore < 0"
+                 [endScaleValue]="0"
+                 [startScaleValue]="-50"
+                 [value]="getScoreChartValue(data.data)"
+                 [color]="'#f00'">
+        <dxo-tooltip
+          [enabled]="true"
+          [customizeTooltip]="customizeTooltipText">
+        </dxo-tooltip>
+      </dx-bullet>
+    </div>
+    <div class="assessment-score-item green" *ngIf="!data.data.IsRelevant">
+      <dx-bullet *ngIf="data.data.IndicatorScore >= 0"
+                 [endScaleValue]="50"
+                 [showZeroLevel]="true"
+                 [value]="getScoreChartValue(data.data)"
+                 [color]="'#2ab71b'">
+        <dxo-tooltip
+          [enabled]="true"
+          [customizeTooltip]="customizeTooltipText">
+        </dxo-tooltip>
+      </dx-bullet>
+    </div>
+    <div *ngIf="!data.data.isRelevant">
+      <i class="material-icons glass" (click)="getCharacteristicPopup(data)">zoom_in</i>
+    </div>
+    <div *ngIf="data.data.IsRelevant">
+      <span class="risk-column">Marked as not relevant</span>
+    </div>
+  </div>
+  <div *dxTemplate="let data of 'isPriorCellTemplate' " [ngClass]="{'not-relevant': !data.data.IsPrior}">
+    <dx-switch (onValueChanged)="changeCharacteristicPrior($event, data)"
+               #switch [value]="data.data.IsPrior"></dx-switch>
+  </div>
+
+</dx-data-grid>
+
+</div>
+  <div class="prioritise-container">
+    <div class="prioritise-container-header">Prioritised Items
+    </div>
+    <div class="active-categories-view">
+      <div class="active-categories-list-item" *ngFor="let characteristic of topPriorByPrincipleGroup; let index = index" [ngStyle]="{'background-color': selectedCharacteristic?.OID === characteristic?.OID ? '#F3F3F3' : '#fff'}" (click)="setClickableCharacteristic(characteristic, index)">
+        <span>{{index+1}}</span><span class="active-category-name">{{characteristic?.ShortTitle}}</span>
+        <i class="material-icons">
+          keyboard_arrow_right
+        </i>
+      </div>
+      <div class="clickable-icons-wrapper">
+        <i class="material-icons clickable-icon" (click)="moveTop()">
+          keyboard_arrow_up
+        </i>
+        <i class="material-icons clickable-icon" (click)="moveDown()">
+          keyboard_arrow_down
+        </i>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<dx-popup class="guidance-popup-wrapper" #dxPopupGuidance
+          [showTitle]="true"
+          [dragEnabled]="true"
+          [closeOnOutsideClick]="true"
+          [closeOnBackButton]="true"
+          [showCloseButton]="true"
+          [(visible)]="isPopupVisibleRisk"
+          [shading]="false"
+          [resizeEnabled]="true"
+>
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view #scrollView [useNative]="false">
+      <div [innerHTML]="riskStatement" class="popOver"></div>
+    </dx-scroll-view>
+  </div>
+</dx-popup>-->
+
+<dx-popup #Chart
+          [width]="1000"
+          [height]="'90%'"
+          [showTitle]="true"
+          titleTemplate="title"
+          [dragEnabled]="false"
+          [(visible)]="isPopupVisible"
+          class="indicator-reporting-popup"
+>
+  <div class="title_template" *dxTemplate="let data of 'title'">
+    <div class="popup-title-wrapper">
+      <span class="popup-title">Performance Indicator Detail</span>
+      <span class="popup-subtitle">{{indicatorData.Characteristic}}</span>
+    </div>
+    <div class="close-btn">
+      <a (click)="closePopup()"><i class="dx-icon dx-icon-close"></i></a>
+    </div>
+  </div>
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view #scrollView [useNative]="false">
+      <div class="popup-reporting">
+        <div class="chart-wrapper">
+          <div class="chart-hover-element">
+            <div class="chart-tooltip-title">{{indicatorData.Relevance}}</div>
+          </div>
+          <dx-chart id="chart"
+                    [palette]="['#D49290', '#7FD03E']"
+                    [dataSource]="graphData"
+                    [series]="{
+                argumentField: 'Period',
+                valueField: 'Value',
+                name: ' ',
+                type: 'spline'
+                }"
+                    [tooltip]="{
+                  enabled: 'true',
+                  argumentFormat: '0,###.##',
+                  format: '0,###.##'}"
+                    [argumentAxis]="{
+                  title: 'year'}"
+                    [valueAxis]="{
+                  title: indicatorFormulaAxis
+                  }"
+          >
+          </dx-chart>
+        </div>
+        <div class="popup-reporting-text-content">
+          <span class="popup-reporting-text-content-title">FORMULA</span>
+          <span class="popup-reporting-text-content-info">{{indicatorData.Relevance}}</span>
+          <span class="popup-reporting-text-content-title">RELEVANCE</span>
+          <span class="popup-reporting-text-content-info">{{indicatorData.Markup }}</span>
+          <span class="popup-reporting-text-content-title">INTEPRETATION</span>
+          <span class="popup-reporting-text-content-info" style="white-space: pre-wrap">{{indicatorData.Interpretation}}</span>
+        </div>
+      </div>
+      <div class="first-data-grid">
+        <dx-data-grid
+          [showBorders]="true"
+          [showColumnHeaders]="false"
+          [columnAutoWidth]="false"
+          [columnWidth]="200"
+          [dataSource]="popupFirstTableData"
+          [scrolling]='{
+        columnRenderingMode: "standard",
+        mode: "standard",
+        preloadEnabled: false,
+        rowRenderingMode: "standard",
+        useNative: null}'
+          [showRowLines]="true">
+        </dx-data-grid>
+      </div>
+      <div class="second-data-grid">
+        <dx-data-grid
+          [showBorders]="true"
+          [showColumnHeaders]="false"
+          [columnAutoWidth]="false"
+          [columnWidth]="200"
+          [dataSource]="popupSecondTableData"
+          [scrolling]='{
+        columnRenderingMode: "standard",
+        mode: "standard",
+        preloadEnabled: false,
+        rowRenderingMode: "standard",
+        useNative: null}'
+          [showRowLines]="true">
+        </dx-data-grid>
+      </div>
+    </dx-scroll-view>
+  </div>
+</dx-popup>

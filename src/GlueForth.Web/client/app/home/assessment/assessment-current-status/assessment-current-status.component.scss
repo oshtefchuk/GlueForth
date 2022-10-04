@@ -1,0 +1,56 @@
+@import "../../../../styles/variables";
+@import "../../../../styles/mixins";
+
+.assesment-current-status-container {
+  background-color: #fff;
+  height: 100vh;
+
+  ul {
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 15px;
+  }
+  .current-status-wrapper {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .assesment-current-status-annotation {
+    grid-column: 1 / -1;
+    margin-bottom: 25px;
+  }
+
+  .assesment-type-container {
+    max-width: 420px;
+    border: 2px solid #F3F3F3;
+  }
+
+  .assessment-type-header {
+    display: grid;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    height: 200px;
+    background-color: #B0DBFB;
+  }
+  i {
+    font-size: 90px;
+  }
+
+  .full-assessment-header {
+    background-color: #6BC871;
+  }
+
+  .assessment-type-content {
+    padding: 25px;
+  }
+
+  /deep/ dx-button {
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 100%);
+  }
+}

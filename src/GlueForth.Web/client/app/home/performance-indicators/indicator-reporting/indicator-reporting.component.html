@@ -1,0 +1,285 @@
+<div class="reporting-title-container"><h5>FILTER BY</h5></div>
+<div class="left-content">
+  <span class="title-for-selector">
+    Select:
+  </span>
+    <dx-select-box [dataSource]="dimentionsList"
+                   [width]="185"
+                   valueExpr="OID"
+                   displayExpr="ShortTitle"
+                   placeholder='Dimension'
+                   (onSelectionChanged)="changeFilter($event, 'dimension')">
+    </dx-select-box>
+    <dx-select-box [dataSource]="principleList"
+                   valueExpr="OID"
+                   [width]="285"
+                   displayExpr="ShortTitle"
+                   [value]=""
+                   placeholder='Principle'
+                   (onSelectionChanged)="changeFilter($event, 'principle')">
+    </dx-select-box>
+    <dx-select-box [dataSource]="principleGroups"
+                   valueExpr="OID"
+                   displayExpr="ShortTitle"
+                   [width]="215"
+                   [value]=""
+                   placeholder='Management Focus Area'
+                   (onSelectionChanged)="changeFilter($event, 'management-area')">
+    </dx-select-box>
+  <div class="question-group-statuses-description">
+  <div class="report-description-container" *ngFor="let status of statuses; let index = index">
+    <div class="report-description-color"
+         [ngClass]="{'gradient' : index === 2}"
+         [style.backgroundColor]="status.color"></div>
+    <span>{{status.description}}</span>
+  </div>
+  </div>
+ </div>
+
+<div class="data-grid-wrapper">
+
+  <!--<div class="sort-container">
+    <span>Sort by</span>
+    <dx-select-box [dataSource]="['Strengthening', 'Weakening']"
+                   (onSelectionChanged)="getSortedValues($event)">
+    </dx-select-box>
+  </div>-->
+  <div class="data-grid-container">
+    <dx-data-grid #dataGrid
+                  id="gridContainer"
+                  [dataSource]="reportingDataSource"
+                  noDataText=""
+                  [showRowLines]="true">
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxi-column [width]="100"
+                  dataField="CharacteristicRef"
+                  headerCellTemplate="titleHeaderTemplate"
+                  caption="REFERENCE">
+      </dxi-column>
+      <dxi-column dataField="Characteristic"
+                  headerCellTemplate="titleHeaderTemplate"
+                  cellTemplate="characteristicTemplate"
+                  caption="CHARACTERISTIC">
+      </dxi-column>
+      <div *dxTemplate="let data of 'characteristicTemplate'" class="template-view">
+        <span id="#characteristic{{data.rowIndex}}" (mouseenter)="showCharateristicPopover(data)" (mouseleave)="showCharateristicPopover(null)">{{data.data.Characteristic}}</span>
+        <div class="popOver" *ngIf="data.rowIndex >= 0 && isPopoverVisible === data.rowIndex">{{characteristicSummary}}</div>
+      </div>
+      <dxi-column dataField="MeasuredBy"
+                  headerCellTemplate="titleHeaderTemplate"
+                  caption="MEASURED BY"
+                  cellTemplate="MeasuredByCellTemplate">
+      </dxi-column>
+      <div *dxTemplate="let data of 'MeasuredByCellTemplate'" class="template-view">
+        <span><a (click)="getCharacteristicPopup(data)">{{data.data.MeasuredBy}}</a> </span>
+      </div>
+      <dxi-column
+                  headerCellTemplate="titleHeaderTemplate"
+                  caption="FORMULA"
+                  cellTemplate="formulaCellTemplate">
+      </dxi-column>
+      <div *dxTemplate="let data of 'formulaCellTemplate'" class="formula-cell" style="white-space: pre-wrap">
+        {{data.data.Relevance}}
+      </div>
+      <dxi-column caption="TREND"
+                  headerCellTemplate="titleHeaderTemplate"
+                  cellTemplate="chartCellTemplate"
+      >
+      </dxi-column>
+      <div *dxTemplate="let d of 'chartCellTemplate'">
+        <div [className]="getChartBackgroundClass(d.data) + ' chart-cell'">
+       <!--   <dx-sparkline
+            [dataSource]="d.data.Trend"
+            type="area"
+            [lineWidth]="3"
+            [showMinMax]="true"
+            minColor="#f00"
+            maxColor="#2ab71b"
+            margin="15"
+            [pointSize]="6">
+            <dxo-size [height]="50"></dxo-size>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+          </dx-sparkline>-->
+          <dx-chart class="data-collection-chart"
+                    [width]="300"
+                    [palette]="['#585651']"
+                    [rotated]="false"
+                    [dataSource]="d.data.TrendDictionary"
+                    [equalBarWidth]="true"
+                    [commonPaneSettings]="{
+                    backgroundColor: getChartBackgroundColor(d.data)}"
+
+                    [hoverMode]="{
+                    dashStyle: 'dot'}"
+                    [series]="{
+              argumentField: 'Year',
+              valueField: 'Value',
+              dashStyle: 'solid',
+              name: ' ',
+              type: 'line',
+              point : {
+                    color: 'green',
+                    size: 4
+                    }
+              }"
+                    [tooltip]="{
+                enabled: 'false'}"
+          >
+            <dxo-grid [visible]="true"></dxo-grid>
+            <dxo-value-axis [visible]="false"></dxo-value-axis>
+            <dxo-adaptive-layout [height]="1" [width]="1"></dxo-adaptive-layout>
+          </dx-chart>
+        </div>
+      </div>
+      <dxi-column caption="SCORE"
+                  cellTemplate="scoreCellTemplate"
+                  headerCellTemplate="scoreHeaderTemplate"
+                  [allowSorting]="true"
+                  [calculateSortValue]="customScoreSortingFunction">
+      </dxi-column>
+      <div *dxTemplate="let d of 'scoreCellTemplate'">
+        <div class="chart-bar-cell">
+          <div class="cell-item">{{d.data.Score}}%</div>
+          <div class="cell-item bullet-trend-nan" *ngIf="isTrendDictionaryNaN(d)">
+            <dx-bullet
+                       [endScaleValue]="0"
+                       [startScaleValue]="-50"
+                       [value]="getScoreChartValue(d.data)"
+                       [color]="'#f00'">
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="customizeTooltipText">
+              </dxo-tooltip>
+            </dx-bullet>
+          </div>
+          <div [style.visibility]="d.data.Score < 0 ? 'visible' : 'hidden'" class="cell-item" *ngIf="!isTrendDictionaryNaN(d)">
+            <dx-bullet
+              [endScaleValue]="0"
+              [startScaleValue]="-50"
+              [value]="getScoreChartValue(d.data)"
+              [color]="'#f00'">
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="customizeTooltipText">
+              </dxo-tooltip>
+            </dx-bullet>
+          </div>
+          <div class="cell-item">
+          <dx-bullet *ngIf="d.data.Score > 0"
+            [endScaleValue]="50"
+            [showZeroLevel]="true"
+            [value]="getScoreChartValue(d.data)"
+            [color]="'#91c74b'">
+            <dxo-tooltip
+              [enabled]="true"
+              [customizeTooltip]="customizeTooltipText">
+            </dxo-tooltip>
+          </dx-bullet>
+          </div>
+        </div>
+      </div>
+      <div *dxTemplate="let info of 'titleHeaderTemplate'" class="data-grid-header">
+        <p class="data-grid-header">{{info.column.caption}}</p>
+      </div>
+      <div *dxTemplate="let info of 'scoreHeaderTemplate'" class="data-grid-score-header">
+        <p class="score-header">{{info.column.caption}}</p>
+        <div>%</div>
+        <div>WEAKER</div>
+        <div style="text-align: center">STRONGER</div>
+      </div>
+    </dx-data-grid>
+  </div>
+</div>
+
+
+
+<dx-popup #Chart
+          [width]="1200"
+          [height]="'90%'"
+          [showTitle]="true"
+          titleTemplate="title"
+          [dragEnabled]="false"
+          [(visible)]="isPopupVisible"
+          class="indicator-reporting-popup"
+>
+  <div class="title_template" *dxTemplate="let data of 'title'">
+    <div class="popup-title-wrapper">
+      <span class="popup-title">Performance Indicator Detail</span>
+      <span class="popup-subtitle">{{indicatorData.Characteristic}}</span>
+    </div>
+    <div class="close-btn">
+      <a (click)="closePopup()"><i class="dx-icon dx-icon-close"></i></a>
+    </div>
+  </div>
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view #scrollView [useNative]="false">
+    <div class="popup-reporting">
+      <div class="chart-wrapper">
+        <div class="chart-hover-element">
+          <div class="chart-tooltip-title">{{indicatorFormula}}</div>
+        </div>
+        <dx-chart id="chart"
+                [palette]="['#D49290', '#7FD03E']"
+                [dataSource]="graphData"
+                [series]="{
+                argumentField: 'Period',
+                valueField: 'Value',
+                name: ' ',
+                type: 'spline'
+                }"
+                  [tooltip]="{
+                  enabled: 'true',
+                  argumentFormat: '0,###.##',
+                  format: '0,###.##'}"
+                  [argumentAxis]="{
+                  title: 'year'}"
+                  [valueAxis]="{
+                  title: indicatorFormulaAxis
+                  }"
+        >
+      </dx-chart>
+      </div>
+      <div class="popup-reporting-text-content">
+        <span class="popup-reporting-text-content-title">FORMULA</span>
+        <span [innerHTML]="indicatorData.Relevance | replaceLineBreaks" class="popup-reporting-text-content-info"></span>
+        <span class="popup-reporting-text-content-title">RELEVANCE</span>
+        <span [innerHTML]="indicatorData.Markup | replaceLineBreaks" class="popup-reporting-text-content-info"></span>
+        <span class="popup-reporting-text-content-title">INTEPRETATION</span>
+        <span [innerHTML]="indicatorData.Interpretation | replaceLineBreaks" class="popup-reporting-text-content-info"></span>
+      </div>
+    </div>
+    <div class="first-data-grid">
+      <dx-data-grid
+        [showBorders]="true"
+        [showColumnHeaders]="false"
+        [columnAutoWidth]="false"
+        [columnWidth]="200"
+        [dataSource]="popupFirstTableData"
+        [scrolling]='{
+        columnRenderingMode: "standard",
+        mode: "standard",
+        preloadEnabled: false,
+        rowRenderingMode: "standard",
+        useNative: null}'
+        [showRowLines]="true">
+      </dx-data-grid>
+    </div>
+    <div class="second-data-grid">
+      <dx-data-grid
+        [showBorders]="true"
+        [showColumnHeaders]="false"
+        [columnAutoWidth]="false"
+        [columnWidth]="200"
+        [dataSource]="popupSecondTableData"
+        [scrolling]='{
+        columnRenderingMode: "standard",
+        mode: "standard",
+        preloadEnabled: false,
+        rowRenderingMode: "standard",
+        useNative: null}'
+        [showRowLines]="true">
+      </dx-data-grid>
+    </div>
+    </dx-scroll-view>
+  </div>
+</dx-popup>

@@ -1,0 +1,77 @@
+<div class="user-profile-organisation-container">
+  <form (submit)="onFormSubmitUpdateOrganisation($event)" dx-group-column-count="2">
+    <span class="registration-mandatory">All fields marked * are mandatory.</span>
+    <dx-form id="form"
+             labelLocation="right"
+             [formData]="setupOrganisation"
+             [readOnly]="false"
+             [showColonAfterLabel]="true"
+             [showValidationSummary]="true"
+             validationGroup="setupOrganisation"
+    >
+      <dxi-item dataField="organisationName"
+                [editorOptions]="{ placeholder: 'ORGANISATION NAME' }">
+        <dxi-validation-rule
+          type="required"
+          message="Organisation name is required">
+        </dxi-validation-rule>
+      </dxi-item>
+      <dxi-item itemType="group" class="address" caption="ADDRESS">
+        <dxi-item dataField="organisationStreet"
+                  [editorOptions]="{ placeholder: 'STREET'}">
+          <dxi-validation-rule
+            type="required"
+            message="Street is required"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="organisationCity"
+                  [editorOptions]="{ placeholder: 'CITY'}">
+          <dxi-validation-rule
+            type="required"
+            message="City is required"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="stateProvince"
+                  [editorOptions]="{ placeholder: 'STATE PROVINCE'}">
+          <dxi-validation-rule
+            type="required"
+            message="Province is required"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item dataField="Country">
+          <dx-select-box [dataSource]="countriesInfo"
+                         [value]="setupOrganisation.country"
+                         [searchEnabled]=true
+                         searchMode="startsWith"
+                         valueExpr="Oid"
+                         displayExpr="Name"
+                         placeholder="SELECT COUNTRY"
+                         (onSelectionChanged)="getCountryValueForOrganisation($event)">
+          </dx-select-box>
+        </dxi-item>
+        </dxi-item>
+      <dxi-item dataField="phoneNumber"
+                helpText="Example: +123(0)814026552"
+                [editorOptions]="{
+                    placeholder: 'TELEPHONE NUMBER'
+                }">
+        <!--<dxi-validation-rule
+          type="pattern"
+          [pattern]="phonePattern"
+          message="The cellphone must have a correct format">
+        </dxi-validation-rule>-->
+      </dxi-item>
+    </dx-form>
+    <br/>
+    <dx-button
+      text="UPDATE ORGANISATION"
+      type="success"
+      validationGroup="setupOrganisation"
+      [useSubmitBehavior]="true">
+    </dx-button>
+  </form>
+</div>

@@ -1,0 +1,470 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  //max-width: 1440px;
+  //border-right: 2px solid #fff;
+  //margin: 0 20px;
+  display: grid;
+  //grid-gap: 15px;
+  .content {
+    //margin-left: 50px;
+  }
+
+  &.fullscreen {
+    display: block;
+    /deep/ .fullscreen-icon {
+      display: none;
+    }
+    /deep/ .fullscreen-exit-icon {
+      display: block;
+    }
+    .sidebar, .main-page-header {
+      display: none;
+    }
+    /deep/ .data-grid-full-wrapper dx-data-grid > .dx-datagrid {
+      max-height: calc(100vh - 220px);
+    }
+    /deep/ .assessment-capture-light-container .assessment-selector-container {
+      position: absolute;
+      top: -10000000px;
+    }
+    /deep/ .assessment-capture-light-container .dx-datagrid-rowsview {
+      max-height: calc(100vh - 190px);
+    }
+  }
+  .fullscreen-exit-icon {
+    display: none;
+  }
+}
+
+.header {
+  border-bottom: 2px solid $body-background;
+  background-color: #fff;
+}
+
+.dx-widget {
+  color: #4F5261;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 0!important;
+
+ li  {
+    padding-left: 0;
+    height: 100px;
+    vertical-align: middle;
+    width: 100%;
+   :hover {
+     background-color: #2C86D3;
+     color: #fff;
+   }
+  }
+  .parentode-style{
+    padding: 15px;
+  }
+}
+
+.sidebar {
+  background-color: #262F44;
+  padding: 0 !important;
+  width: 100%;
+ // margin-top: 70px;
+  /deep/ .dx-treeview-node {
+    color: #fff;
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
+.user-profile {
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  background-color: #262F44;
+
+  .material-icons {
+    margin-top: 20px;
+    font-size: 50px;
+    color: #54647D;
+  }
+  .user-profile-name {
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+
+  .user-profile-last-name {
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    display: inline-block;
+    white-space: pre;
+  }
+  .user-profile-logout {
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    display: block;
+  }
+  p, a {
+    display: block;
+    font-size: 12px;
+    color: #fff;
+  }
+  a {
+    color: #7798B1;
+    text-decoration: underline;
+  }
+}
+
+.main-page-header {
+  overflow: hidden;
+}
+
+/deep/ dx-select-box {
+  .dx-field-value {
+    float: none;
+    width: 100%;
+    margin: 15px;
+  }
+}
+
+.main-page-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  background-color: #fff;
+  min-height: 80px;
+  padding: 15px;
+  font-size: 24px;
+  position: relative;
+
+  .main-page-title {
+    color: $title-color;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+
+  .main-page-subtitle {
+    font-size: 14px;
+    display: inline-block;
+  }
+  .main-page-description {
+    font-size: 14px;
+  }
+  .right-content {
+    font-size: 12px;
+    display: grid;
+    grid-gap: 5px;
+    //justify-content: center;
+    align-self: center;
+    span {
+      align-self: center;
+    }
+    .dx-field-value {
+      width: 100%;
+    }
+    dx-select-box {
+      border-radius: 0;
+      height: 22px;
+      width: 250px;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+
+  /* no grid support? */
+  .sidebar {
+    //float: left;
+    //width: 19.1489%;
+    width: 166px;
+    height: 100vh;
+    position: fixed;
+    //margin-top: 70px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .content {
+    grid-column-start: 2;
+    //padding-left: 15px;
+    //float: right;
+    //width: 79.7872%;
+    margin: 0px 20px 0 0;
+    overflow: hidden;
+    //width: calc(100% - 500px);
+  }
+  .content-wrapper {
+    margin-left: 20px;
+  }
+  .wrapper {
+   // margin: 0 auto;
+    grid-template-columns: 166px 5fr;
+  }
+
+  .header, .footer {
+    grid-column: 1 / -1;
+    /* needed for the floated layout */
+    clear: both;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+}
+
+.wrapper > * {
+ margin-bottom: 10px;
+}
+
+/* We need to set the widths used on floated items back to auto, and remove the bottom margin as when we have grid we have gaps. */
+@supports (display: grid) {
+  .wrapper > * {
+   // width: auto;
+   // margin: 0;
+  }
+  li .dx-treeview-node{
+      padding-left: 0!important;
+  }
+}
+
+/deep/ dx-tree-view{
+.dx-treeview-node {
+  padding-left: 0 !important;
+  text-align: center;
+  &.dx-state-focused {
+    color: #000 !important;
+  }
+  .dx-treeview-node-container > ul {
+    margin: 0 auto;
+    text-align: left;
+  }
+  .dx-treeview-toggle-item-visibility {
+    width: 100% !important;
+    height: 100%!important;
+    opacity: 0!important;
+  }
+  .dx-treeview .dx-treeview-item .dx-icon {
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    display: block;
+  }
+  .dx-treeview-item .item-style {
+    color: #4F5261;
+  }
+  .dx-treeview-item .parent-selected .item-style {
+    color: #fff;
+  }
+  .dx-item .dx-treeview-item .dx-state-hover {
+    background-color: #fff!important;
+  }
+}
+  .dx-item-content .dx-treeview-item-content {
+    display: grid;
+    justify-items: center;
+  }
+ .dx-state-focused>.dx-treeview-item {
+   //display: grid;
+   //justify-items: center;
+   //align-content: center;
+   background-color: #fff!important;
+   //height: 100px;
+   color: #000 !important;
+  }
+.dx-state-selected > .dx-treeview-item {
+   background-color: #fff !important;
+    color: #000 !important;
+  }
+
+  .dx-state-hover> .dx-treeview-item{
+    background-color: #262f44 !important;
+    color: #fff!important;
+  }
+
+
+
+  /* .dx-item .dx-treeview-item {
+     background-color: #6CCDFA!important;
+     color: #fff;
+   }*/
+}
+
+.to-profile {
+  color: #fff!important;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.sidebar-customization{
+  display: grid;
+  justify-items: center;
+  i {
+    font-size: 36px;
+  }
+  .simple-svg {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+.parent-selected {
+  background-color: #6CCDFA;
+  margin: -5px;
+  color: #fff;
+}
+
+.item-style {
+  color: #fff;
+}
+
+
+
+.sidebar-logo {
+  margin-top: 40px;
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+  img {
+    display: inline-block;
+    max-width: 120px;
+    width: 100%;
+  }
+}
+
+/deep/ .full-assess-popup-wrapper .dx-popup-content {
+  padding: 0;
+  overflow: visible;
+}
+/deep/ .full-assess-popup-wrapper .dx-popover-arrow {
+  display: none;
+}
+/deep/ .full-assess-popup-wrapper .dx-template-wrapper {
+  padding: 20px !important;
+  position: relative;
+}
+/deep/ .full-assess-popup-wrapper .dx-template-wrapper:after {
+  content: "";
+  border-width: 10px 7.5px 0 7.5px;
+  display: inline-block;
+  position: absolute;
+  bottom: -10px;
+  border-style: solid;
+}
+/deep/ .full-assess-popup-wrapper .popover-dontknow-content.dx-template-wrapper:after  {
+    border-color: #6BCDFA transparent transparent transparent;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/deep/ .full-assess-popup-wrapper .popover-no-content.dx-template-wrapper:after  {
+    border-color: #FD001A transparent transparent transparent;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/deep/ .full-assess-popup-wrapper .popover-partially-content.dx-template-wrapper:after  {
+    border-color: #FE962C transparent transparent transparent;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/deep/ .full-assess-popup-wrapper .popover-yes-content.dx-template-wrapper:after  {
+    border-color: #6BC89F transparent transparent transparent;
+    right: 20%;
+}
+
+.date-label {
+  display: inline-block;
+  background-color: #91c74b;
+  border-radius: 3px;
+  text-align: center;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 25px;
+  margin-left: 10px;
+
+}
+
+
+/deep/ .light-assess-popup-wrapper .dx-popup-content {
+  padding: 0;
+  overflow: visible;
+}
+/deep/ .light-assess-popup-wrapper.dx-popup-wrapper > .dx-overlay-content {
+  border: none;
+}
+/deep/ .light-assess-popup-wrapper .dx-popover-arrow {
+  display: none;
+}
+/deep/ .light-assess-popup-wrapper .dx-template-wrapper {
+  padding: 20px !important;
+  position: relative;
+  color: #fff;
+}
+/deep/ .light-assess-popup-wrapper .dx-template-wrapper:after {
+  content: "";
+  border-width: 10px 7.5px 0 7.5px;
+  display: inline-block;
+  position: absolute;
+  bottom: -10px;
+  border-style: solid;
+}
+/deep/ .light-assess-popup-wrapper .popover-dontknow-content.dx-template-wrapper:after  {
+    border-color: #6BCDFA transparent transparent transparent;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/deep/ .light-assess-popup-wrapper .popover-no-content.dx-template-wrapper:after  {
+    border-color: #6BC89F transparent transparent transparent;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/deep/ .light-assess-popup-wrapper .popover-no-content.dx-template-wrapper.thesecond:after {
+  border-color: #6BC89F transparent transparent transparent;
+    left: 50%;
+    transform: none;
+}
+/deep/ .light-assess-popup-wrapper .popover-partially-content.dx-template-wrapper:after  {
+    border-color: #FE962C transparent transparent transparent;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/deep/ .light-assess-popup-wrapper .popover-yes-content.dx-template-wrapper:after  {
+    border-color: #FD001A transparent transparent transparent;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/deep/ .light-assess-popup-wrapper .popover-dontknow-content  {
+    background-color: #6BCDFA;
+}
+/deep/ .light-assess-popup-wrapper .popover-no-content  {
+  background-color: #6BC89F;
+}
+/deep/ .light-assess-popup-wrapper .popover-partially-content  {
+    background-color: #FE962C;
+}
+/deep/ .light-assess-popup-wrapper .popover-yes-content  {
+  background-color: #FD001A;
+}
+.sidebar /deep/ .dx-treeview .dx-treeview-item.dx-state-hover {
+  background-color: #fff;
+}
+
+.sidebar /deep/ .dx-scrollable-content>.dx-treeview-node-container>.dx-treeview-node:hover>.dx-treeview-item {
+  background-color: #fff;
+}
+/deep/ .dx-tabs-wrapper .dx-item.dx-tab .dx-tab-content span {
+	display: inline-block;
+	max-width: 140px;
+	white-space: pre-line;
+	vertical-align: middle;
+}
+/deep/ .dx-treeview .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-focused > .dx-treeview-item * {
+  color: #000;
+}

@@ -1,0 +1,193 @@
+<div class="units-container">
+  <div class="units-title">
+    <span>Click on the Unit's name below to edit it.</span>
+
+  <div class="align-button">
+    <dx-button
+      (onClick)="addNewUnit()"
+      text="ADD UNIT"
+      type="success">
+    </dx-button>
+  </div>
+  </div>
+    <dx-data-grid #dataGrid
+                  id="gridContainer"
+                  [dataSource]="unitsList"
+                  [showBorders]="true"
+                  (onRowClick)="redirectToCurrentUnit($event)"
+                  (onRowUpdated)="editUnit($event)"
+                  (onRowRemoving)="removeUnit($event)"
+                  (onInitNewRow)="addNewUnit()"
+                  [hoverStateEnabled]="true"
+                  noDataText=""
+                  keyExpr="Oid">
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxi-column [width]="180"
+                  [fixed]="true" dataField="UnitName" caption="Unit Name">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="ResponsibleName" caption="Name">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="ResponsibleSurname" caption="Surname">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="ResponsiblePhone" caption="Phone">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="ResponsibleEmail" caption="Email">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column
+        dataField="UnitCountryId"
+        caption="Country">
+        <dxo-lookup
+          [dataSource]="countriesInfo"
+          displayExpr="Name"
+          valueExpr="Oid">
+        </dxo-lookup>
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column
+        dataField="UnitStructure"
+        caption="Unit Structure"
+      >
+        <dxo-lookup
+          [dataSource]="businessUnitStructure"
+          displayExpr="Name"
+          valueExpr="Oid">
+        </dxo-lookup>
+      </dxi-column>
+
+      <dxi-column [width]="120"
+                  cellTemplate="assignUserCellTemplate">
+      </dxi-column>
+      <dxi-column [width]="120"
+                  cellTemplate="deleteUnitCellTemplate">
+      </dxi-column>
+
+      <div *dxTemplate="let unit of 'assignUserCellTemplate'">
+        <a *ngIf="unit.data.IsUserAdmin" class="assign_user" (click)="showAssignUserPopup(unit)">Assigned users</a>
+      </div>
+      <div *dxTemplate="let unit of 'deleteUnitCellTemplate'">
+        <a *ngIf="unit.data.IsUserAdmin" class="assign_user" (click)="deleteUnit(unit)">Delete</a>
+      </div>
+
+    </dx-data-grid>
+
+  <!--<div class="no-units-message" *ngIf="!unitsCountLimit || unitsCountLimit <= 0">
+    A Sherpa Administrator needs to review your profile and give you the appropriate access to load business units.
+  </div>-->
+</div>
+
+<dx-popup
+  [width]="450"
+  [height]="150"
+  [showTitle]="true"
+  title="Delete Confirmation"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [allowUpdating]="true"
+  [(visible)]="isShowConfirmationDeletePopup">
+  <div *dxTemplate="let data of 'content'">
+    <div><span>{{confirmMessage}}</span></div>
+    <div class="confirmation-popup-wrapper">
+      <a class="cancel-confirm-btn" (click)="cancelDelete()">Cancel</a>
+      <a (click)="confirmDelete()" class="confirmation-btn">Delete</a>
+    </div>
+  </div>
+</dx-popup>
+
+<dx-popup
+  [width]="420"
+  [height]="getHeight()"
+  [showTitle]="true"
+  title="Assign user to unit"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [allowUpdating]="true"
+  [(visible)]="isShowAssignUserPopup">
+  <div *dxTemplate="let data of 'content'">
+    <form class="indicator-set-form" (submit)="onFormSubmitAssingUser($event)">
+      <dx-form #createDataSetForm
+               [formData]="assignUserData"
+               [readOnly]="false"
+               [showColonAfterLabel]="true"
+               validationGroup="userData"
+      >
+        <dxi-item dataField="FirstName"
+                  [editorOptions]="{ placeholder: 'NAME'}">
+          <dxi-validation-rule
+            type="required"
+            message="Name is required">
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="LastName"
+                  [editorOptions]="{ placeholder: 'LAST NAME'}">
+          <dxi-validation-rule
+            type="required"
+            message="LAST NAME is required">
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="Email"
+                  [editorOptions]="{ placeholder: 'EMAIL'}">
+          <dxi-validation-rule
+            type="required"
+            message="Email is required"
+          >
+          </dxi-validation-rule>
+          <dxi-validation-rule #maleValidator
+                               type="pattern"
+                               [pattern]="emailPattern"
+                               message="Enter valid Email"
+          >
+          </dxi-validation-rule>
+        </dxi-item>
+
+      </dx-form>
+      <dx-button [useSubmitBehavior]="true"
+                 text="ADD USER"
+                 type="success"
+                 validationGroup="userData"
+                 class="continue-btn"
+                 [disabled]="loadIndicatorVisible"
+      >
+        <div *dxTemplate="let data of 'content'">
+          <dx-load-indicator class='button-indicator'
+                             height="20" width="20"
+                             [visible]="loadIndicatorVisible">
+          </dx-load-indicator>
+          <span class='dx-button-text'>{{buttonText}}</span>
+        </div>
+      </dx-button>
+    </form>
+    <dx-scroll-view [showScrollbar]="always" #scrollView [useNative]="false" class="scroll-view-list-container">
+      <ul *ngIf="assignedUsers.length" class="users-list-container">
+        <li *ngFor="let user of assignedUsers">
+          <div class="info-block" [style.backgroundColor]="user.IsUserAdmin ? '#e0efda73' : ''">
+            <div>
+              <span>{{user.FirstName}} </span>
+              <span>{{user.LastName}}</span>
+              <span>E-mail: {{user.Email}}</span>
+            </div>
+            <div>
+              <span>Role: </span>
+              <span *ngIf="!user.IsUserAdmin">User</span>
+             <!-- <label *ngIf="!user.IsUserAdmin">User
+                <dx-check-box (valueChange)="selectAsAdmin(user, $event)"></dx-check-box>
+              </label>-->
+              <span *ngIf="user.IsUserAdmin">Owner</span>
+            </div>
+            <i *ngIf="!user.IsUserAdmin" class="material-icons remove-user" (click)="onUnUssignUnitClick(user.Oid)">
+              clear
+            </i>
+          </div>
+        </li>
+      </ul>
+
+      <div class="users-list-container users-list-empty" *ngIf="!assignedUsers.length">
+        No Assigned Users Yet...
+      </div>
+    </dx-scroll-view>
+  </div>
+</dx-popup>

@@ -1,0 +1,190 @@
+<bluenorth-header></bluenorth-header>
+<div class="registration-background">
+<div class="registration-container">
+  <form (submit)="onFormSubmit($event)" #declarativeForm="ngForm">
+    <div>
+      <h4>REGISTER
+        <i class="material-icons" id="targetElement"
+           (mouseenter)="toggleDefault()"
+           (mouseleave)="toggleDefault()">help_outline</i>
+      </h4>
+      <dx-tooltip
+        target="#targetElement"
+        position="top"
+        [(visible)]="tooltipVisible">
+        <div *dxTemplate="let data = data of 'content'">
+          <span class="registration-mandatory">All fields marked * and CAPTCHA are mandatory.</span>
+        </div>
+      </dx-tooltip>
+    </div>
+    <p class="login-text">Please use the Google Chrome web browser to access Sherpa.</p>
+    <p class="login-text">  Sherpa is built for and tested in Google Chrome. Other web browsers could limit Sherpa functionality.</p>
+    <dx-form id="form" #dxForm
+      labelLocation="right"
+      [formData]="registrationInfo"
+      [readOnly]="false"
+      [showColonAfterLabel]="true"
+      [showValidationSummary]="true"
+      validationGroup="customerData">
+      <!--<dxi-item dataField="subscriptionType"
+        editorType="dxSelectBox"
+        [editorOptions]="{ dataSource: subscriptionType, placeholder: 'SELECT TYPE OF SUBSCRIPTION'}">
+        <dxi-validation-rule
+          type="required"
+          message="Select type of subscription">
+        </dxi-validation-rule>
+      </dxi-item>-->
+     <!-- <dxi-item dataField="UserName"
+        [editorOptions]="{ placeholder: 'LOGIN'}">
+        <dxi-validation-rule
+          type="required"
+          message="Login is required"
+        >
+        </dxi-validation-rule>
+
+      </dxi-item>-->
+      <dxi-item dataField="FirstName"
+        [editorOptions]="{ placeholder: 'FIRST NAME'}">
+        <dxi-validation-rule
+          type="required"
+          message="Name is required">
+        </dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="LastName"
+        [editorOptions]="{ placeholder: 'LAST NAME'}">
+        <dxi-validation-rule
+          type="required"
+          message="LAST NAME is required">
+        </dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="Email"
+        [editorOptions]="{ placeholder: 'EMAIL'}">
+        <dxi-validation-rule
+          type="required"
+          message="Email is required"
+        >
+        </dxi-validation-rule>
+        <dxi-validation-rule #maleValidator
+          type="pattern"
+          [pattern]="emailPattern"
+          message="Enter valid Email"
+        >
+        </dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item
+        [template]="'countryTemplate'">
+      </dxi-item>
+      <div *dxTemplate="let data of 'countryTemplate'">
+        <dx-select-box #countrySelector
+                       [searchEnabled]=true
+                       searchMode="startsWith"
+                       [items]="countriesInfo"
+                       displayExpr="Name"
+                       placeholder="SELECT COUNTRY"
+                       valueExpr="Oid"
+                       [(value)]="registrationInfo.CountryId"
+                       (onValueChanged)="countrySelectorChange($event)">
+          <dx-validator validationGroup="customerData">
+            <dxi-validation-rule
+              type="required"
+              message="Country is required">
+            </dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
+      </div>
+      <dxi-item itemType="group" caption="Cellphone number">
+        <dxi-item dataField="Mobile"
+                  helpText="Example: +123(0)814026552"
+                  [editorOptions]="{
+                   placeholder: 'CELLPHONE NUMBER'
+                }">
+          <dxi-validation-rule
+            type="required"
+            message="Cellphone Number is required">
+          </dxi-validation-rule>
+          <dxi-validation-rule
+            type="pattern"
+            [pattern]="cellPhonePattern"
+            message="The cellphone must have a correct format">
+          </dxi-validation-rule>
+
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" caption="Phone number">
+        <dxi-item dataField="Phone"
+                  [editorOptions]="{
+                    placeholder: 'PHONE NUMBER'
+                }">
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" caption="Password should contain at least 8 characters, at least 1 upper and lower case, as well as a number and 1 special character. For example: Y3l*v6pN">
+      <dxi-item dataField="Password"
+        [editorOptions]="{ placeholder: 'PASSWORD' , mode: 'password', useMaskedValue: true, attr: {'autocomplete':'new-password'} }"
+      >
+        <dxi-validation-rule
+          type="required"
+          message="Password is required">
+        </dxi-validation-rule>
+        <dxi-validation-rule type="pattern" [pattern]="passwordPattern" message="The password should contain at least 8 characters, 1 upper and lower case, 1 number and 1 special character."></dxi-validation-rule>
+        </dxi-item>
+      </dxi-item>
+      <dxi-item
+        dataField="Password1"
+        editorType="dxTextBox"
+        [editorOptions]="{ placeholder: 'CONFIRM PASSWORD', mode: 'password' }">
+
+        <dxi-validation-rule
+          type="required"
+          message="Confirm Password is required">
+        </dxi-validation-rule>
+        <dxi-validation-rule
+          type="compare"
+          [comparisonTarget]="passwordComparison"
+          message="Password and Confirm Password do not match">
+        </dxi-validation-rule>
+      </dxi-item>
+      <dxi-item>
+        <re-captcha class="re-captcha" (resolved)="resolved($event)"
+          siteKey="6LehQHUUAAAAAIcJzlkW7sU4E_2vUAPRz7-J5pVL"
+        ></re-captcha>
+        <dxi-validation-rule
+          type="required"
+          message="Captcha is required">
+        </dxi-validation-rule>
+      </dxi-item>
+    </dx-form>
+
+    <div class="registration-terms-conditions">
+
+        <div class="dx-field-label checkbox-styles">
+          <div class="dx-field-value checkbox-styles-position">
+            <dx-check-box id="termsTarget"
+                          [value]="checkBoxValue"
+                          (valueChange)="getTermsConds($event)"
+            ></dx-check-box>
+            <span>I agree to the <a [routerLink]="['/eula-and-conditions']">Terms & Conditions</a></span>
+          </div>
+        </div>
+
+      </div>
+    <br/>
+    <dx-button
+      [disabled]="!captchaResponse"
+      text="REGISTER"
+      type="success"
+      validationGroup="customerData"
+      [useSubmitBehavior]="true">
+    </dx-button>
+    <span class="registration-terms-conditions">Already have an account?  <a [routerLink]="['/login']">Sign In</a></span>
+  </form>
+</div>
+</div>
+<dx-tooltip
+  target="#termsTarget"
+  position="bottom"
+  [(visible)]="termsTooltipVisible">
+  <div *dxTemplate="let data = data of 'content'">
+    <span class="registration-mandatory">Please check this box if you want to proceed</span>
+  </div>
+</dx-tooltip>

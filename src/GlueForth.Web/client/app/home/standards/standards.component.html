@@ -1,0 +1,263 @@
+<div class="data-grid-wrapper standarts-wrapper">
+  <div class="data-grid-container">
+    <div class="data-grid-container-header">STANDARDS</div>
+    <div class="left-content">
+  <span class="title-for-selector">
+    Sort By:
+  </span>
+      <dx-select-box class="standarts-select-box" [dataSource]="standardsByCurrentUnit"
+                     valueExpr="OID"
+                     displayExpr="Title"
+                     placeholder='Select Standards'
+                     (onSelectionChanged)="changeFilter($event, 'standard')"
+                      (onOpened)="setStandardSelectWidth($event)">
+      </dx-select-box>
+      <dx-select-box [dataSource]="questionGroupsTitles"
+                     valueExpr="OID"
+                     displayExpr="Title"
+                     [value]=""
+                     placeholder='Select Category'
+                     (onSelectionChanged)="changeFilter($event, 'questionGroup')"
+                     (onOpened)="setCategorySelectWidth($event)">
+      </dx-select-box>
+      <dx-select-box [dataSource]="fullListPrinciplesGroups"
+                     valueExpr="OID"
+                     displayExpr="Title"
+                     [value]=""
+                     placeholder='Select Focus Area'
+                     (onSelectionChanged)="changeFilter($event, 'fullListPrinciplesGroups')"
+                     (onOpened)="setFocusAreaSelectWidth($event)">
+      </dx-select-box>
+      <dx-select-box [dataSource]="characteristicsList"
+                     valueExpr="OID"
+                     displayExpr="Title"
+                     [value]=""
+                     placeholder='Characteristic'
+                     (onSelectionChanged)="changeFilter($event, 'characteristicsList')"
+                     (onOpened)="setCharacteristicSelectWidth($event)">
+      </dx-select-box>
+    <div class="right-content">
+    <span class="title-for-selector">
+    Filter By:
+  </span>
+      <dx-select-box [dataSource]="standardShowFilter"
+                     valueExpr="id"
+                     [value]=0
+                     displayExpr="status"
+                     (onSelectionChanged)="changeStandardShowFilter($event)">
+      </dx-select-box>
+      <dx-select-box [dataSource]="standardStatuses"
+                     #statusFilter
+                     valueExpr="id"
+                     [value]=2
+                     displayExpr="status"
+                     (onSelectionChanged)="changeStatusFilter($event)">
+      </dx-select-box>
+      </div>
+    </div>
+
+    <dx-data-grid #dataGrid
+      id="gridContainer"
+      [dataSource]="currentUnitStatuses"
+      [showBorders]="false"
+      [showColumnLines]="false"
+      [showRowLines]="true"
+      [hoverStateEnabled]="false"
+      noDataText=""
+      >
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+      <dxi-column
+        [width]="10 + '%'"
+        cellTemplate="multipleChoiceTemplate"
+        caption="Add Tasks"
+        headerCellTemplate="titleHeaderTemplateTasks"
+      ></dxi-column>
+      <dxi-column [width]="5 + '%'"
+                  dataField="ShortTitle"
+                  [allowSorting]="true"
+                  caption="Standard"
+                  headerCellTemplate="titleHeaderTemplate">
+      </dxi-column>
+      <dxi-column [width]="5 + '%'"
+                  dataField="StandardContentRef"
+                  [allowSorting]="true"
+                  [sortOrder]="'asc'"
+                  [sortingMethod]="sortByStandardContentRef"
+                  caption="CP Ref"
+                  headerCellTemplate="titleHeaderTemplate">
+      </dxi-column>
+      <dxi-column dataField="Description"
+                  [width]="35 + '%'"
+                  [allowSorting]="true"
+                  caption="Control Point Description"
+                  headerCellTemplate="titleHeaderTemplate">
+      </dxi-column>
+      <dxi-column dataField="Reference"
+                  [allowSorting]="true"
+                  [width]="8 + '%'"
+                  caption="Reference"
+                  headerCellTemplate="titleHeaderTemplate">
+      </dxi-column>
+      <dxi-column [width]="12 + '%'"
+                  dataField="CharacteristicName"
+                  [allowSorting]="true"
+                  caption="Characteristic Name"
+                  headerCellTemplate="titleHeaderTemplate">
+      </dxi-column>
+      <dxi-column dataField="QuestionGroup"
+                  [width]="12 + '%'"
+                  [allowSorting]="true"
+                  caption="Question Category"
+                  headerCellTemplate="titleHeaderTemplate">
+      </dxi-column>
+      <dxi-column [width]="8 + '%'"
+                  [allowSorting]="true"
+                  headerCellTemplate="titleHeaderTemplate"
+                  caption="STATUS"
+                  dataField="Choice"
+                  cellTemplate="statusCellTemplate"></dxi-column>
+      <dxi-column [width]="8 + '%'"[allowSorting]="true"
+                  headerCellTemplate="titleHeaderTemplate"
+                  caption="Compliance Status"
+                  dataField="DefaultChoice"
+                  cellTemplate="compliantCellTemplate"></dxi-column>
+      <div class="status-wrapper" *dxTemplate="let data of 'statusCellTemplate'">
+        <!--<span [ngClass]="{'status-label-not-in-action-plan' : data.data.Status==='Not in action plan',
+               'status-label-in-action-plan' : data.data.Status==='In action plan'}"
+              class="status-label status-label-not-in-action-plan">{{data.data.Choice}}</span>-->
+        <span *ngIf="data.data.Choice === -1">Not Answered</span>
+        <span *ngIf="data.data.Choice === 0 && data.data.CharacteristicOid !== 0">I don't know</span>
+        <span *ngIf="data.data.Choice === 1">No</span>
+        <span *ngIf="data.data.Choice === 2">Partially</span>
+        <span *ngIf="data.data.Choice === 3">Yes</span>
+        <span *ngIf="data.data.Choice === 0 && data.data.CharacteristicOid === 0">-</span>
+      </div>
+      <div class="status-wrapper" *dxTemplate="let data of 'compliantCellTemplate'">
+        <!--<span [ngClass]="{'status-label-not-in-action-plan' : data.data.Status==='Not in action plan',
+               'status-label-in-action-plan' : data.data.Status==='In action plan'}"
+              class="status-label status-label-not-in-action-plan">{{data.data.Choice}}</span>-->
+        <span *ngIf="data.data.DefaultChoice === data.data.Choice && data.data.CharacteristicOid !== 0">Compliant</span>
+        <span *ngIf="data.data.DefaultChoice !== data.data.Choice && data.data.Choice === -1">-</span>
+        <span *ngIf="data.data.DefaultChoice !== data.data.Choice && data.data.Choice !== -1">Not Fully Compliant</span>
+        <span *ngIf="data.data.Choice === null || data.data.CharacteristicOid === 0">-</span>
+      </div>
+      <div *dxTemplate="let info of 'titleHeaderTemplate' " [allowSorting]="true" class="data-grid-header">
+        <p class="data-grid-header">{{info.column.caption}}</p>
+      </div>
+      <dxi-column
+                  [width]="11 + '%'"
+                  cellTemplate="addTaskCellTemplate"
+                  caption="Tasks"
+                  headerCellTemplate="titleHeaderTemplate"
+      ></dxi-column>
+      <div *dxTemplate="let info of 'titleHeaderTemplateTasks'">
+        <div class="notes-button-container notes-button-container-header">
+         <!-- <dx-check-box
+            [(value)]="checkBoxValue"
+            (valueChange)=getAllPoints($event)
+          ></dx-check-box>-->
+        <dx-button
+          [text]="'ADD TASK'"
+          [height]="40"
+          [disabled]="!multipleTasks.length"
+          (click)="addMultipleTasks()"
+         >
+        </dx-button>
+        </div>
+      </div>
+      <div *dxTemplate="let data of 'addTaskCellTemplate'">
+        <div class="notes-button-container">
+          <div *ngIf="data.data.TasksCount"
+               class="notes-button-label"
+               (click)="addTask(data)"
+               [ngClass]="{'notes-button-label-zero': !data.data.TasksCount}">{{data.data.TasksCount}}
+          </div>
+          <div *ngIf="!data.data.TasksCount"
+               class="notes-button-label"
+               [ngClass]="{'notes-button-label-zero': !data.data.TasksCount}">{{data.data.TasksCount}}
+          </div>
+          <dx-button
+            [ngClass]="{'zero-notes-style': !data.data.TasksCount}"
+            [text]="'ADD TASK'"
+            [width]="140"
+            [height]="40"
+            (onClick)="addTask(data)">
+          </dx-button>
+        </div>
+      </div>
+      <div *dxTemplate="let data of 'multipleChoiceTemplate'">
+        <dx-check-box id="{{data.data.StandardContentOid}}"
+                      [value]="checkBoxValue"
+                      (valueChange)="getItemForTask($event, data)"
+         ></dx-check-box>
+      </div>
+    </dx-data-grid>
+</div>
+</div>
+
+<dx-popup #dxForm
+          [width]="600"
+          [height]="600"
+          [showTitle]="true"
+          [title]="'Add Task'"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="true"
+          [allowUpdating]="true"
+          [showCloseButton]="true"
+          [(visible)]="isAddTaskPopupVisible"
+          class="add-task-popup"
+>
+  <div *dxTemplate="let data of 'content'">
+    <form class="indicator-set-form" (submit)="onFormSubmitCreateTask($event)">
+      <dx-form #createTaskForm
+               [(formData)]="newTask"
+               [readOnly]="false"
+               [showColonAfterLabel]="true">
+        <dxi-item dataField="Actions" editorType="dxTextArea"
+                  [editorOptions]="{placeholder: 'Enter your action required here'}"
+                  [label]="{text: 'What Action?'}">
+        </dxi-item>
+        <dxi-item dataField="Resposible"
+                  [editorOptions]="{placeholder: 'Who should be completing these actions?'}"
+                  [label]="{text: 'Complete by whom?'}">
+        </dxi-item>
+
+        <dxi-item dataField="DueDate" editorType="dxDateBox"
+                  [editorOptions]="{ value: date, width: '100%', displayFormat: 'dd/MM/yyy' }"
+                  [label]="{text: 'By When?'}">
+        </dxi-item>
+
+        <dxi-item dataField="Result" editorType="dxTextArea"
+                  [editorOptions]="{placeholder: 'What evidence for there to support that these actions have been taken?'}"
+                  [label]="{text: 'What Evidence?'}">
+        </dxi-item>
+        <dxi-item dataField="IsCompleted" editorType="dxSwitch"
+                  [label]="{text: 'Completed?'}">
+        </dxi-item>
+
+        <dxi-item dataField="CharacteristicOid" [visible]="false">
+        </dxi-item>
+      </dx-form>
+      <div id="fileuploader-container">
+        <dx-file-uploader *ngIf="isAddTaskPopupVisible"
+          (onClick)="updateClick($event)"
+          [multiple]="false"
+          [uploadMode]="useButtons"
+          [allowCanceling]="true"
+          selectButtonText="Upload File"
+          labelText=""
+          (onValueChanged)="addFiles($event)"
+          [value]="uploadValue"
+          uploadMode="useForm">
+        </dx-file-uploader>
+      </div>
+      <dx-button
+        [useSubmitBehavior]="true"
+        class="continue-btn"
+        text="Save"
+        type="success">
+      </dx-button>
+    </form>
+  </div>
+</dx-popup>

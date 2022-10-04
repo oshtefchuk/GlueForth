@@ -1,0 +1,231 @@
+<div class="tasks-wrapper">
+
+  <div class="tasks-selector-container">
+    <span>Filter by:</span>
+    <dx-select-box [dataSource]="fullListPrinciplesGroups"
+                   [width]="250"
+                   valueExpr="OID"
+                   displayExpr="Title"
+                   [value]=""
+                   placeholder='Select Management Focus Area'
+                   (onSelectionChanged)="changeFilter($event, 'fullListPrinciplesGroups')"
+                   (onOpened)="setFocusAreaSelectWidth($event)">
+    </dx-select-box>
+    <dx-select-box [dataSource]="questionGroupsTitles"
+                   [width]="250"
+                   valueExpr="OID"
+                   displayExpr="Title"
+                   [value]=""
+                   placeholder='Select Question Category'
+                   (onSelectionChanged)="changeFilter($event, 'questionGroup')"
+                   (onOpened)="setCategorySelectWidth($event)">
+    </dx-select-box>
+    <dx-select-box [dataSource]="characteristicsList"
+                   [width]="250"
+                   valueExpr="OID"
+                   displayExpr="Title"
+                   [value]=""
+                   placeholder='Select Characteristic'
+                   (onSelectionChanged)="changeFilter($event, 'characteristicsList')"
+                   (onOpened)="setCharacteristicSelectWidth($event)">
+    </dx-select-box>
+  </div>
+
+<div class="data-grid-container">
+  <dx-data-grid #dataGrid
+    id="gridContainer"
+    [showBorders]="true"
+    [showColumnHeaders]="true"
+    [columnAutoWidth]="true"
+    [columnWidth]="200"
+    [headerFilter]="{ visible: true }"
+    [dataSource]="tasksData"
+    [scrolling]='{
+        columnRenderingMode: "standard",
+        mode: "standard",
+        preloadEnabled: false,
+        rowRenderingMode: "standard",
+        scrollByContent: true,
+        scrollByThumb: false,
+        showScrollbar: "onScroll",
+        useNative: null}'
+    [showRowLines]="true">
+    <dxo-export [enabled]="true"
+                backgroundColor="#6BCDFD"
+                fileName="My Actions - Tasks"
+                [allowExportSelectedData]="false">
+    </dxo-export>
+    <dxo-paging [enabled]="false"></dxo-paging>
+    <dxi-column dataField="CharacteristicRef"
+                [width]="80"
+                headerCellTemplate="titleHeaderTemplate"
+                caption="Ref">
+    </dxi-column>
+    <dxi-column dataField="CharacteristicShortTitle"
+                headerCellTemplate="titleHeaderTemplate"
+                caption="Characteristic">
+    </dxi-column>
+    <dxi-column dataField="Actions"
+                [allowFiltering]="false"
+                headerCellTemplate="titleHeaderTemplate"
+                caption="Action"
+                [width]="350">
+    </dxi-column>
+    <dxi-column dataField="DueDate"
+                headerCellTemplate="titleHeaderTemplate"
+                dataType="'datetime'"
+                format="dd/MM/yyyy"
+                caption="Due Date"
+                [calculateFilterExpression]="calculateFilterExpression">
+      <dxo-header-filter
+        [dataSource]="orderHeaderFilter"></dxo-header-filter>
+    </dxi-column>
+    <dxi-column dataField="Resposible"
+                [allowFiltering]="false"
+                headerCellTemplate="titleHeaderTemplate"
+                caption="Who">
+    </dxi-column>
+    <dxi-column dataField="Result"
+                [allowFiltering]="false"
+                headerCellTemplate="titleHeaderTemplate"
+                caption="Evidence">
+    </dxi-column>
+    <dxi-column dataField="Status"
+                headerCellTemplate="titleHeaderTemplate"
+                [allowFiltering]="false"
+                caption="Status">
+    </dxi-column>
+
+    <dxi-column dataField="StandardContent"
+                headerCellTemplate="titleHeaderTemplate"
+                [headerFilter]="{
+                dataSource: [
+                {
+                  text: 'Was created from the Standard Section',
+                  value: ['StandardContent', 'notcontains', '']
+                },
+                 {
+                  text: 'Other',
+                  value: ['StandardContent', 'contains', '']
+                }
+                ]
+                }"
+                caption="Standard Reference">
+    </dxi-column>
+    <dxi-column dataField="FileName"
+                headerCellTemplate="titleHeaderTemplate"
+                cellTemplate="downloadFileCell"
+                [allowFiltering]="false"
+                caption="Uploaded File">
+    </dxi-column>
+    <dxi-column dataField="Cost"
+                headerCellTemplate="titleHeaderTemplate"
+                [allowFiltering]="false"
+                caption="Estimated Cost"
+                cellTemplate="costCellTemplate">
+    </dxi-column>
+    <dxi-column caption="MANAGE"
+                headerCellTemplate="titleHeaderTemplate"
+                cellTemplate="manageTemplate"
+                [width]="165"
+                [allowEditing]="false"></dxi-column>
+
+    <div *dxTemplate="let info of 'titleHeaderTemplate'" class="data-grid-header">
+      <p class="data-grid-header">{{info.column.caption}}</p>
+    </div>
+
+    <div *dxTemplate="let info of 'costCellTemplate'" class="cost-column">
+      <p>{{info.data.Cost}}</p>
+    </div>
+
+    <div class="download-column" *dxTemplate="let data of 'downloadFileCell'">
+      <a (click)="downLoadFile(data.data)">{{data.data.FileName}}</a>
+    </div>
+    <div *dxTemplate="let data of 'manageTemplate'" class="grid-edit">
+      <dx-button
+        text="Edit"
+        type="success"
+        [width]="80"
+        (onClick)="editTask($event, data)">
+      </dx-button>
+      <dx-button
+        text="Delete"
+        type="danger"
+        [width]="80"
+        (onClick)="deleteTask($event, data)">
+      </dx-button>
+    </div>
+  </dx-data-grid>
+</div>
+
+<dx-popup #dxForm
+          [width]="600"
+          [height]="600"
+          [showTitle]="true"
+          [title]="'Edit task'"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="true"
+          [allowUpdating]="true"
+          [showCloseButton]="true"
+          [(visible)]="isAddTaskPopupVisible"
+          class="add-task-popup"
+>
+  <div *dxTemplate="let data of 'content'">
+    <form class="indicator-set-form" (submit)="onFormSubmitEditTask($event)">
+      <dx-form #createTaskForm
+               [(formData)]="newTask"
+               [readOnly]="false"
+               [showColonAfterLabel]="true">
+        <dxi-item dataField="Actions" editorType="dxTextArea"
+                  [editorOptions]="{placeholder: 'Enter your action required here'}"
+                  [label]="{text: 'What Action?'}">
+        </dxi-item>
+        <dxi-item dataField="Resposible"
+                  [editorOptions]="{placeholder: 'Who should be completing these actions?'}"
+                  [label]="{text: 'Complete by whom?'}">
+        </dxi-item>
+
+        <dxi-item dataField="DueDate" editorType="dxDateBox"
+                  [editorOptions]="{ value: date, width: '100%', displayFormat: 'dd-MMM-yy' }"
+                  [label]="{text: 'By When?'}">
+        </dxi-item>
+
+        <dxi-item dataField="Result" editorType="dxTextArea"
+                  [editorOptions]="{placeholder: 'What evidence for there to support that these actions have been taken?'}"
+                  [label]="{text: 'What Evidence?'}">
+        </dxi-item>
+        <dxi-item dataField="IsCompleted" editorType="dxSwitch"
+
+                  [label]="{text: 'Completed?'}">
+        </dxi-item>
+
+        <dxi-item dataField="CharacteristicOid" [visible]="false">
+        </dxi-item>
+
+      </dx-form>
+      <div class="uploaded-item" *ngIf="newTask.FileName"><span>Uploaded File:</span>{{newTask.FileName}}</div>
+      <div *ngIf="newTask.FileName">
+      <img
+        [src]="'data:image/png;base64,' + newTask.File" style="width:100px" alt="">
+      </div>
+      <dx-file-uploader *ngIf="isAddTaskPopupVisible"
+                        [multiple]="false"
+                        [uploadMode]="useButtons"
+                        [allowCanceling]="true"
+                        selectButtonText="Upload File"
+                        labelText=""
+                        (onValueChanged)="addFiles($event)"
+                        [value]=""
+                        uploadMode="useForm">
+      </dx-file-uploader>
+      <dx-button
+        [disabled]=""
+        [useSubmitBehavior]="true"
+        class="continue-btn"
+        text="Save"
+        type="success">
+      </dx-button>
+    </form>
+  </div>
+</dx-popup>
+</div>

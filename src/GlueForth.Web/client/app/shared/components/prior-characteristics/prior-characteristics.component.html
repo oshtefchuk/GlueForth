@@ -1,0 +1,9 @@
+<div class="active-categories-view">
+  <div class="active-categories-list-item"  *ngFor="let characteristic of topPriorByPrincipleGroup; let index = index">
+    <span>{{index+1}}</span>
+    <span class="active-category-name" routerLink='/my-actions-capture/{{characteristic?.OID}}'>{{characteristic?.Title}}</span>
+    <i class="material-icons">
+      keyboard_arrow_right
+    </i>
+  </div>
+</div>

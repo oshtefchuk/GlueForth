@@ -1,0 +1,40 @@
+.status-label {
+  height: 20px;
+  padding: 5px;
+  background-color: silver;
+  border-radius: 3px;
+  text-align: center;
+  color: #fff;
+  font-size: 11px;
+  line-height: 20px;
+  margin-left: 10px;
+
+  &-status-0 {
+    background-color: #d28b91;
+  }
+  &-status-1 {
+    background-color: #F8876B;
+  }
+  &-status-2 {
+    background-color: #FBB475;
+  }
+  &-status-3 {
+    background-color: #FFE681;
+  }
+  &-status-4 {
+    background-color: #DBDD7F;
+  }
+  &-status-5 {
+    background-color: #B8D37C;
+  }
+  &-status-6 {
+    background-color: #98C779;
+  }
+  &-status-7 {
+    background-color: #79BD76;
+  }
+  &-status-8 {
+    background-color: #5BB474;
+  }
+
+}

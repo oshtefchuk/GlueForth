@@ -1,0 +1,104 @@
+<div class="reports-container">
+  <div class="question-group-statuses-description">
+    <div class="report-description-container" *ngFor="let status of statuses; let index = index">
+      <div class="report-description-color"
+           [ngClass]="{'gradient' : index === 3 }"
+           [style.backgroundColor]="status.color"></div>
+      <span>{{status.description}}</span>
+    </div>
+  </div>
+  <div class="reports-title">IMPROVEMENT PROGRESS</div>
+  <div class="reports-top-header">
+    <div class="reports-top-header-items medium first-item">
+      <span>Strategic Alignment</span>
+    </div>
+    <div class="reports-top-header-items large second-item">
+      <span>Operational Capabilities</span>
+    </div>
+    <div class="reports-top-header-items medium third-item">
+      <span>Implementation</span>
+    </div>
+    <div class="reports-top-header-items small fourth-item">
+      <span>Result</span>
+    </div>
+  </div>
+  <dx-data-grid #dataGrid
+                id="gridContainer"
+                noDataText="No Data"
+                [showColumnLines]="false"
+                [showBorders]="false"
+                [showRowLines]="false"
+                [wordWrapEnabled]="true"
+                [dataSource]=improvementData
+                [columns]="['CharacteristicRef', 'CharacteristicTitle', QuestionGroupStatuses]">
+    <dxo-scrolling mode="standard"></dxo-scrolling>
+    <dxo-paging [enabled]="false"></dxo-paging>
+
+    <div *dxTemplate="let info of 'titleHeaderTemplate' ">
+      <p class="data-grid-header ">{{info.column.caption}}</p>
+    </div>
+    <div *dxTemplate="let info of 'statusHeaderTemplate' ">
+      <p class="data-grid-header data-grid-header-rotated">{{info.column.caption}}</p>
+    </div>
+
+    <dxi-column
+      [style]="{'font-size': '11px'}"
+      [width]="50"
+      dataField='CharacteristicRef'
+      caption="Ref"
+      headerCellTemplate="titleHeaderTemplate"
+      cellTemplate="characteristicRefTemplate"
+    ></dxi-column>
+    <dxi-column
+      [style]="{'font-size': '11px'}"
+      [width]="300"
+      dataField='CharacteristicTitle'
+      caption="Prioritised Items"
+      headerCellTemplate="titleHeaderTemplate"
+      cellTemplate="characteristicTemplate"
+    ></dxi-column>
+    <div *dxTemplate="let data of 'characteristicTemplate'">
+      <p class="characteristic-style">{{data.data.CharacteristicTitle}}</p>
+    </div>
+    <div *dxTemplate="let data of 'characteristicRefTemplate'">
+      <p class="characteristic-style">{{data.data.CharacteristicRef}}</p>
+    </div>
+    <div [ngStyle]="{'background-color':getCellColor(data.data.QuestionGroupStatuses[data.columnIndex-2])}"
+         *dxTemplate="let data of 'dataTemplate'">
+
+      <div *ngIf="data.data.QuestionGroupStatuses[data.columnIndex-2]===QuestionGroupStatuses.NoQuestionAvailable" class="cell-style cell-style-na">
+        <span class="na-question">N/A</span>
+      </div>
+
+      <div *ngIf="data.data.QuestionGroupStatuses[data.columnIndex-2]===QuestionGroupStatuses.HasUnansweredQuestion" class="cell-style">
+       <!-- <i class="material-icons">clear</i>-->
+      </div>
+
+      <div *ngIf="data.data.QuestionGroupStatuses[data.columnIndex-2]===QuestionGroupStatuses.AnsweredNo" class="cell-style" style="background: repeating-linear-gradient(45deg, #5fc874, #fff 3px, #fff 7px);">
+        <i class="material-icons"></i>
+      </div>
+
+      <div *ngIf="data.data.QuestionGroupStatuses[data.columnIndex-2] < 0" class="cell-style">
+        {{data.data.QuestionGroupStatuses[data.columnIndex-2] * -1}}
+        <i class="material-icons">overdue</i>
+      </div>
+      <div *ngIf="data.data.QuestionGroupStatuses[data.columnIndex-2]===QuestionGroupStatuses.AnsweredYesAllTaskComplete" class="cell-style">
+        <i class="material-icons">done</i>
+      </div>
+    </div>
+
+    <div class="status-template" [ngStyle]="{'color':getStatusCellColor(data.data.Status)}"
+         *dxTemplate="let data of 'progressTemplate'">
+      <span class="status-label status-label-not-in-action-plan">{{data.data.Status}}%</span>
+    </div>
+    <div class="status-template progress-label" [ngStyle]="{'background-color':getStatusCellColor(data.data.Status)}"
+         *dxTemplate="let data of 'statusTemplate'">
+      <span *ngIf="data.data.Status ===0">NOT STARTED</span>
+      <span *ngIf="data.data.Status > 0 && data.data.Status < 100">IN PROGRESS</span>
+      <span *ngIf="data.data.Status >= 100">COMPLETED</span>
+    </div>
+    <div class="status-wrapper" *dxTemplate="let data of 'statusCellTemplate'">
+    </div>
+  </dx-data-grid>
+
+</div>

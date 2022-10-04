@@ -1,0 +1,30 @@
+<container-element [ngSwitch]="status">
+  <ng-container *ngSwitchCase="CharacteristicStatus.OFF_THE_RADAR">
+    <span class="status-label status-label-status-0">OFF THE RADAR</span>
+  </ng-container>
+  <ng-container *ngSwitchCase="CharacteristicStatus.DABBLING">
+    <span class="status-label status-label-status-1">DABBLING</span>
+  </ng-container>
+  <ng-container *ngSwitchCase="CharacteristicStatus.GOOD_FORTUNE">
+    <span class="status-label status-label-status-2">GOOD FORTUNE</span>
+  </ng-container>
+  <ng-container *ngSwitchCase="CharacteristicStatus.MAKING_REPARATIONS">
+    <span class="status-label status-label-status-3">MAKING PREPARATIONS</span>
+  </ng-container>
+  <ng-container *ngSwitchCase="CharacteristicStatus.TENTATIVE_ENGAGEMENT">
+    <span class="status-label status-label-status-4">TENTATIVE ENGAGEMENT</span>
+  </ng-container>
+   <ng-container *ngSwitchCase="CharacteristicStatus.OVER_STRETCHED">
+     <span class="status-label status-label-status-5">OVER STRETCHED</span>
+   </ng-container>
+  <ng-container *ngSwitchCase="CharacteristicStatus.READY_TO_START">
+     <span class="status-label status-label-status-6">READY TO START</span>
+   </ng-container>
+  <ng-container *ngSwitchCase="CharacteristicStatus.WELL_UNDERWAY">
+     <span class="status-label status-label-status-7">WELL UNDERWAY</span>
+   </ng-container>
+  <ng-container *ngSwitchCase="CharacteristicStatus.FULFILLED">
+     <span class="status-label status-label-status-8">FULFILLED</span>
+   </ng-container>
+</container-element>
+

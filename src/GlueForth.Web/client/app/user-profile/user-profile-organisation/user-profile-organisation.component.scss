@@ -1,0 +1,74 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+bluenorth-user-profile {
+  background-color: #fff;
+}
+.user-profile-organisation-container {
+  height: calc(100vh - 138px);
+  padding: 22px 50px;
+  background-color: #fff;
+  /deep/ .dx-texteditor-input {
+      min-height: 30px;
+      padding: 0 9px;
+      line-height: 30px;
+  }
+  /deep/ dx-select-box {
+      min-height: 30px;
+      input {
+          font-size: 1em;
+      }
+  }
+  .dx-list-item-content {
+      font-size: 1em;
+  }
+  /deep/ .dx-texteditor {
+      border-radius: 0;
+  }
+  form {
+    min-width: 300px;
+    margin-bottom: 30px;
+    //margin-top: 50px;
+    //padding: 80px;
+    background-color: #fff;
+  }
+  .registration-mandatory {
+    float: left;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+
+  /deep/ dx-button {
+    margin-top: 15px;
+    @include button-variant($main-button-font-color, $main-button-background-color, $main-button-border-color, 100%);
+  }
+  .dx-item {
+    margin-bottom: 15px;
+  }
+  .rc-anchor .rc-anchor-normal .rc-anchor-light {
+    margin-top: 15px;
+  }
+
+  .registration-terms-conditions {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+}
+
+.user-profile-header {
+  .user-profile-title, .material-icons {
+    color: #3282B9!important;
+  }
+  background-color: #ffffff;
+  padding: 15px;
+  margin-bottom: 5px;
+  span {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .user-profile-organisation-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+}

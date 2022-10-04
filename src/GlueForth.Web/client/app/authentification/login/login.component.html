@@ -1,0 +1,49 @@
+<bluenorth-header></bluenorth-header>
+<div class="login-background">
+  <div class="login-container">
+    <form class="login-form" (submit)="login($event)" dx-group-column-count="2">
+      <h4>SIGN IN</h4>
+      <p class="login-text">Please use the Google Chrome web browser to access Sherpa.  Sherpa is built for and tested in Google Chrome. Other web browsers could limit Sherpa functionality.</p>
+      <span class="notation-alignment">All fileds marked <i class="asterisk">*</i> are mandatory.</span>
+      <dx-form id="form"
+        #loginForm
+        class="form-position"
+        labelLocation="right"
+        [formData]="loginInfo"
+        [readOnly]="false"
+        [showColonAfterLabel]="false"
+        [showValidationSummary]="true"
+        validationGroup="customerData">
+        <dxi-item dataField="username"
+          [editorOptions]="{ placeholder: 'E-MAIL' }">
+          <dxi-validation-rule
+            type="required"
+            message="Username is required">
+          </dxi-validation-rule>
+        </dxi-item>
+        <dxi-item class="forgot-password-container"><a class="forgot-password" [routerLink]="['/forgot-password']">Forgot
+          Password?</a></dxi-item>
+        <dxi-item dataField="password"
+          [editorOptions]="{ placeholder: 'PASSWORD' , mode: 'password'}">
+        </dxi-item>
+      </dx-form>
+      <dx-button
+        type="success"
+        validationGroup="customerData"
+        [disabled]="loadIndicatorVisible"
+        [useSubmitBehavior]="true">
+        <div *dxTemplate="let data of 'content'">
+          <dx-load-indicator class='button-indicator'
+            height="20" width="20" color="#fff"
+            [visible]="loadIndicatorVisible">
+          </dx-load-indicator>
+          <span class='button-text'>{{buttonText}}</span>
+        </div>
+      </dx-button>
+
+      <span class="login-registration notation-alignment">Don't have an account?
+      <a [routerLink]="['/registration']">Register here</a>
+    </span>
+    </form>
+  </div>
+</div>

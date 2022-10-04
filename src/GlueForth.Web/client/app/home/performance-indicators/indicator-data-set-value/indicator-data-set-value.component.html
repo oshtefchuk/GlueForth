@@ -1,0 +1,647 @@
+<div class="indicator-title-container">
+  <h5>SELECT DATE PERIOD</h5>
+
+  <div class="control-panel-container">
+    <dx-drop-down-box [style.width.px]="200"
+                      [valueExpr]="'OID'"
+                      [displayExpr]="'PeriodFrom'"
+                      placeholder="Show/Hide Data Period"
+                      [dataSource]="indicatorDataSetList">
+      <div *dxTemplate="let data of 'content'">
+        <dx-load-panel class='button-indicator'
+                       [visible]="!selectdataset"
+                       [position]="{ of: '#checkboxList' }"
+                       [showIndicator]="true"
+                       [showPane]="false"
+                       [shading]="true"
+                       shadingColor="rgba(0,0,0,0.1)"
+                       [closeOnOutsideClick]="false"
+        >
+        </dx-load-panel>
+        <div id="checkboxList">
+          <dx-scroll-view>
+          <div class="checkbox-list" *ngFor="let item of indicatorDataSetList let index = index">
+            <label class="container"> <input type="checkbox" [disabled]="item.IsChecked && checkedDataSets.length===1"
+                                             id="{{item.OID}}" #currentItem
+                                             [checked]="item.IsChecked"
+                                             (change)="setUpDataSets($event.target.checked, item, index, $event)">
+              {{item.PeriodFrom}} <span class="checkmark"></span></label>
+          </div>
+          </dx-scroll-view>
+        </div>
+      </div>
+    </dx-drop-down-box>
+
+    <div class="dataset-container">
+      <div *ngFor="let dataset of indicatorDataSetList let index = index" >
+        <div *ngIf="dataset.IsChecked" class="dataset-item">
+          <span>{{dataset.PeriodFrom}}</span>
+          <span (click)="editDataset(dataset, 'dataSetEdit')"><i
+            class="material-icons edit-dataset">border_color</i></span>
+          <!-- <span (click)="unselectDataSets(false, dataset, index)">X</span>-->
+        </div>
+      </div>
+      <dx-load-panel
+        [(visible)]="loadingVisible"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        [closeOnOutsideClick]="false"
+      ></dx-load-panel>
+    </div>
+    <div class="left-content">
+      <dx-button
+        text="ADD NEW DATA PERIOD"
+        [width]="200"
+        [height]="36"
+        (onClick)="showFormPopup()">
+      </dx-button>
+      <dx-button
+        [disabled]="!selectedDatasets.length"
+        text="SUBMIT FOR REVIEW"
+        [width]="200"
+        [height]="36"
+        (onClick)="isSubmitForReviewPopupVisible = true">
+      </dx-button>
+
+    </div>
+  </div>
+  <div class="data-grid-wrapper indicator-data-grid-wrapper">
+    <div class="table-wrapper">
+      <dx-data-grid #dataTable id="grid-container"
+                    [dataSource]="principleGroupsForTableList"
+                    noDataText=""
+                    [showBorders]="true"
+                    [scrolling]="{ showScrollbar: 'never' }"
+                    [hoverStateEnabled]="true"
+                    (onSelectionChanged)="selectCurrentRow($event)"
+                    (onContentReady)="contentRowReady($event)"
+                    [showColumnHeaders]="false"
+                    [masterDetail]="{ enabled: false, template: 'detail', hoverStateEnabled: false }"
+      >
+        <dxo-selection mode="single"></dxo-selection>
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+        <dxo-paging [enabled]="false"></dxo-paging>
+        <!--<div *dxTemplate="let info of 'firstColumnHeaderTemplate'">
+          <p class="data-grid-header">{{info.column.index+1}}</p>
+        </div>-->
+        <div *dxTemplate="let info of 'headerTemplate'">
+          <p class="data-grid-header">{{info.column.caption}}</p>
+        </div>
+        <dxi-column dataField="Title"
+                    [width]="400"
+                    headerCellTemplate="headerTemplate"
+                    [fixed]="true"
+        >
+        </dxi-column>
+        <dxi-column caption="UoM"
+                    [width]="150"
+                    cellTemplate="unitTemplate"
+                    [fixed]="true"
+                    headerCellTemplate="headerTemplate">
+
+        </dxi-column>
+        <div *dxTemplate="let item of 'unitTemplate'">
+          <p>UNIT</p>
+        </div>
+        <div *dxTemplate="let item of 'actionsTemplate'">
+        </div>
+        <div *dxTemplate="let itemData of 'trendTemplate'; let itemIndex = index">
+          <p class="open-btn" (click)="selectCurrentRow($event, itemData)"></p>
+        </div>
+        <div *dxTemplate="let item of 'detail'">
+          <dx-data-grid class="main-datagrid" #innerDataTable
+                        id="gridContainer"
+                        [dataSource]="testArray1"
+                        noDataText=""
+                        [showBorders]="true"
+                        [hoverStateEnabled]="false"
+                        [showColumnHeaders]="false"
+                        [width]="'100%'"
+                        keyExpr="PrimaryDataFieldOid"
+                        [wordWrapEnabled]="true">
+            <dxo-paging [enabled]="false"></dxo-paging>
+            <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+            <dxo-editing
+              mode="cell"
+              [allowUpdating]="true"
+            >
+            </dxo-editing>
+            <dxi-column dataField="Name"
+                        [width]="400"
+                        caption="Indicator"
+                        cellTemplate="titleTemplate"
+                        [allowEditing]="false"
+                        [fixed]="true"
+                        id="title">
+              <div *dxTemplate="let templateTitle of 'titleTemplate'"
+                   [class.total-line-bold]="isDisabledCommodity(templateTitle)
+                 || filterDataGrid(templateTitle) || templateTitle.data.IsBoolean || templateTitle.data.IsMapArea"
+                   class="indicator-title">
+                <span id="guidance{{templateTitle.rowIndex}}">{{templateTitle.data.Name}}</span>
+                <i class="material-icons" *ngIf="templateTitle.data.Guidance"
+                   (mouseenter)="toggleGuidancePopup(templateTitle)" (mouseleave)="toggleGuidancePopup(null)"
+                   id="{{templateTitle.data.Name}}">help_outline</i>
+                <dx-popover
+                  target="#guidance{{templateTitle.rowIndex}}"
+                  position="top"
+                  [width]="250"
+                  [visible]="templateTitle.rowIndex == isIndicatorPopoverVisible">
+                  <div *dxTemplate="let data2 of 'content'">
+                    <span>{{templateTitle.data.Guidance}}</span>
+                  </div>
+                </dx-popover>
+              </div>
+            </dxi-column>
+            <dxi-column
+              [allowEditing]="false"
+              dataField="DefaultUOM"
+              caption="Unit Of Measure"
+              [width]="150"
+              [fixed]="true"
+              cellTemplate="mapCellTemplate"
+            >
+            </dxi-column>
+            <div *dxTemplate="let selector of 'mapCellTemplate'" class="map-selector">
+              <p>{{selector.data.DefaultUOM}}</p>
+              <dx-select-box *ngIf="selector.data.IsMapArea"
+                             [width]="50"
+                             (onValueChanged)="getMapAreaMode($event, selector)"
+                             [dataSource]="[{mode: 'Capture', value: true}, {mode: 'Map', value: false}]"
+                             displayExpr="mode"
+                             valueExpr="value"
+                             [value]="selector.data.IsMapManual"
+              ></dx-select-box>
+              <dx-select-box *ngIf="selector.data.IsMonthlyDataModeAvailable && selector.data.CommodityOid"
+                             [width]="50"
+                             (onValueChanged)="getDataMode($event, selector)"
+                             [dataSource]="[{mode: 'Monthly', value: true}, {mode: 'Annualy', value: false}]"
+                             displayExpr="mode"
+                             valueExpr="value"
+                             [value]="selector.data.IsMonthlyDataMode"
+              ></dx-select-box>
+            </div>
+
+            <div *dxTemplate="let note of 'notesCellTemplate'">
+              <div *ngIf="!isDisabledCommodity(note)" class="notes-button-container">
+                <div *ngIf="note.data.IndicatorNotesCount"
+                     class="notes-button-label"
+                     (click)="toOpenNotes($event, note)"
+                     [ngClass]="{'notes-button-label-zero': !note.data.IndicatorNotesCount}">
+                  {{note.data.IndicatorNotesCount}}
+                </div>
+                <div *ngIf="!note.data.IndicatorNotesCount"
+                     class="notes-button-label"
+                     [ngClass]="{'notes-button-label-zero': !note.data.IndicatorNotesCount}">
+                  {{note.data.IndicatorNotesCount}}
+                </div>
+                <dx-button
+                  [ngClass]="{'zero-notes-style': !note.data.IndicatorNotesCount}"
+                  [text]="buttonTextNotes"
+                  [width]="114"
+                  [height]="32"
+                  (onClick)="toOpenNotes($event, note)">
+                </dx-button>
+              </div>
+            </div>
+
+            <div *dxTemplate="let Value of 'editNumberTemplate'">
+              <div (click)="getMonthlyPopup(Value, 'monthlyValues')">
+                <dx-number-box id="{{Value.columnIndex}}-{{Value.rowIndex}}"
+
+                               [ngClass]="{'number-box-border-red': Value.data.PrimaryDataValue[Value.columnIndex -2].Value==='',
+                           'number-box-border-grey': Value.data.PrimaryDataValue[Value.columnIndex -2].Value!==''
+                           }"
+                               format="0,###.##" *ngIf="!Value.data.IsBoolean"
+                               [disabled]="filterDataGrid(Value) || isDisabledCommodity(Value) || isDisabledMapArea(Value) || isDisabledMonthly(Value)"
+                               (onValueChanged)="onValueChanged($event, Value)"
+                               [value]="Value.data.PrimaryDataValue[Value.columnIndex -2].Value !=='' ?
+                           +Value.data.PrimaryDataValue[Value.columnIndex -2].Value : ''">
+                </dx-number-box>
+                <dx-select-box *ngIf="Value.data.IsBoolean"
+                               #switch
+                               [dataSource]="selectBoxValues"
+                               [disabled]="filterDataGrid(Value) || isDisabledCommodity(Value)"
+                               (onValueChanged)="onValueChanged($event, Value)"
+                               displayExpr="name"
+                               valueExpr="value"
+                               [value]="(Value.data.PrimaryDataValue[Value.columnIndex -2].Value === 'True' || Value.data.PrimaryDataValue[Value.columnIndex -2].Value)
+                        && Value.data.PrimaryDataValue[Value.columnIndex -2].Value !== 'False'"
+                ></dx-select-box>
+              </div>
+            </div>
+            <div *dxTemplate="let item of 'trendInnerTemplate' let index = index">
+              <dx-button
+                (onClick)="showTrendChart(item)"
+                class="trend-btn"
+                text="TREND"
+                type="success"
+                [visible]="!item.data.IsBoolean"></dx-button>
+            </div>
+          </dx-data-grid>
+        </div>
+      </dx-data-grid>
+    </div>
+  </div>
+  <dx-popup class="popup"
+            [width]="700"
+            [height]="700"
+            [showTitle]="true"
+            title="NOTES"
+            [dragEnabled]="false"
+            [closeOnOutsideClick]="true"
+            [allowUpdating]="true"
+            [(visible)]="isNotesPopupVisible">
+    <div *dxTemplate="let data of 'content'"
+         class="popup">
+      <dx-scroll-view>
+        <dx-accordion
+          [scrollByContent]="true"
+          [scrollByThumb]="true"
+          [dataSource]="notes"
+          [multiple]="false"
+          [animationDuration]="300"
+          [selectedItems]="[notes[0]]">
+          <div *dxTemplate="let itemData of 'title' let index = index">
+            <p class="accordion-title">DATA COLLECTION PERIOD: {{itemData.FullPeriod}} <span
+              [ngClass]="{'notes-button-label-zero': !itemData.Notes.length}" class="notes-button-label">{{itemData.Notes.length}}</span>
+            </p>
+          </div>
+          <div #templateContainer
+               *dxTemplate="let itemData of 'item'"
+               class="template">
+            <div #templateContainer
+                 class="chart-container">
+              <div *ngFor="let key of itemData.Notes"
+                   [ngClass]="{'message-container' : key.UserFullName !== currentUserFullName}">
+                <div *ngIf="key.OID">
+                  <div class="message-info-top">
+                    <span class="accordion-name">
+                      {{key.FirstName}} {{key.LastName}}
+                    </span>
+                    <span class="accordion-name accordion-date">
+                      {{key.Created | date: 'd MMMM y'}}
+                    </span>
+                  </div>
+                  <div class="message-note-container">
+                    <!--<div class="accordion-message"-->
+                    <!--[ngClass]="{'admin-message' : key.UserFullName !== currentUserFullName}">-->
+                    <!--{{key.Message}}-->
+                    <!--</div>-->
+                    <dx-text-area
+                      [height]="50"
+                      (onValueChanged)="changeNote($event, key)"
+                      [value]="key.Message">
+                    </dx-text-area>
+                    <div (click)="updateNote(key, itemData)" class="update-note-btn">
+                      <i class="material-icons">
+                        update
+                      </i>
+                    </div>
+                    <div (click)="deleteNote(key, itemData, 'deleteNote')" class="delete-note-btn">
+                      <i class="material-icons">
+                        delete
+                      </i>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="text-container">
+              <dx-text-area
+                [height]="60"
+                [(value)]="value"
+                (input)="noteValueChanged($event)">
+              </dx-text-area>
+              <div class="button-container"
+                   (click)="addMessage($event, itemData)">
+                <i class="material-icons send-button">send</i>
+              </div>
+            </div>
+          </div>
+        </dx-accordion>
+      </dx-scroll-view>
+    </div>
+  </dx-popup>
+
+  <dx-popup class="popup indicator-popup"
+            [width]="700"
+            [height]="200"
+            [showTitle]="true"
+            title="{{indicatorGuidance.Title}}"
+            [dragEnabled]="false"
+            [closeOnOutsideClick]="true"
+            [allowUpdating]="true"
+            [(visible)]="isIndicatorPopupVisible">
+    <div *dxTemplate="let data of 'content'" class="popup">
+      <dx-scroll-view>
+        {{indicatorGuidance}}
+      </dx-scroll-view>
+    </div>
+  </dx-popup>
+
+  <dx-popup
+    [width]="600"
+    [height]="200"
+    [showTitle]="true"
+    title="SUBMIT FOR REVIEW"
+    [dragEnabled]="false"
+    [closeOnOutsideClick]="true"
+    [allowUpdating]="true"
+    [(visible)]="isSubmitForReviewPopupVisible">
+
+    <div *dxTemplate="let data of 'content'">
+      <div *ngIf="selectedDatasets.length"
+           class="datasets-submit-popup">
+        <dx-tag-box #multySelectorForReview
+                    class="review-selector"
+                    [editorOptions]="{placeholder: 'SELECT DATASETS'}"
+                    [items]="selectedDatasets"
+                    displayExpr="PeriodFrom"
+                    valueExpr="OID"
+                    (onSelectionChanged)="selectDatasetsForReview($event)">
+        </dx-tag-box>
+        <dx-button
+          [disabled]="!selectedDatasetsForReview.length"
+          text="SUBMIT FOR REVIEW SELECTED DATASETS"
+          [width]="250"
+          [height]="36"
+          (onClick)="upateDatasetsGrade()">
+        </dx-button>
+      </div>
+    </div>
+  </dx-popup>
+
+  <dx-popup #dxForm
+            [width]="600"
+            [height]="350"
+            [showTitle]="true"
+            title="Add Data Set"
+            [dragEnabled]="false"
+            [closeOnOutsideClick]="true"
+            [allowUpdating]="true"
+            [(visible)]="isCreateDataSetPopupVisible"
+  >
+    <div *dxTemplate="let data of 'content'">
+      <form class="indicator-set-form" (submit)="onFormSubmitCreateDataSet(null, $event)">
+        <dx-form #createDataSetForm
+                 [formData]="newDataSet"
+                 [readOnly]="false"
+                 [showColonAfterLabel]="true"
+                 [showValidationSummary]="true"
+                 validationGroup="addDataSet"
+        >
+          <dxi-item itemType="group" caption="Period" [colCount]="4">
+            <dxi-item [label]="{text: 'From'}">
+              <dx-select-box #periodFromMonthSelector
+                             [items]="monthArray"
+                             [(value)]="periodFromMonth"
+                             (onValueChanged)="setMonthPeriod($event)">
+              </dx-select-box>
+            </dxi-item>
+            <dxi-item>
+              <dx-select-box #periodFromYearSelector
+                             [items]="yearArrayFrom"
+                             [value]="periodFromYear.text"
+                             (onValueChanged)="showChangesFromYear($event)"
+                             valueExpr="text"
+                             displayExpr="text">
+              </dx-select-box>
+            </dxi-item>
+
+            <dxi-item [label]="{text: 'To'}">
+              <dx-select-box #periodToMonthSelector
+                             [items]="monthArray"
+                             [(value)]="periodToMonth"
+
+              >
+              </dx-select-box>
+            </dxi-item>
+            <dxi-item>
+              <dx-select-box #periodToYearSelector
+                             [items]="yearArrayTo"
+                             [(value)]="periodToYear.text"
+                             valueExpr="text"
+                             displayExpr="text">
+              </dx-select-box>
+            </dxi-item>
+          </dxi-item>
+
+          <dxi-item dataField="Comment"
+                    editorType="dxTextArea"
+                    [editorOptions]="{placeholder: 'Add your comment'}"
+                    [value]="">
+          </dxi-item>
+
+        </dx-form>
+        <dx-button validationGroup="addDataSet"
+                   [disabled]="!periodFromMonth || !periodToMonth || !periodFromYear.text || !periodToYear.text"
+                   [useSubmitBehavior]="true"
+                   class="continue-btn"
+                   text="SUBMIT"
+                   type="success">
+        </dx-button>
+      </form>
+    </div>
+  </dx-popup>
+
+  <dx-popup #trendChart
+            [width]="1000"
+            [height]="600"
+            [showTitle]="true"
+            title="Data Field Trend Line"
+            [dragEnabled]="false"
+            [(visible)]="isTrendChartPopupVisible"
+  >
+    <div *dxTemplate="let data of 'content'" class="chart-wrapper">
+      <div class="chart-hover-element">
+        <div class="chart-tooltip-title">{{yaxisName}}</div>
+      </div>
+      <dx-chart id="chart"
+                [palette]="['#D49290', '#7FD03E']"
+                [dataSource]="trendInfo"
+                [series]="{
+        argumentField: 'Period',
+        valueField: 'Value',
+        name: '',
+        type: 'line'
+      }"
+                [argumentAxis]="{
+                title: 'year'}"
+                [valueAxis]="{
+                title: yaxisName
+                }"
+      >
+        <dxo-tooltip
+          [enabled]="true"
+          [customizeTooltip]="customizeChartTooltip">
+        </dxo-tooltip>
+      </dx-chart>
+    </div>
+  </dx-popup>
+
+
+  <dx-popup
+    [width]="400"
+    [height]="150"
+    [showTitle]="true"
+    title="Confirmation"
+    [dragEnabled]="false"
+    [closeOnOutsideClick]="true"
+    [allowUpdating]="true"
+    [(visible)]="isShowConfirmationPopup">
+    <div *dxTemplate="let data of 'content'">
+      <div class="confirmation-popup-wrapper">
+        <a class="cancel-confirm-btn" (click)="cancelDelete()">Cancel</a>
+        <a (click)="confirmDeleteDataSet()" class="confirmation-btn">Delete</a>
+      </div>
+    </div>
+  </dx-popup>
+
+
+  <dx-popup
+    [width]="400"
+    [height]="150"
+    [showTitle]="true"
+    title="Confirmation"
+    [dragEnabled]="false"
+    [closeOnOutsideClick]="true"
+    [allowUpdating]="true"
+    [(visible)]="isShowConfirmationEditPopup">
+    <div *dxTemplate="let data of 'content'">
+      <div><span>Are you sure you want to update?</span></div>
+      <div class="confirmation-popup-wrapper">
+        <a class="cancel-confirm-btn" (click)="isShowConfirmationEditPopup = false">Cancel</a>
+        <a (click)="updateDataSet()" class="confirmation-btn-update">Update</a>
+      </div>
+    </div>
+  </dx-popup>
+
+  <dx-popup class="monthly-popup-wrapper" #genericPopup
+            [width]="currentPopupConfig.width"
+            [height]="currentPopupConfig.height "
+            [showTitle]="currentPopupConfig.showTitle"
+            [title]="currentPopupConfig.title"
+            [dragEnabled]="currentPopupConfig.dragEnabled"
+            [closeOnOutsideClick]="currentPopupConfig.closeOnOutsideClick"
+            [closeOnBackButton]="currentPopupConfig.closeOnBackButton"
+            [showCloseButton]="currentPopupConfig.showCloseButton"
+            [(visible)]="popupShow"
+            [shading]="currentPopupConfig.shading"
+            [resizeEnabled]="currentPopupConfig.resizeEnabled"
+            (onHidden)="onPopupHidden()"
+            [(contentTemplate)]="currentPopupTemplate"
+            titleTemplate="title"
+ >
+
+    <div *dxTemplate="let data of 'title'">
+      <p>{{monthlyPopupTitle ? monthlyPopupTitle : currentPopupConfig.title}}</p>
+      <i class="dx-icon dx-icon-close" (click)="closePopup(genericPopup)"></i>
+    </div>
+
+    <div *dxTemplate="let data of 'monthlyValues'">
+      <dx-scroll-view>
+        <dx-data-grid #monthlyDataTable
+          [dataSource]="monthlyData.MonthValues"
+          >
+          <dxi-column caption="Month"
+          cellTemplate="monthCellTemplate"
+          headerCellTemplate="monthlyHeader"
+          dataField="MonthNumber">
+          </dxi-column>
+          <dxi-column *ngFor="let item of monthlyData.Periods; let index = index"
+                      caption="{{item.Name}}"
+                      dataField="{{item.ValueOid}}"
+                      dataType="number"
+                      editCellTemplate="monthValuesTemplate"
+                      [showEditorAlways]="true"
+                      headerCellTemplate="monthlyHeader"
+                      [allowEditing]="true">
+          </dxi-column>
+
+          <div *dxTemplate="let header of 'monthlyHeader'">
+  <strong class="month-table-header">{{header.column.caption}}</strong>
+          </div>
+          <div *dxTemplate="let month of 'monthCellTemplate'">
+            <span [ngClass]="{'total-style': month.data.MonthNumber === 'Total'}">{{getMonthByNumber(month.data.MonthNumber)}}</span>
+          </div>
+          <div *dxTemplate="let el of 'monthValuesTemplate'">
+            <dx-number-box
+              [ngClass]="{'number-box-border-red': el.data.Values[el.columnIndex-1]==='',
+                           'number-box-border-grey': el.data.Values[el.columnIndex-1]!==''}"
+              format="0,###.##"
+              (onValueChanged)="updateMonthlyValue($event, el)"
+              [disabled]="el.data.MonthNumber === 'Total'"
+              [value]="getValue(el)"
+            >
+            </dx-number-box>
+
+          </div>
+
+        </dx-data-grid>
+      </dx-scroll-view>
+    </div>
+
+      <div *dxTemplate="let data of 'dataSetEdit'">
+        <form class="indicator-set-form">
+          <dx-form #createDataSetForm
+                   [formData]="newDataSet"
+                   [readOnly]="false"
+                   [showColonAfterLabel]="true"
+                   [showValidationSummary]="true"
+                   validationGroup="addDataSet"
+          >
+
+            <dxi-item itemType="group" caption="Period" [colCount]="4">
+              <dxi-item [label]="{text: 'From'}">
+                <dx-select-box #periodFromMonthSelector
+                               [items]="monthArray"
+                               [(value)]="periodFromMonth"
+                >
+                </dx-select-box>
+              </dxi-item>
+              <dxi-item>
+                <dx-select-box #periodFromYearSelector
+                               [items]="yearArrayTo"
+                               [(value)]="periodFromYear.text"
+                               valueExpr="text"
+                               displayExpr="text"
+                ></dx-select-box>
+              </dxi-item>
+              <dxi-item [label]="{text: 'To'}">
+                <dx-select-box #periodToMonthSelector
+                               [items]="monthArray"
+                               [(value)]="periodToMonth"
+                ></dx-select-box>
+              </dxi-item>
+              <dxi-item>
+                <dx-select-box #periodToYearSelector
+                               [items]="yearArrayTo"
+                               [(value)]="periodToYear.text"
+                               valueExpr="text"
+                               displayExpr="text"
+                ></dx-select-box>
+              </dxi-item>
+            </dxi-item>
+          </dx-form>
+        </form>
+        <dx-button
+          [useSubmitBehavior]="true"
+          (onClick)="isShowConfirmationEditPopup = true"
+          class="continue-btn"
+          text="Save"
+          type="success">
+        </dx-button>
+    </div>
+
+    <div *dxTemplate="let data of 'deleteNote'">
+      <div><span>Are you sure you want to delete this note?</span></div>
+      <div class="confirmation-popup-wrapper">
+        <a class="cancel-confirm-btn" (click)="cancelDeleteNote()">Cancel</a>
+        <a (click)="confirmDeleteNote()" class="confirmation-btn">Delete</a>
+      </div>
+    </div>
+  </dx-popup>
+
+</div>

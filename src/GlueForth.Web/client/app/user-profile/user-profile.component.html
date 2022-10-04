@@ -1,0 +1,55 @@
+<div class="wrapper">
+  <!--<bluenorth-header class="header"></bluenorth-header>-->
+  <aside class="sidebar user-profile-sidebar">
+
+    <div class="form">
+      <div class="user-profile">
+        <i class="material-icons">account_circle</i>
+        <p>Welcome Back,</p>
+        <a class="user-profile-name to-profile">{{currentUser?.Person1?.FirstName}}
+          {{currentUser?.Person1?.LastName}}</a>
+        <a class="user-profile-logout to-profile" (click)="logout()">Logout</a>
+      </div>
+      <ul class="profile-navigation">
+        <li class="profile-navigation-item" [ngClass]="{'active': isActive === 'info'}"
+            (click)="getTitle('info', 'MY PROFILE')">
+          My Profile
+          <i *ngIf="isActive === 'info'" class="material-icons">keyboard_arrow_right</i>
+        </li>
+        <li *ngIf="currentUser.Organisation" class="profile-navigation-item"
+            [ngClass]="{'active': isActive === 'organisation'}"
+            (click)="getTitle('organisation', 'MY ORGANISATION')" routerLinkActive="active">
+          My Organisation
+          <i *ngIf="isActive === 'organisation'" class="material-icons">keyboard_arrow_right</i>
+        </li>
+        <li class="profile-navigation-item" [ngClass]="{'active': isActive === 'business-unit'}"
+            (click)="getTitle('business-unit', 'MY BUSINESS UNITS')" routerLinkActive="active">
+          My Business Units
+          <i *ngIf="isActive === 'business-unit'" class="material-icons">keyboard_arrow_right</i>
+        </li>
+      </ul>
+    </div>
+
+  </aside>
+  <article class="content">
+    <div class="user-profile-header">
+      <h3 class="user-profile-title">{{title}}</h3>
+      <p *ngIf="showBusinessUnitExplanationSpan">Please capture the details of the specific Business Unit (farm,
+        processing plant, etc.) here. You can create more than one Business Unit.</p>
+      <p *ngIf="showBusinessUnitExplanationSpan">Please click on the "ADD UNIT" button to add a Business Unit.</p>
+      <span *ngIf="showOrganisationExplanationSpan">* If you have multiple business units (farms, processing plants, etc.), then please enter the details of the holding organization here.<br></span>
+      <span *ngIf="showOrganisationExplanationSpan">* If you only have one business unit, then the same information will be entered here and at the "Business Unit" section.</span>
+      <span *ngIf="showProfileInfoExplanationSpan">Please capture the user (your) details here.</span>
+      <dx-button
+        text="DASHBOARD"
+        type="success"
+        [routerLink]="['/dashboard']">
+      </dx-button>
+    </div>
+    <router-outlet></router-outlet>
+  </article>
+  <!--<footer class="footer">My footer</footer>-->
+</div>
+
+
+

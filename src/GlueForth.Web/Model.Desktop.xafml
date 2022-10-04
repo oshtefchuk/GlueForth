@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="BlueNorth.Model.Question">
+      <OwnMembers>
+        <Member Name="GuidanceText" RowCount="6" />
+        <Member Name="ImprovementPlanGuidance" RowCount="6" />
+        <Member Name="ImprovementPlanQuestion" RowCount="3" />
+        <Member Name="NoAnswerGuidance" RowCount="2" />
+        <Member Name="PartiallyAnswerGuidance" RowCount="2" />
+        <Member Name="UnknownAnswerGuidance" RowCount="2" />
+        <Member Name="YesAnswerGuidance" RowCount="2" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerAspNetModule" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="18.2.7.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="18.2.7.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <DetailView Id="ChangePasswordOnLogonParameters_DetailView">
+      <Items>
+        <StaticText Id="ChangePasswordText" Text="For security reasons, you must now set your own password. Please enter your new password in the two text fields below. New Password should at least 8 characters long, included upper case, lower case, numbers and a special character(@$!%*#?&amp;amp;amp;) and be sure not to reuse a password you used before." />
+      </Items>
+    </DetailView>
+    <DetailView Id="Characteristic_DetailView">
+      <Items>
+        <PropertyEditor Id="PrincipleGroup" View="PrincipleGroup_LookupListView" />
+      </Items>
+    </DetailView>
+  </Views>
+</Application>

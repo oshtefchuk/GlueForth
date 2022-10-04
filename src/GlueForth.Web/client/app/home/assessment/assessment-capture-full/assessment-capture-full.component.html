@@ -1,0 +1,401 @@
+<div class="assessment-full-selector-container">
+  <dx-tabs [style.visibility]="arrayForTabs.length ? 'visible' : 'hidden'"
+           id="tabs"
+           #apiTabs
+           [dataSource]="arrayForTabs"
+           (onItemClick)="selectTab($event)"
+           [selectedIndex]="firstNotAnsweredIndex"
+           [scrollByContent]="true"
+           [showNavButtons]="true"
+           noDataText=" "
+           itemTemplate="tabTemplate"
+           [width]="width"
+           keyExpr="id">
+    <div *dxTemplate="let info of 'tabTemplate'">
+      <span>{{info.text}}</span>
+      <span class="unanswered-characteristic-label" *ngIf="info.badge != 0">{{info.badge}}</span>
+      <i *ngIf="info.badge == 0" class="material-icons answered-characteristic-label">done</i>
+    </div>
+  </dx-tabs>
+  <dx-load-panel
+    #loadPanelTabs
+    shadingColor="rgba(0,0,0,0)"
+    [position]="{ of: '#tabs' }"
+    [visible]="!arrayForTabs.length"
+    [showIndicator]="true"
+    [showPane]="false"
+    [shading]="false"
+    [message]="loadText"
+    [closeOnOutsideClick]="false">
+  </dx-load-panel>
+  <div class="data-grid-full-wrapper" bluenorthElementWidth (actual-width)="width = $event">
+    <div class="table-header"><span *ngIf="arrayForTabs.length && currentCharacteristic">{{currentTab.text}} / {{currentCharacteristic.ShortTitle}}</span>
+      <dx-tooltip
+        target="#fullScrinMode"
+        [(visible)]="showFullScreenTooltip">
+        <div *dxTemplate="let data = data of 'content'">
+          Full ScreenMode
+        </div>
+      </dx-tooltip>
+      <i id="fullScrinMode"
+
+         class="material-icons fullscreen-btn fullscreen-icon"
+         (click)="toggleFullScreenMode(true)"
+         (mouseenter)="toggleFullScreenToolTip()"
+         (mouseleave)="toggleFullScreenToolTip()">
+        fullscreen
+      </i>
+      <i class="material-icons fullscreen-btn fullscreen-exit-icon"
+         (click)="toggleFullScreenMode(false)">
+        fullscreen_exit
+      </i>
+    </div>
+    <ul class="characteristic-tabs">
+      <li class="characteristic-tabs-item"
+          *ngFor="let tab of characteristicList let index = index"
+          [ngClass]="{'active': activeTab === index}"
+          (click)="setCurrentCharacteristic(tab, index)">{{tab.Title}}
+        <span *ngIf="tab.Answers.length" class="unanswered-characteristic-label">{{tab.Answers.length}}</span>
+        <i *ngIf="!tab.Answers.length" class="material-icons answered-characteristic-label">done</i>
+      </li>
+    </ul>
+    <div class="data-grid-container inner-padding">
+      <div id="characteristic-info"
+           class="characteristic-container">
+        <div class="characteristic-reference-container">
+          {{currentCharacteristic?.Reference}}
+        </div>
+        <div class="characteristic-info">
+          <div class="characteristic-type-style" *ngIf="currentCharacteristic && characteristicList.length">
+            {{currentFramework}}
+          </div>
+          <bluenorth-characteristic-status
+            *ngIf="currentCharacteristic && characteristicList.length && !showCharacteristicStatus"
+            class="status-label"
+            [status]="currentCharacteristic.Status"
+            (mouseenter)="popupShown('content2', 'status')">
+          </bluenorth-characteristic-status>
+          <div class="characteristic-description">{{currentCharacteristic?.Description}}</div>
+          <div class="characteristic-guidance" *ngIf="showGuidance"
+               [innerHTML]="currentCharacteristic?.Summary | replaceLineBreaks"></div>
+          <!--<div class="characteristic-guidance"  *ngIf="showGuidance" [innerHTML]="currentCharacteristic?.GuidanceText"></div>-->
+          <div *ngIf="!showGuidance && currentCharacteristic?.Summary" (click)="showGuidance = !showGuidance">
+            <a>Refer to guidance</a>
+          </div>
+          <div *ngIf="showGuidance" (click)="showGuidance = !showGuidance"><a>Close guidance</a></div>
+        </div>
+        <div *ngIf="currentCharacteristic && characteristicList.length"
+             class="characteristic-info characteristic-relevant"
+             [ngClass]="{'not-relevant': !isRelevantCharacteristic}">
+          <span>Relevant</span>
+          <dx-switch *ngIf="isRelevantShown"
+                     #switch
+                     (onValueChanged)="changeCharacteristicRelevant($event)"
+                     [value]="isRelevantCharacteristic"
+                     [disabled]="isRelevantDisabled"></dx-switch>
+        </div>
+      </div>
+      <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.1)"
+        [position]="{ of: '#characteristic-info' }"
+        [visible]="loadingVisible"
+        [showIndicator]="true"
+        [showPane]="false"
+        [shading]="false"
+        [message]="loadText"
+        [closeOnOutsideClick]="false">
+      </dx-load-panel>
+      <dx-data-grid #dataGrid
+                    id="gridContainer"
+                    noDataText=""
+                    [showColumnHeaders]="false"
+                    (onToolbarPreparing)="onToolbarPreparing($event)"
+                    [showColumnLines]="false"
+                    [showRowLines]="true"
+                    [showBorders]="true"
+                    [wordWrapEnabled]="true"
+                    [autoExpandAll]="true"
+                    [grouping]="{allowCollapsing : false}"
+                    [dataSource]="questionsByCharacteristic"
+                    keyExpr="QuestionOid"
+                    (onEditorPreparing)="onEditorPreparing($event)"
+                    (onContentReady)="updateTable($event)">
+        <dxo-paging [enabled]="false"></dxo-paging>
+        <dxo-load-panel [enabled]="true"
+                        [showIndicator]="true"
+                        [showPane]="false"
+                        [shading]="false"
+                        [message]=""></dxo-load-panel>
+        <dxo-editing
+          mode="batch"
+          [allowUpdating]="false">
+        </dxo-editing>
+        <div *dxTemplate="let info of 'titleHeaderTemplate'" class="data-grid-header">
+        </div>
+        <dxi-column dataField="Title"
+                    [groupIndex]="0"
+                    groupCellTemplate="groupCellTemplate"
+                    [allowSorting]="false"
+                    sortOrder="asc"
+                    calculateGroupValue="GroupShortTitle"
+                    headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <div *dxTemplate="let item of 'groupCellTemplate'">{{item.data.items[0].Title}}</div>
+        <dxi-column dataField="QuestionTitle"
+                    caption="Question"
+                    cellTemplate="questionCellTemplate"
+                    headerCellTemplate="titleHeaderTemplate">
+        </dxi-column>
+        <div class="grid-slider-view" *dxTemplate="let data of 'questionCellTemplate' let index = index">
+          <div class="question-title">{{data.data.QuestionTitle}}</div>
+          <div *ngIf="showGuidanceQuestion === data.rowIndex" class="question-guidance"
+               [innerHTML]="data.data?.GuidanceText | replaceLineBreaks"></div>
+          <div class="guidance-notes">
+            <div
+              *ngIf="data.data.IsGuidanceExists && showGuidanceQuestion !== data.rowIndex && !isShowGoodManagementPractice(data)"
+              (click)="toShowGuidanceQuestion(data)">
+              <a class="guidance-show">Refer to guidance</a></div>
+            <div *ngIf="showGuidanceQuestion === data.rowIndex" (click)="showGuidanceQuestion = null"><a
+              class="guidance-show">Close guidance</a></div>
+            <div *ngIf="data.data.Title === 'Practical Action' && isShowGoodManagementPractice(data)"
+                 (click)="popupShown('content1', 'guidance')"
+            ><a class="guidance-show">Good Management Practice</a></div>
+
+             <!-- <a class="guidance-show" (click)="showNotesPopup('content3', 'note', data)" class="guidance-show">Add Note</a>-->
+           <div class="notes-button-container">
+            <div *ngIf="data.data.IsNoteOrFileExist"
+                 class="notes-button-label">
+
+            </div>
+            <dx-button
+              [text]="'Notes'"
+              [width]="70"
+              [height]="32"
+              (click)="showNotesPopup('content3', 'note', data)"
+            >
+            </dx-button>
+           </div>
+          </div>
+        </div>
+        <dxi-column dataField="AnswerChoise" caption="Answer"
+                    [showEditorAlways]="true"
+                    editCellTemplate="sliderCellTemplate" headerCellTemplate="titleHeaderTemplate">
+        </dxi-column>
+        <div *dxTemplate="let data of 'sliderCellTemplate' let index = index ">
+          <dx-popover class="full-assess-popup-wrapper"
+                      target="#unknown{{data.rowIndex}}"
+                      position="top"
+                      [width]="300"
+                      [visible]="isPopupVisibleDontKnow === data.rowIndex">
+            <div *dxTemplate="let data = model of 'content'" class="popover-dontknow-content">
+              {{info}}
+            </div>
+            <dxo-animation>
+              <dxo-show
+                type="pop"
+                [from]="{ scale: 0 }"
+                [to]="{ scale: 1 }"></dxo-show>
+              <dxo-hide
+                type="fade"
+                [from]="1"
+                [to]="0"></dxo-hide>
+            </dxo-animation>
+          </dx-popover>
+          <dx-popover class="full-assess-popup-wrapper"
+                      target="#no{{data.rowIndex}}"
+                      position="top"
+                      [width]="300"
+                      [visible]="isPopupVisibleNo === data.rowIndex">
+            <div *dxTemplate="let data = model of 'content'" class="popover-no-content">
+              <h5>NO</h5>
+              {{info}}
+            </div>
+            <dxo-animation>
+              <dxo-show
+                type="pop"
+                [from]="{ scale: 0 }"
+                [to]="{ scale: 1 }"></dxo-show>
+              <dxo-hide
+                type="fade"
+                [from]="1"
+                [to]="0"></dxo-hide>
+            </dxo-animation>
+          </dx-popover>
+          <dx-popover class="full-assess-popup-wrapper"
+                      target="#partially{{data.rowIndex}}"
+                      position="top"
+                      [width]="300"
+                      [visible]="isPopupVisiblePartially === data.rowIndex">
+            <div *dxTemplate="let data = model of 'content'" class="popover-partially-content">
+              <h5>PARTIALLY</h5>
+              {{info}}
+            </div>
+            <dxo-animation>
+              <dxo-show
+                type="pop"
+                [from]="{ scale: 0 }"
+                [to]="{ scale: 1 }"></dxo-show>
+              <dxo-hide
+                type="fade"
+                [from]="1"
+                [to]="0"></dxo-hide>
+            </dxo-animation>
+          </dx-popover>
+          <dx-popover class="full-assess-popup-wrapper"
+                      target="#yes{{data.rowIndex}}"
+                      position="top"
+                      [width]="300"
+                      [visible]="isPopupVisibleYes === data.rowIndex">
+            <div *dxTemplate="let data = model of 'content'" class="popover-yes-content">
+              <h5>YES</h5>
+              {{info}}
+            </div>
+            <dxo-animation>
+              <dxo-show
+                type="pop"
+                [from]="{ scale: 0 }"
+                [to]="{ scale: 1 }"></dxo-show>
+              <dxo-hide
+                type="fade"
+                [from]="1"
+                [to]="0"></dxo-hide>
+            </dxo-animation>
+          </dx-popover>
+          <!--if three answers-->
+          <div class="slider-scale" *ngIf="getNumberOfAnswers(data.data) == 3" [ngStyle]="threeAnswersStyle">
+            <span class="answer-alignment-dont-know">Unanswered</span>
+            <span *ngIf="data.data.UnknownAnswerGuidance !== disabledAnswerVariantText;" style="text-align: left;"><span
+              id="unknown{{data.rowIndex}}" class="answer-alignment-dont-know"
+              (mouseenter)="toggleDefault(data.rowIndex, 1, data.data.UnknownAnswerGuidance)"
+              (mouseleave)="toggleDefault(null, 1)"
+              [ngClass]="{'dont-know-color': data.data.AnswerChoise >= 13 && data.data.AnswerChoise < 41  && isRelevantCharacteristic}">I don't know</span></span>
+
+            <span *ngIf="data.data.NoAnswerGuidance !== disabledAnswerVariantText" style="text-align: center;"><span
+              id="no{{data.rowIndex}}"
+              class="answer-alignment-no"
+              (mouseenter)="toggleDefault(data.rowIndex, 2, data.data.NoAnswerGuidance)"
+              (mouseleave)="toggleDefault(null, 2)"
+              [ngClass]="{'no-color':data.data.AnswerChoise >= 41 && data.data.AnswerChoise < 63  && isRelevantCharacteristic}">No</span></span>
+
+            <span *ngIf="data.data.PartiallyAnswerGuidance !== disabledAnswerVariantText;"><span
+              id="partially{{data.rowIndex}}"
+              (mouseenter)="toggleDefault(data.rowIndex, 3, data.data.PartiallyAnswerGuidance)"
+              (mouseleave)="toggleDefault(null, 3)"
+              class="answer-alignment-partially"
+              [ngClass]="{'partially-color': data.data.AnswerChoise >= 63 && data.data.AnswerChoise < 88 && isRelevantCharacteristic}">Partially</span></span>
+
+            <span *ngIf="data.data.YesAnswerGuidance !== disabledAnswerVariantText"><span id="yes{{data.rowIndex}}"
+                                                                                          (mouseenter)="toggleDefault(data.rowIndex, 4, data.data.YesAnswerGuidance)"
+                                                                                          (mouseleave)="toggleDefault(null, 4)"
+                                                                                          class="answer-alignment-yes"
+                                                                                          [ngClass]="{'yes-color': data.data.AnswerChoise >= 88 && isRelevantCharacteristic}">Yes</span></span>
+          </div>
+          <!--if two answers-->
+          <div class="slider-scale" *ngIf="getNumberOfAnswers(data.data) == 2" [ngStyle]="twoAnswersStyle">
+            <span class="answer-alignment-dont-know">Unanswered</span>
+            <span *ngIf="data.data.UnknownAnswerGuidance !== disabledAnswerVariantText;" style="text-align: left;"><span
+              id="unknown{{data.rowIndex}}" class="answer-alignment-dont-know"
+              (mouseenter)="toggleDefault(data.rowIndex, 1, data.data.UnknownAnswerGuidance)"
+              (mouseleave)="toggleDefault(null, 1)"
+              [ngClass]="{'dont-know-color': data.data.AnswerChoise >= 13 && data.data.AnswerChoise < 50 && isRelevantCharacteristic}">I don't know</span></span>
+
+            <span *ngIf="data.data.NoAnswerGuidance !== disabledAnswerVariantText" style="text-align: center;">
+              <span
+                id="no{{data.rowIndex}}"
+                class="answer-alignment-no"
+                (mouseenter)="toggleDefault(data.rowIndex, 2, data.data.NoAnswerGuidance)"
+                (mouseleave)="toggleDefault(null, 2)"
+                [ngClass]="{'no-color':data.data.AnswerChoise >= 50 && data.data.AnswerChoise < 80 && isRelevantCharacteristic}">No
+            </span>
+            </span>
+            <span>
+              <span class="asnswer-empty" style="display: block;color: white">
+              </span>
+            </span>
+            <span *ngIf="data.data.YesAnswerGuidance !== disabledAnswerVariantText">
+              <span id="yes{{data.rowIndex}}"
+                    (mouseenter)="toggleDefault(data.rowIndex, 3, data.data.YesAnswerGuidance)"
+                    (mouseleave)="toggleDefault(null, 3)"
+                    class="answer-alignment-yes"
+                    [ngClass]="{'yes-color': data.data.AnswerChoise > 80 && isRelevantCharacteristic}">Yes
+              </span>
+            </span>
+          </div>
+          <dx-slider
+            #slider
+            [min]="0"
+            [max]="100"
+            [value]="data.data.AnswerChoise"
+            [showRange]="true"
+            (onValueChanged)="getAnswer($event, data)"
+            [disabled]="!isRelevantCharacteristic"
+            [activeStateEnabled]="false"
+          >
+          </dx-slider>
+          <p class="unanswered-label" *ngIf="data.data.AnswerOid === 0">UNANSWERED</p>
+        </div>
+       </dx-data-grid>
+    </div>
+    <dx-popup class="guidance-popup-wrapper" #dxPopupGuidance
+              [width]="currentPopupConfig.width"
+              [height]="currentPopupConfig.height "
+              [showTitle]="currentPopupConfig.showTitle"
+              [title]="currentPopupConfig.title"
+              [dragEnabled]="currentPopupConfig.dragEnabled"
+              [closeOnOutsideClick]="currentPopupConfig.closeOnOutsideClick"
+              [closeOnBackButton]="currentPopupConfig.closeOnBackButton"
+              [showCloseButton]="currentPopupConfig.showCloseButton"
+              [(visible)]="guidancePopupShow"
+              [shading]="currentPopupConfig.shading"
+              [resizeEnabled]="currentPopupConfig.resizeEnabled"
+              (onHidden)="currentPopupTemplate = ''"
+              [(contentTemplate)]="currentPopupTemplate"
+              (onHiding)="updateNotes()">
+
+      <div *dxTemplate="let data of 'content1'">
+        <dx-scroll-view #scrollView [showScrollbar]="always" [useNative]="false">
+          <div [innerHTML]="currentCharacteristic.GuidanceText" class="guidance-popover characteristic-guidance"></div>
+        </dx-scroll-view>
+      </div>
+
+      <div *dxTemplate="let data of 'content2'">
+        <img src="../../assets/explanationTable.png" alt="table">
+      </div>
+
+      <div *dxTemplate="let data of 'content3'">
+        <dx-scroll-view>
+          <div class="message-note-container">
+            <dx-text-area
+              width="500"
+              [height]="50"
+              (onFocusIn)="isNoteChanged = true"
+              (onValueChanged)="onChangeQuestionNote($event)"
+              [value]="questionNote?.Note">
+            </dx-text-area>
+            <dx-button [disabled]="!isNoteChanged" (onClick)="updateQuestionNote($event)" text="Save"></dx-button>
+
+          </div>
+          <div>
+            <dx-file-uploader
+              [multiple]="false"
+              [allowCanceling]="true"
+              selectButtonText="Attach Files"
+              labelText=""
+              (onValueChanged)="addFiles($event)"
+              [uploadMode]="'useButtons'">
+            </dx-file-uploader>
+          </div>
+          <ng-container *ngIf="questionNote.Attachments && questionNote.Attachments.length; else emptyList">
+            <div class="files-container">
+          <span class="attachment-item" *ngFor="let file of questionNote.Attachments">
+            <span (click)="downloadAttachment(file)">{{file.FileName}}</span>
+            <span (click)="deleteAttachment(file.OID)">x</span>
+          </span>
+            </div>
+          </ng-container>
+          <ng-template #emptyList>No attached files yet..</ng-template>
+        </dx-scroll-view>
+      </div>
+    </dx-popup>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="user-profile-container">
+  <form (submit)="onFormSubmitProfilrUpdate($event)">
+    <dx-form id="form"
+             [(formData)]="userInfo"
+             [readOnly]="false"
+             [showColonAfterLabel]="true"
+             [showValidationSummary]="true"
+             validationGroup="customerData">
+
+     <!-- <dxi-item dataField="UserName"
+                [editorOptions]="{ placeholder: 'LOGIN', disabled: true}">
+      </dxi-item>-->
+      <dxi-item dataField="FirstName"
+                [editorOptions]="{ placeholder: 'NAME'}">
+      </dxi-item>
+      <dxi-item dataField="LastName"
+                [editorOptions]="{ placeholder: 'LAST NAME'}">
+      </dxi-item>
+      <dxi-item dataField="Email"
+                [editorOptions]="{ placeholder: 'EMAIL', disabled: true}">
+        <dxi-validation-rule
+          type="pattern"
+          [pattern]="emailPattern"
+          message="Enter valid Email">
+        </dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item dataField="Country">
+        <dx-select-box [dataSource]="countriesInfo"
+                       [value]="userInfo.Country"
+                       [searchEnabled]=true
+                       searchMode="startsWith"
+                       valueExpr="Oid"
+                       displayExpr="Name"
+                       placeholder="SELECT COUNTRY"
+                       (onSelectionChanged)="getCountryValueForUser($event)">
+        </dx-select-box>
+      </dxi-item>
+
+      <dxi-item dataField="MobileNumber"
+                helpText="Example: +123(0)814026552"
+                [editorOptions]="{
+                    placeholder: 'TELEPHONE NUMBER'
+                }">
+       <!-- <dxi-validation-rule
+          type="pattern"
+          [pattern]="cellPhonePattern"
+          message="The cellphone must have a correct format">
+        </dxi-validation-rule>-->
+      </dxi-item>
+     <!-- <dxi-item dataField="TelephoneNumber"
+                [editorOptions]="{
+                      placeholder: 'CELLPHONE NUMBER'
+                  }">
+        <dxi-validation-rule
+          type="pattern"
+          [pattern]="cellPhonePattern"
+          message="The telephone must have a correct format">
+        </dxi-validation-rule>
+      </dxi-item>-->
+
+      <dxi-item
+        editorType="dxTextBox"
+        [editorOptions]="{ placeholder: 'ENTER CURRENT PASSWORD', mode: 'password', attr: {'autocomplete':'new-password'} }">
+        <dxo-label
+          text="ENTER CURRENT PASSWORD">
+        </dxo-label>
+      </dxi-item>
+      <dxi-item dataField="NewPassword"
+                [editorOptions]="{ placeholder: 'ENTER NEW PASSWORD' , mode: 'password'}"
+      >
+      </dxi-item>
+      </dx-form>
+      <div class="checkbox-styles" [style.background-color]="!isTermsAccepted ? '#FF655440' : '#fff'">
+        <div class="checkbox-styles-position">
+          <dx-check-box id="termsTarget"
+                        [disabled]="isTermsAccepted"
+                        [value]="currentUser.AcceptedTermsConditions"
+                        (valueChange)="getTermsConds($event)"
+          ></dx-check-box>
+          <span>I agree to the <a [routerLink]="['/eula-and-conditions']">Terms & Conditions</a></span>
+        </div>
+      </div>
+    <br />
+    <dx-button
+      text="UPDATE"
+      type="success"
+      validationGroup="customerData"
+      [useSubmitBehavior]="true">
+    </dx-button>
+  </form>
+  <dx-tooltip
+    target="#termsTarget"
+    position="bottom"
+    [(visible)]="termsTooltipVisible">
+    <div *dxTemplate="let data = data of 'content'">
+      <span class="registration-mandatory">Please check this box if you want to proceed</span>
+    </div>
+  </dx-tooltip>
+</div>
+

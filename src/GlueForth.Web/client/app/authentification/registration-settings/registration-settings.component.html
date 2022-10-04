@@ -1,0 +1,608 @@
+<bluenorth-header></bluenorth-header>
+<div class="registration-settings-background">
+<div class="registration-settings-container">
+  <div id="tabs" class="tabs-container">
+    <dx-tabs
+      #apiTabs
+      [dataSource]="tabs"
+      [selectedIndex]="0"
+      (onItemClick)="selectTab($event)"
+    ></dx-tabs>
+    <div *ngIf="itemIndex===0">
+      <form (submit)="onFormSubmitCreateOrganisation($event)" dx-group-column-count="2">
+        <p class="registration-mandatory">* If you have multiple business units (farms, processing plants, etc.), then please enter the details of the holding organization here.</p>
+        <p class="registration-mandatory">* If you only have one business unit, then the same information will be entered here and at the business unit level (next page).</p>
+        <span class="registration-mandatory">All fields marked * are mandatory.</span>
+        <dx-form id="form" #organisationForm
+          labelLocation="right"
+          [formData]="setupOrganisation"
+          [readOnly]="false"
+          [showColonAfterLabel]="true"
+          [showValidationSummary]="true"
+          validationGroup="setupOrganisation">
+          <dxi-item dataField="organisationName"
+            [editorOptions]="{ placeholder: 'ORGANISATION NAME'}">
+            <dxi-validation-rule
+              type="required"
+              message="Organisation name is required">
+            </dxi-validation-rule>
+          </dxi-item>
+          <dxi-item itemType="group" class="address" caption="ADDRESS">
+            <dxi-item dataField="organisationStreet"
+              [editorOptions]="{ placeholder: 'STREET'}">
+              <dxi-validation-rule
+                type="required"
+                message="Street is required">
+              </dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="organisationCity"
+              [editorOptions]="{ placeholder: 'CITY'}">
+              <dxi-validation-rule
+                type="required"
+                message="City is required">
+              </dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="stateProvince"
+              [editorOptions]="{ placeholder: 'STATE PROVINCE'}">
+              <dxi-validation-rule
+                type="required"
+                message="Province is required">
+              </dxi-validation-rule>
+            </dxi-item>
+          </dxi-item>
+          <dxi-item
+              [template]="'countryTemplate'">
+            </dxi-item>
+            <div *dxTemplate="let data of 'countryTemplate'">
+              <dx-select-box #countrySelector
+                             [items]="countriesInfo"
+                             displayExpr="Name"
+                             placeholder="SELECT COUNTRY"
+                             valueExpr="Oid"
+                             [value]="setupOrganisation.country"
+                             (onSelectionChanged)="getCountryValueForOrganisation($event, countrySelector)">
+              </dx-select-box>
+            </div>
+
+          <dxi-item dataField="phoneNumber"
+                    [disabled]="phoneCode === ''"
+                    [editorOptions]="{
+                    placeholder: 'TELEPHONE NUMBER',
+                    mask:phoneCode+'(9)99-999-9999',
+                    useMaskedValue: true,
+                    showMaskMode: 'onFocus'
+                }">
+          </dxi-item>
+        </dx-form>
+        <br/>
+        <dx-button
+          text="NEXT"
+          type="success"
+          validationGroup="setupOrganisation"
+          [useSubmitBehavior]="true">
+        </dx-button>
+      </form>
+    </div>
+
+    <div *ngIf="itemIndex===1">
+      <form>
+      <div>
+        <p>
+          Thank you for Registering your organisation.
+        </p>
+        <p style="margin-top: 20px;margin-bottom: 20px;">
+          A representative from SHERPA will be in contact soon to finalise your account.
+        </p>
+      </div>
+
+        <dx-button
+          [routerLink]="['/profile/business-unit']"
+          class="continue-btn"
+          text="To My Profile"
+          type="success">
+        </dx-button>
+      </form>
+    </div>
+    <!--<div *ngIf="itemIndex===1">
+      <form (keydown.enter)="$event.preventDefault()" (submit)="onFormSubmitAddUnit($event)">
+        <p class="registration-mandatory">Please capture the details of the specific Business Unit (farm, processing plant, etc.) here. You can create more than one Business Unit.</p>
+        <dx-form #unitForm
+          (onFieldDataChanged)="onFieldDataChanged($event)"
+          labelLocation="right"
+          [(formData)]="unitInfo"
+          [readOnly]="false"
+          [showColonAfterLabel]="true"
+          [showValidationSummary]="true"
+          validationGroup="businessUnit">
+          <dxi-item dataField="UnitName"
+            [editorOptions]="{ placeholder: 'BUSINESS UNIT NAME  ( eg Farm Name, Packhouse name, etc) '}">
+            <dxi-validation-rule
+              type="required"
+              message="Business Unit Name is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item dataField="UnitTypeId"
+            editorType="dxSelectBox"
+            [editorOptions]="unitTypeBoxOptions">
+            <dxi-validation-rule
+              type="required"
+              message="Type of business is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item dataField="UnitStructure"
+            editorType="dxSelectBox"
+            [editorOptions]="unitStructureBoxOptions">
+            <dxi-validation-rule
+              type="required"
+              message="Unit Structure is required">
+            </dxi-validation-rule>
+          </dxi-item>
+          <dxi-item dataField="ResponsibleName"
+            [editorOptions]="{ placeholder: 'NAME OF PERSON RESPONSIBLE FOR THIS UNIT '}">
+          </dxi-item>
+          <dxi-item dataField="ResponsibleSurname"
+            [editorOptions]="{ placeholder: 'LAST NAME OF PERSON RESPONSIBLE FOR THIS UNIT '}">
+          </dxi-item>
+          <dxi-item dataField="ResponsibleEmail"
+            [editorOptions]="{ placeholder: 'EMAIL OF PERSON RESPONSIBLE FOR THIS UNIT '}">
+
+            <dxi-validation-rule
+              type="pattern"
+              [pattern]="emailPattern"
+              message="Enter valid Email">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item
+            [template]="'countryTemplate'">
+          </dxi-item>
+          <div *dxTemplate="let data of 'countryTemplate'">
+            <dx-select-box #countryUnitSelector
+                           [items]="countriesInfo"
+                           displayExpr="Name"
+                           placeholder="SELECT COUNTRY"
+                           valueExpr="Oid"
+                           [value]="unitInfo.UnitCountryId"
+                           (onValueChanged)="getCountryValueForUnit($event, countryUnitSelector)">
+            <dx-validator validationGroup="businessUnit">
+              <dxi-validation-rule
+                type="required"
+                message="Country is required">
+              </dxi-validation-rule>
+            </dx-validator>
+            </dx-select-box>
+          </div>
+          <dxi-item dataField="ResponsibleMobile" [disabled]="phoneCode === ''"
+            [editorOptions]="{
+                    placeholder: 'TELEPHONE NUMBER',
+                    mask:phoneCode+'(9)99-999-9999',
+                    useMaskedValue: true,
+                    showMaskMode: 'onFocus'
+                }">
+          </dxi-item>
+          <dxi-item dataField="ResponsiblePhone" [disabled]="phoneCode === ''"
+            [editorOptions]="{
+                    placeholder: 'OFFICE NUMBER',
+                    mask:phoneCode+'(9)99-999-9999',
+                    useMaskedValue: true,
+                    showMaskMode: 'onFocus'
+                }">
+          </dxi-item>
+
+
+          <dxi-item
+            [template]="'assessmentType'">
+          </dxi-item>
+          <div *dxTemplate="let data of 'assessmentType'">
+            <div class="assessment-type-select-box">
+              <dx-select-box
+                             [items]="assessmentTypesInfo"
+                             displayExpr="Name"
+                             placeholder="SELECT ASSESSMENT TYPE"
+                             valueExpr="Oid"
+                             [value]="unitInfo.AssessmentType"
+                             (onValueChanged)="getAssessmentTypeForUnit($event)">
+                <dx-validator validationGroup="businessUnit">
+                  <dxi-validation-rule
+                    type="required"
+                    message="Assessment type is required">
+                  </dxi-validation-rule>
+                </dx-validator>
+              </dx-select-box>
+              <i class="material-icons" style="padding-left: 6px" id="targetElement" aria-describedby="dx-db52d984-5724-946c-2290-8eeb574b9741"  (mouseenter)="toggleDefault()"
+                 (mouseleave)="toggleDefault()">help_outline</i>
+              <dx-popover
+                target="#targetElement"
+                position="top"
+                [width]="500"
+                [(visible)]="tooltipVisible">
+                <div *dxTemplate="let data of 'content'">
+                  <p>The Light Assessment allows you to quickly assess your business. It should take less than 1 hour to complete)</p>
+                  <p>The Full Assessment is a more detailed assessment that takes 2 to 3 hours to complete and allows all your Standards to be assessed and managed within SHERPA.</p>
+                  <p>You can change your preferred assessment here at any stage.</p>
+                </div>
+              </dx-popover>
+            </div>
+          </div>
+&lt;!&ndash;
+          <dxi-item dataField="assessmentTypesInfo"
+                    editorType="dxSelectBox"
+                    [value]="unitInfo.AssessmentType"
+                    [editorOptions]="assessmentTypes">
+          </dxi-item>&ndash;&gt;
+
+
+          <dxi-item dataField="UnitCommodityId"
+            editorType="dxSelectBox"
+            [dataSource]="commodityInfo"
+            [editorOptions]="commoditiesBoxOptions">
+            <dxi-validation-rule
+              type="required"
+              message="Commodity is required">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item class="commodities-mulity-select"
+                    [template]="'commodityTemplate'">
+          </dxi-item>
+
+          <div class="commodities-mulity-select" *dxTemplate="let data of 'commodityTemplate'">
+            <dx-tag-box #multySelectorSecondaryCommodity
+                        [dataSource]="secondaryCommodityInfo"
+                        [value]="unitInfo.Commodities"
+                        (onValueChanged)="onSecondaryCommoditiesValueChanged($event)"
+                        displayExpr="Title"
+                        valueExpr="OID"
+                        placeholder="SELECT OTHER COMMODITIES"
+            >
+            </dx-tag-box>
+          </div>
+          <dxi-item dataField="FrameworkId"
+            editorType="dxSelectBox"
+            [editorOptions]="frameworkBoxOptions">
+            <dxi-validation-rule
+              type="required"
+              message="Framework is required">
+            </dxi-validation-rule>
+          </dxi-item>
+          <dxi-item>
+            <span>* select all applicable standards</span>
+          </dxi-item>
+          <dxi-item dataField="Standards"
+            [template]="'standardTemplate'"></dxi-item>
+          <div *dxTemplate="let data of 'standardTemplate'">
+            <dx-tag-box #multySelector
+              [items]="standardsInfo"
+              [value]="unitInfo.Standards"
+              displayExpr="Title"
+              placeholder="SELECT STANDARDS"
+              [disabled]="!ifFrameworkSelected"
+              valueExpr="OID">
+            </dx-tag-box>
+          </div>
+          <dxi-item>
+            <span>* select all applicable suppliers</span>
+          </dxi-item>
+          <dxi-item dataField="Suppliers"
+            [template]="'supplierTemplate'">
+          </dxi-item>
+          <div *dxTemplate="let data of 'supplierTemplate'">
+            <dx-tag-box #multySelectorSupplier
+                        [items]="supplierInfo"
+                        displayExpr="Title"
+                        placeholder="SELECT SUPPLIER"
+                        valueExpr="OID">
+              <dx-validator validationGroup="businessUnit">
+                <dxi-validation-rule
+                  type="required"
+                  message="Supplier is required">
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-tag-box>
+          </div>
+          &lt;!&ndash;<dxi-item>
+            <span (click)="isSupplierPopupVisible = true" class="link-style">+<a>Add own supplier</a></span>
+          </dxi-item>&ndash;&gt;
+          <dxi-item>
+            <span>* select all applicable retailers</span>
+          </dxi-item>
+          <dxi-item dataField="Retailers"
+            [template]="'retailerTemplate'">
+          </dxi-item>
+          <div *dxTemplate="let data of 'retailerTemplate'">
+            <dx-tag-box #multySelectorRetailer
+                        [items]="retailerInfo"
+                        displayExpr="Title"
+                        placeholder="ADD RETAILER"
+                        valueExpr="OID">
+              <dx-validator validationGroup="businessUnit">
+                <dxi-validation-rule
+                  type="required"
+                  message="Retailer is required">
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-tag-box>
+          </div>
+        </dx-form>
+        <dx-validation-group validationGroup="businessUnit">
+          <div class="questions-container" *ngFor="let question of questionsWithAnswers let index = index">
+            <div>{{question.question}}</div>
+            <div>
+              <dx-number-box
+                [(value)]="question.answer"
+                [showSpinButtons]="true"
+                [min]="0">
+              </dx-number-box>
+            </div>
+          </div>
+          <dx-validation-summary></dx-validation-summary>
+        </dx-validation-group>
+        <div class="dx-item-content dx-validationsummary-item-content dx-validationsummary-item map-validation-message" *ngIf="isShowValidationMapMessage">Please enter your location by using the Map</div>
+        <h5 class="map-title">BUSINESS UNIT LOCATION</h5>
+        <div class="dx-textbox dx-texteditor dx-widget dx-texteditor-masked map-container">
+        </div>
+        <input id="pac-input" class="controls" type="text" placeholder="Search place">
+        <div class="registration-settings-map" id="googleMap" #gmap></div>
+        <br/>
+        <dx-button
+          #continueButton
+          (onClick)="changeTabIndicator = true"
+          validationGroup="businessUnit"
+          [useSubmitBehavior]="true"
+          class="continue-btn"
+          text="SAVE and CONTINUE"
+          type="success">
+        </dx-button>
+        <dx-button
+          #addAnotherButton
+          (onClick)="changeTabIndicator = false"
+          class="add-unit-btn"
+          text="Save and add Another Business Unit"
+          type="success"
+          validationGroup="businessUnit"
+          [useSubmitBehavior]="true">
+        </dx-button>
+      </form>
+      <dx-popup
+        [width]="600"
+        [height]="250"
+        [showTitle]="true"
+        title="Add new Commodity"
+        [dragEnabled]="false"
+        [closeOnOutsideClick]="true"
+        [(visible)]="isCommodityPopupVisible">
+        <div *dxTemplate="let data of 'content'">
+          <form class="commodity-create-form" (submit)="onFormSubmitCreateCommodity($event)">
+            <dx-form
+              [formData]="newCommodity"
+              [readOnly]="false"
+              [showColonAfterLabel]="true"
+              [showValidationSummary]="true"
+              validationGroup="addCommodity">
+              <dxi-item dataField="Title"
+                [editorOptions]="{placeholder: 'ADD TITLE'}">
+                <dxi-validation-rule
+                  type="required"
+                  message="Title is required">
+                </dxi-validation-rule>
+              </dxi-item>
+              <dxi-item dataField="Reference"
+                [editorOptions]="{placeholder: 'ADD REFERENCE'}">
+                <dxi-validation-rule
+                  type="required"
+                  message="Reference is required">
+                </dxi-validation-rule>
+              </dxi-item>
+            </dx-form>
+            <dx-button validationGroup="addCommodity"
+              [useSubmitBehavior]="true"
+              class="continue-btn"
+              text="Add Commodity"
+              type="success">
+            </dx-button>
+          </form>
+        </div>
+      </dx-popup>
+      <dx-popup
+        [width]="600"
+        [height]="300"
+        [showTitle]="true"
+        title="Add new Supplier"
+        [dragEnabled]="false"
+        [closeOnOutsideClick]="true"
+        [(visible)]="isSupplierPopupVisible">
+        <div *dxTemplate="let data of 'content'">
+          <form class="commodity-create-form supplier-edit-form" (submit)="onFormSubmitCreateSupplier($event)">
+            <dx-form
+              [formData]="newSupplier"
+              [readOnly]="false"
+              [showColonAfterLabel]="true"
+              [showValidationSummary]="true"
+              validationGroup="addSupplier">
+              <dxi-item dataField="Title"
+                [editorOptions]="{placeholder: 'ADD TITLE'}">
+                <dxi-validation-rule
+                  type="required"
+                  message="Title is required">
+                </dxi-validation-rule>
+              </dxi-item>
+              <dxi-item dataField="ShortTitle"
+                [editorOptions]="{placeholder: 'ADD SHORT TITLE'}">
+                <dxi-validation-rule
+                  type="required"
+                  message="Short title is required">
+                </dxi-validation-rule>
+              </dxi-item>
+              <dxi-item dataField="Description"
+                editorType="dxTextArea"
+                [editorOptions]="{placeholder: 'ADD DESCRIPTION'}">
+                <dxi-validation-rule
+                  type="required"
+                  message="Description is required">
+                </dxi-validation-rule>
+              </dxi-item>
+            </dx-form>
+            <dx-button validationGroup="addSupplier"
+              [useSubmitBehavior]="true"
+              class="continue-btn"
+              text="Add Supplier"
+              type="success">
+            </dx-button>
+          </form>
+        </div>
+      </dx-popup>
+    </div>-->
+    <!--<div *ngIf="itemIndex===2">
+      <form>
+        <dx-button
+          class="add-unit-btn back-btn"
+          text="BACK TO BUSSINESS UNIT"
+          type="success"
+          (onClick)="backToBusinessUnit()">
+        </dx-button>
+        <div class="subscription-notification-container">
+          <p class="subscription-notification">
+            Thank you for completing the online registration process.
+          </p>
+          <span class="subscription-notification-instruction">
+    Please click below to log in into your 3 month trial account.
+     </span>
+        </div>
+        <dx-button
+          [routerLink]="['/dashboard']"
+          class="continue-btn"
+          text="Continue with free account"
+          type="success">
+        </dx-button>
+      </form>
+    </div>-->
+
+    <!--<dx-popup
+      [width]="600"
+      [height]="auto"
+      [showTitle]="true"
+      title="Create new user"
+      [dragEnabled]="false"
+      [closeOnOutsideClick]="true"
+      [(visible)]="isAddUserPopupVisible">
+      <div class="registration-container" *dxTemplate="let data of 'content'">
+        <form (submit)="onFormSubmit($event)" #declarativeForm="ngForm">
+        <dx-form id="Regform" #dxForm
+                 labelLocation="top"
+                 [formData]="registrationInfo"
+                 [readOnly]="false"
+                 [showColonAfterLabel]="true"
+                 [showValidationSummary]="true"
+                 validationGroup="customerData">
+          <dxi-item dataField="FirstName"
+                    [editorOptions]="{ placeholder: 'NAME'}">
+            <dxi-validation-rule
+              type="required"
+              message="Name is required">
+            </dxi-validation-rule>
+          </dxi-item>
+          <dxi-item dataField="LastName"
+                    [editorOptions]="{ placeholder: 'LAST NAME'}">
+            <dxi-validation-rule
+              type="required"
+              message="LAST NAME is required">
+            </dxi-validation-rule>
+          </dxi-item>
+          <dxi-item dataField="Email"
+                    [editorOptions]="{ placeholder: 'EMAIL'}">
+            <dxi-validation-rule
+              type="required"
+              message="Email is required"
+            >
+            </dxi-validation-rule>
+            <dxi-validation-rule #maleValidator
+                                 type="pattern"
+                                 [pattern]="emailPattern"
+                                 message="Enter valid Email"
+            >
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item
+            [template]="'countryTemplate'">
+          </dxi-item>
+          <div *dxTemplate="let data of 'countryTemplate'">
+            <dx-select-box #countrySelector
+                           [items]="countriesInfo"
+                           displayExpr="Name"
+                           placeholder="SELECT COUNTRY"
+                           valueExpr="Oid"
+                           [(value)]="registrationInfo.CountryId"
+                           (onSelectionChanged)="countrySelectorChange($event)">
+              <dx-validator validationGroup="customerData">
+                <dxi-validation-rule
+                  type="required"
+                  message="Country is required">
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-select-box>
+          </div>
+          <dxi-item itemType="group" caption="Cellphone number">
+            <dxi-item dataField="Mobile"
+                      [editorOptions]="{
+                    placeholder: 'CELLPHONE NUMBER',
+                    mask:phoneCode+'(0)00-000-0000',
+                    useMaskedValue: true,
+                    maskInvalidMessage: 'The phone must have a correct format'
+                }">
+              <dxi-validation-rule
+                type="required"
+                message="Cellphone Number is required">
+              </dxi-validation-rule>
+            </dxi-item>
+          </dxi-item>
+          <dxi-item itemType="group" caption="Phone number">
+            <dxi-item dataField="Phone"
+                      [editorOptions]="{
+                    placeholder: 'PHONE NUMBER',
+                    mask:  phoneCode+'(9)99-999-9999',
+                    maskRules: phoneRules,
+                    useMaskedValue: true,
+                    maskInvalidMessage: 'The phone must have a correct format'
+                }">
+            </dxi-item>
+          </dxi-item>
+
+          <dxi-item dataField="Password"
+                    [editorOptions]="{ placeholder: 'PASSWORD' , mode: 'password'}"
+          >
+            <dxi-validation-rule
+              type="required"
+              message="Password is required">
+            </dxi-validation-rule>
+          </dxi-item>
+          <dxi-item
+            dataField="Password1"
+            editorType="dxTextBox"
+            [editorOptions]="{ placeholder: 'CONFIRM PASSWORD', mode: 'password' }">
+
+            <dxi-validation-rule
+              type="required"
+              message="Confirm Password is required">
+            </dxi-validation-rule>
+            <dxi-validation-rule
+              type="compare"
+              [comparisonTarget]="passwordComparison"
+              message="Password and Confirm Password do not match">
+            </dxi-validation-rule>
+          </dxi-item>
+        </dx-form>
+        <dx-button
+          text="CREATE"
+          type="success"
+          validationGroup="customerData"
+          [useSubmitBehavior]="true">
+        </dx-button>
+        </form>
+      </div>
+    </dx-popup>-->
+  </div>
+</div>
+</div>

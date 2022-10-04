@@ -1,0 +1,95 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.terms-background {
+  background: url("../../../assets/login-background.jpg");
+  background-size: cover;
+  width: 100%;
+
+}
+.terms-container {
+  @include form-container();
+  grid-template-columns: minmax(300px, 40%);
+  height: 100vh;
+  grid-gap: 0;
+
+  .terms-wrapper {
+    display: grid;
+    grid-template-columns: auto 50px;
+    margin-top: 100px;
+    margin-bottom: 20px;
+  }
+
+  .terms-content {
+    background-color: #ffffff;
+    padding: 30px;
+    line-height: 20px;
+    h1 {
+      color: $title-color;
+      margin-bottom: 7px;
+      font-size: 20px;
+    }
+    p {
+      padding-bottom: 10px;
+    }
+    .sub-title:after {
+      display: block;
+      content: '';
+      height: 5px;
+      border-radius: 1px;
+      background: rgba(234, 224, 222, 0.4);
+      margin: 10px 0;
+    }
+  }
+
+  .terms-right-block {
+    text-align: center;
+    //float: right;
+    width: 50px;
+    background-color: #6BCDFD;
+    height: 100%;
+  }
+  .terms-close {
+    font-weight: 900;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+  }
+  /deep/ dx-button {
+    @include button-variant($second-button-font-color, $second-button-background-color, $second-button-border-color, 250px);
+    margin-top: 50px;
+    &:hover {
+      color: #fff;
+      background-color: $main-button-background-color;
+      border: 2px solid $main-button-background-color;
+    }
+
+  }
+}
+
+ol {
+  list-style-type: none;
+  counter-reset: item;
+  margin: 0;
+  padding: 0;
+}
+
+ol > li {
+  display: table;
+  counter-increment: item;
+  margin-bottom: 0.6em;
+}
+
+ol > li:before {
+  content: counters(item, ".") ". ";
+  display: table-cell;
+  padding-right: 0.6em;
+}
+
+li ol > li {
+  margin: 0;
+}
+
+li ol > li:before {
+  content: counters(item, ".") " ";
+}

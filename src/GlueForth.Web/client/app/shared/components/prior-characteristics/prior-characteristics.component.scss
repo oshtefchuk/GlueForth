@@ -1,0 +1,32 @@
+.active-categories-view {
+  padding: 0 15px;
+  .active-categories-list-item {
+    padding: 8px 0 8px 0;
+    display: grid;
+    grid-template-columns: 20px 2fr 20px;
+    align-items: baseline;
+    transition: all .25s linear;
+    &:not(:last-child) {
+      border-bottom: 1px solid #EEEEEE;
+    }
+    &:hover {
+      background-color: #F3F3F3;
+    }
+    span {
+      color: #999999;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .active-category-name {
+      font-weight: 400;
+      padding-top: 5px;
+      text-transform: none;
+    }
+    i {
+      line-height: 20px;
+      color: #D8D8D8;
+      font-size: 20px;
+    }
+  }
+}
+

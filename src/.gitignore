@@ -1,0 +1,28 @@
+<<<<<<< HEAD
+/.vs
+/BlueNorth.Model/obj
+/BlueNorth.Module.Web/obj/Debug
+/BlueNorth.Module.Mobile/obj/Debug
+/BlueNorth.Module.Win/obj/Debug
+/BlueNorth.Module/obj/Debug
+/BlueNorth.Web/obj/Debug
+/BlueNorth.Win/obj/Debug
+/packages
+=======
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/BlueNorth.Model/bin/Debug/netcoreapp2.0
+/BlueNorth.Model/obj
+>>>>>>> 829437c13b2622df7fce042811b6535bd2984b51
+/BlueNorth.Module/bin/Debug
+/BlueNorth.Module.Mobile/bin/Debug
+/BlueNorth.Module.Web/bin/Debug
+/BlueNorth.Module.Web.Tests/obj/Debug
+/BlueNorth.Module.Win/bin/Debug
+/BlueNorth.Web/bin
+/BlueNorth.Win/bin/Debug
+/BlueNorth.Module.Web.Tests/bin/Debug
+/BlueNorth.Model.Tests/bin/Debug
+/BlueNorth.Model.Tests/obj/Debug
