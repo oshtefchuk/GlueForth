@@ -1,7 +1,7 @@
 ﻿using System;
 using DevExpress.ExpressApp.Mobile;
 
-namespace BlueNorth.Mobile {
+namespace GlueForth.Mobile {
     public class ResourcesHttpHandler : MobileResourcesHttpHandler<BlueNorthMobileApplication> {
     }
 }

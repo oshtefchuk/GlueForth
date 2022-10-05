@@ -1,4 +1,4 @@
-using BlueNorth.WebApi.Helpers;
+using GlueForth.WebApi.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Web.Http;
 using System.Web.OData;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class CharacteristicsController : ApiController
     {

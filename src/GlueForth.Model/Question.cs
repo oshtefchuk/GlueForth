@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     public enum AssessmentType
     {

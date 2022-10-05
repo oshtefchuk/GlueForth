@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions
+namespace GlueForth.WebApi.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

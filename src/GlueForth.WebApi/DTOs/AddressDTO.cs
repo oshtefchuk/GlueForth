@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class AddressDTO
     {

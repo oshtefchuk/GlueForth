@@ -1,5 +1,5 @@
-﻿using BlueNorth.Models;
-using BlueNorth.WebApi;
+﻿using GlueForth.Models;
+using GlueForth.WebApi;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -15,7 +15,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Security;
 
-namespace BlueNorth.Controllers
+namespace GlueForth.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
 
     [NavigationItem("SPA Structure")]

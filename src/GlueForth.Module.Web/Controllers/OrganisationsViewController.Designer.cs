@@ -1,4 +1,4 @@
-﻿namespace BlueNorth.Module.Web.Controllers
+﻿namespace GlueForth.Module.Web.Controllers
 {
     partial class OrganisationsViewController
     {

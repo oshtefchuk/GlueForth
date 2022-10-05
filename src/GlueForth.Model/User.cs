@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System;
 using DevExpress.ExpressApp;
 using System.Web;
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
 
     [DefaultClassOptions]

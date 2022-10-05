@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
 
-namespace BlueNorth.WebApi.Controllers
+namespace GlueForth.WebApi.Controllers
 {
     public class IndicatorDataSetsController : ApiController
     {

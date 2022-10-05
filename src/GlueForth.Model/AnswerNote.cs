@@ -5,7 +5,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System.Linq;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
 
 

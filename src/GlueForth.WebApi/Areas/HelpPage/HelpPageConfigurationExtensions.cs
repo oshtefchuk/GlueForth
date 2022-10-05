@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions;
-using BlueNorth.WebApi.Areas.HelpPage.Models;
+using GlueForth.WebApi.Areas.HelpPage.ModelDescriptions;
+using GlueForth.WebApi.Areas.HelpPage.Models;
 
-namespace BlueNorth.WebApi.Areas.HelpPage
+namespace GlueForth.WebApi.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

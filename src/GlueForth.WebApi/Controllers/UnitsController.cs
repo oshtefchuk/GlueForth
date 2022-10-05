@@ -11,7 +11,7 @@ using System.Web.Http.Description;
 using System.Web.OData;
 using System.Web.Security;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     [ApiExplorerSettings(IgnoreApi = false)]
     public class UnitsController : ApiController

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlueNorth.WebApi.Helpers
+namespace GlueForth.WebApi.Helpers
 {
     public static class VersionHelper
     {

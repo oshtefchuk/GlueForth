@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     using System;
     using System.Data.Entity;

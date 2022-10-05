@@ -1,4 +1,4 @@
-using BlueNorth.WebApi.DTOs;
+using GlueForth.WebApi.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -11,7 +11,7 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Web.Http;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class ImprovementPlanController : ApiController
     {

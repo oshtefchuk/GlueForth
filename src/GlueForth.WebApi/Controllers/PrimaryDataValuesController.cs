@@ -1,4 +1,4 @@
-﻿using BlueNorth.WebApi.DTOs;
+﻿using GlueForth.WebApi.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,7 +9,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.OData;
 
-namespace BlueNorth.WebApi.Controllers
+namespace GlueForth.WebApi.Controllers
 {
     /// <summary>
     /// Methods for Indicators capturine and Map Area tool pages

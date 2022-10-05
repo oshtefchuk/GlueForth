@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace BlueNorth.Models
+namespace GlueForth.Models
 {
     // Models used as parameters to AccountController actions.
 

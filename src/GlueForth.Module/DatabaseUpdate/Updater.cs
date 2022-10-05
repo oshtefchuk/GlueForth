@@ -7,7 +7,7 @@ using DevExpress.ExpressApp.Security;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 
-namespace BlueNorth.Module.DatabaseUpdate
+namespace GlueForth.Module.DatabaseUpdate
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppUpdatingModuleUpdatertopic.aspx
     public class Updater : ModuleUpdater

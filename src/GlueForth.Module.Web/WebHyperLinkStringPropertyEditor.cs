@@ -13,7 +13,7 @@ using DevExpress.ExpressApp.Localization;
 using DevExpress.ExpressApp.Web.Editors.ASPx;
 using DevExpress.ExpressApp.Web.TestScripts;
 
-namespace BlueNorth.Module.Web
+namespace GlueForth.Module.Web
 {
     [PropertyEditor(typeof(System.String), "HyperLinkStringPropertyEditor", false)]
     public class WebHyperLinkStringPropertyEditor : ASPxPropertyEditor

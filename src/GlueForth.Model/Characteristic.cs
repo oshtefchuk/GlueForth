@@ -9,7 +9,7 @@ using DevExpress.ExpressApp.Model;
 using System.Configuration;
 using DevExpress.Persistent.Validation;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [NavigationItem("SPA Structure")]
     [DefaultProperty("Reference")]

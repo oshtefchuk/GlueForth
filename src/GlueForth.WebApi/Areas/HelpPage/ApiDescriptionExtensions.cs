@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace BlueNorth.WebApi.Areas.HelpPage
+namespace GlueForth.WebApi.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {

@@ -7,9 +7,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Web.Http;
 using System.Web.OData;
-using BlueNorth.WebApi.Helpers;
+using GlueForth.WebApi.Helpers;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class PrincipleGroupsController : ApiController
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public interface IMailingService
     {

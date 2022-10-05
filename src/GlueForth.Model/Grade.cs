@@ -3,7 +3,7 @@ using DevExpress.ExpressApp.Editors;
 using DevExpress.Xpo;
 using System.ComponentModel;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [Appearance("HideOid", TargetItems = "Oid", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide)]
     [DefaultProperty("ShortTitle")]

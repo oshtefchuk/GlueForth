@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace BlueNorth.WebApi.DTOs
+namespace GlueForth.WebApi.DTOs
 {
     public class PrimaryDataMonthValuesDTO
     {

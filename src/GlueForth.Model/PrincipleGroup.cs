@@ -5,7 +5,7 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System.ComponentModel;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [DefaultProperty("ShortTitle")]
     [NavigationItem("SPA Structure")]

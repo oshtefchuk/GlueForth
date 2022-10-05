@@ -2,7 +2,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web.Http;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class FrontendMenuItemController : ApiController
     {

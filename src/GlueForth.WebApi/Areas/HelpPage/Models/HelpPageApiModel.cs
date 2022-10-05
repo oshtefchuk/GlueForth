@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions;
+using GlueForth.WebApi.Areas.HelpPage.ModelDescriptions;
 
-namespace BlueNorth.WebApi.Areas.HelpPage.Models
+namespace GlueForth.WebApi.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.

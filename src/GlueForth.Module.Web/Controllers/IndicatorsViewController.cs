@@ -1,11 +1,11 @@
 ﻿using System;
-using BlueNorth.Model;
+using GlueForth.Model;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Web.Templates.ActionContainers;
 using DevExpress.ExpressApp.Web.Templates.ActionContainers.Menu;
 
-namespace BlueNorth.Module.Web.Controllers
+namespace GlueForth.Module.Web.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
     public partial class IndicatorsViewController : ViewController

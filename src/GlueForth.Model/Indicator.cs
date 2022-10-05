@@ -6,7 +6,7 @@ using DevExpress.Xpo;
 using System.ComponentModel;
 using System.Linq;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [NavigationItem("Indicators")]
 

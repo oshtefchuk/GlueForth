@@ -5,7 +5,7 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
 using System.ComponentModel;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [NavigationItem("Units")]
     [DefaultProperty("Name")]

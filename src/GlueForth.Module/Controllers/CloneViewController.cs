@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using BlueNorth.Model;
+using GlueForth.Model;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.CloneObject;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using DevExpress.Xpo.Metadata;
 
-namespace BlueNorth.Module.Controllers
+namespace GlueForth.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
     public partial class CloneViewController : ViewController

@@ -1,7 +1,7 @@
 ﻿using System;
 using DevExpress.ExpressApp.Mobile.Services;
 
-namespace BlueNorth.Mobile {
+namespace GlueForth.Mobile {
     public class MetadataService : MobileMetadataService<BlueNorthMobileApplication> {
 	}
 }

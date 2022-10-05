@@ -1,1 +1,1 @@
-<%@ Application Language="C#" CodeBehind="Global.asax.cs" Inherits="BlueNorth.Web.Global"%>
+<%@ Application Language="C#" CodeBehind="Global.asax.cs" Inherits="GlueForth.Web.Global"%>

@@ -1,5 +1,5 @@
-using BlueNorth.WebApi.DTOs;
-using BlueNorth.WebApi.Helpers;
+using GlueForth.WebApi.DTOs;
+using GlueForth.WebApi.Helpers;
 using NCalc;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web.Http;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class ReportsController : ApiController
     {

@@ -8,10 +8,10 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Web.Http;
-using BlueNorth.WebApi.DTOs;
-using BlueNorth.WebApi.Helpers;
+using GlueForth.WebApi.DTOs;
+using GlueForth.WebApi.Helpers;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class QuestionsController : ApiController
     {

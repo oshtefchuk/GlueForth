@@ -7,13 +7,13 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Security.ClientServer;
 
-namespace BlueNorth.Web {
+namespace GlueForth.Web {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/DevExpressExpressAppWebWebApplicationMembersTopicAll.aspx
     public partial class BlueNorthAspNetApplication : WebApplication {
         private DevExpress.ExpressApp.SystemModule.SystemModule module1;
         private DevExpress.ExpressApp.Web.SystemModule.SystemAspNetModule module2;
-        private BlueNorth.Module.BlueNorthModule module3;
-        private BlueNorth.Module.Web.BlueNorthAspNetModule module4;
+        private GlueForth.Module.BlueNorthModule module3;
+        private GlueForth.Module.Web.BlueNorthAspNetModule module4;
         private DevExpress.ExpressApp.Security.SecurityModule securityModule1;
         private DevExpress.ExpressApp.Security.SecurityStrategyComplex securityStrategyComplex1;
         private DevExpress.ExpressApp.Security.AuthenticationStandard authenticationStandard1;
@@ -98,8 +98,8 @@ namespace BlueNorth.Web {
         private void InitializeComponent() {
             this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();
             this.module2 = new DevExpress.ExpressApp.Web.SystemModule.SystemAspNetModule();
-            this.module3 = new BlueNorth.Module.BlueNorthModule();
-            this.module4 = new BlueNorth.Module.Web.BlueNorthAspNetModule();
+            this.module3 = new GlueForth.Module.BlueNorthModule();
+            this.module4 = new GlueForth.Module.Web.BlueNorthAspNetModule();
             this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
             this.securityStrategyComplex1 = new DevExpress.ExpressApp.Security.SecurityStrategyComplex();
             this.authenticationStandard1 = new DevExpress.ExpressApp.Security.AuthenticationStandard();
@@ -127,7 +127,7 @@ namespace BlueNorth.Web {
             this.securityStrategyComplex1.Authentication = this.authenticationStandard1;
             this.securityStrategyComplex1.RoleType = typeof(DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole);
             this.securityStrategyComplex1.SupportNavigationPermissionsForTypes = false;
-            this.securityStrategyComplex1.UserType = typeof(BlueNorth.Model.User);
+            this.securityStrategyComplex1.UserType = typeof(GlueForth.Model.User);
             // 
             // authenticationStandard1
             // 

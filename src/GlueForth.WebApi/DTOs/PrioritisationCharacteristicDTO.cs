@@ -1,4 +1,4 @@
-﻿namespace BlueNorth.WebApi
+﻿namespace GlueForth.WebApi
 {
     public class PrioritisationCharacteristicDTO
     {

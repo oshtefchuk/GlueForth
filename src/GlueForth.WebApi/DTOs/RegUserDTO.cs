@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class RegUserDTO
     {

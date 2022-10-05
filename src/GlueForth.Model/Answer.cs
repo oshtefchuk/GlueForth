@@ -5,7 +5,7 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     public enum AnswerVariants
     {

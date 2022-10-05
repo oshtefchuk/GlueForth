@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="BlueNorth.Mobile.MetadataService" CodeBehind="MetadataService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="GlueForth.Mobile.MetadataService" CodeBehind="MetadataService.svc.cs" %>

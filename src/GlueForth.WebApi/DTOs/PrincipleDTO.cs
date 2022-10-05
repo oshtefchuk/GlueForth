@@ -1,4 +1,4 @@
-﻿namespace BlueNorth.WebApi.DTOs
+﻿namespace GlueForth.WebApi.DTOs
 {
     /// <summary>
     /// This class represents DTO of Principle entity for selector on lite assessment capture page

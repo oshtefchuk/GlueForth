@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlueNorth.WebApi.DTOs
+namespace GlueForth.WebApi.DTOs
 {
     public class AnswerDTO
     {

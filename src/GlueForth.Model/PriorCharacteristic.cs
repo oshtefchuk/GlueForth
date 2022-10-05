@@ -4,7 +4,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [Appearance("HideOid", TargetItems = "Oid", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide)]
     [NavigationItem("Prioritisation")]

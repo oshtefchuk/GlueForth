@@ -10,7 +10,7 @@
 using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
-    typeof(BlueNorth.WebApi.BlueNorthEntities),
+    typeof(GlueForth.WebApi.BlueNorthEntities),
     typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7e9e6ef9689831718fbbae368b900d3feab17befc2a4bccee2de099cdde2fca3))]
 
 namespace Edm_EntityMappingGeneratedViews

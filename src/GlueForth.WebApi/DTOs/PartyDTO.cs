@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class PartyDTO
     {

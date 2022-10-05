@@ -1,6 +1,6 @@
 using System;
 
-namespace BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions
+namespace GlueForth.WebApi.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

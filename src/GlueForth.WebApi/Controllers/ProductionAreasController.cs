@@ -1,4 +1,4 @@
-﻿using BlueNorth.WebApi.DTOs;
+﻿using GlueForth.WebApi.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
 
-namespace BlueNorth.WebApi.Controllers
+namespace GlueForth.WebApi.Controllers
 {
     public class ProductionAreasController : ApiController
     {

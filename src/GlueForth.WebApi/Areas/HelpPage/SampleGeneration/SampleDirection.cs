@@ -1,4 +1,4 @@
-namespace BlueNorth.WebApi.Areas.HelpPage
+namespace GlueForth.WebApi.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

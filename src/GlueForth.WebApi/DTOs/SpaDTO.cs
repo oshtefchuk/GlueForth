@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace BlueNorth.WebApi.DTOs
+namespace GlueForth.WebApi.DTOs
 {
     /// <summary>
     /// This class represent SPA DataSet model for strategic assessment => current status page

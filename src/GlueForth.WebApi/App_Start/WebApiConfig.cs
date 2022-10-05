@@ -5,7 +5,7 @@ using System.Web.Http;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public static class WebApiConfig
     {

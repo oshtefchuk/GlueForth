@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BlueNorth.WebApi.DTOs
+namespace GlueForth.WebApi.DTOs
 {
     public class ReportIndicatorDTO
     {

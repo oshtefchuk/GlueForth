@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web.Security;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class MailingService
     {

@@ -5,9 +5,9 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using BlueNorth.WebApi.DTOs;
+using GlueForth.WebApi.DTOs;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class AnswersController : ApiController
     {

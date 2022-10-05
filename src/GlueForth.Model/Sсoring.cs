@@ -5,7 +5,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.Editors;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [DefaultProperty("Title")]
     [NavigationItem("SPA Results")]

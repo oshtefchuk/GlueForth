@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BlueNorth.WebApi.Properties {
+namespace GlueForth.WebApi.Properties {
     using System;
     
     

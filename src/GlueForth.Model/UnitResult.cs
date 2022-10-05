@@ -1,7 +1,7 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [DomainComponent, DefaultClassOptions]
     public class UnitResult

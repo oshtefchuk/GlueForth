@@ -1,4 +1,4 @@
-﻿namespace BlueNorth.Module.Web {
+﻿namespace GlueForth.Module.Web {
     partial class BlueNorthAspNetModule {
         /// <summary> 
         /// Required designer variable.
@@ -26,7 +26,7 @@
             // 
             // BlueNorthAspNetModule
             // 
-            this.RequiredModuleTypes.Add(typeof(BlueNorth.Module.BlueNorthModule));
+            this.RequiredModuleTypes.Add(typeof(GlueForth.Module.BlueNorthModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Web.SystemModule.SystemAspNetModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Chart.Web.ChartAspNetModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.FileAttachments.Web.FileAttachmentsAspNetModule));

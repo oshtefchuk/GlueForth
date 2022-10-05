@@ -4,7 +4,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System.ComponentModel;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [NavigationItem("Units")]
     [Appearance("HideOid", TargetItems = "Oid", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide)]

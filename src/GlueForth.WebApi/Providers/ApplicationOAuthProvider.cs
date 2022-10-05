@@ -9,10 +9,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using BlueNorth.Models;
-using BlueNorth.WebApi;
+using GlueForth.Models;
+using GlueForth.WebApi;
 
-namespace BlueNorth.Providers
+namespace GlueForth.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {

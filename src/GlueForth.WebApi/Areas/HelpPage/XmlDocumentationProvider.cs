@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
-using BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions;
+using GlueForth.WebApi.Areas.HelpPage.ModelDescriptions;
 
-namespace BlueNorth.WebApi.Areas.HelpPage
+namespace GlueForth.WebApi.Areas.HelpPage
 {
     /// <summary>
     /// A custom <see cref="IDocumentationProvider"/> that reads the API documentation from an XML documentation file.

@@ -1,4 +1,4 @@
-namespace BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions
+namespace GlueForth.WebApi.Areas.HelpPage.ModelDescriptions
 {
     public class CollectionModelDescription : ModelDescription
     {

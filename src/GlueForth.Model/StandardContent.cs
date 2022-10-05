@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [Appearance("HideOid", TargetItems = "Oid", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide)]
     [NavigationItem("SPA Structure")]

@@ -1,4 +1,4 @@
-﻿namespace BlueNorth.Module.Controllers
+﻿namespace GlueForth.Module.Controllers
 {
     partial class InitializeNonPersistentListViewController
     {

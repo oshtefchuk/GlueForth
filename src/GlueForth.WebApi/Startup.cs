@@ -3,9 +3,9 @@ using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Owin;
 
-[assembly: OwinStartup(typeof(BlueNorth.Startup))]
+[assembly: OwinStartup(typeof(GlueForth.Startup))]
 
-namespace BlueNorth
+namespace GlueForth
 {
     public partial class Startup
     {

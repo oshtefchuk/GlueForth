@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     public class UserDTO
     {

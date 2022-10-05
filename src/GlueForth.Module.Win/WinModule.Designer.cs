@@ -1,4 +1,4 @@
-﻿namespace BlueNorth.Module.Win {
+﻿namespace GlueForth.Module.Win {
     partial class BlueNorthWindowsFormsModule {
         /// <summary> 
         /// Required designer variable.
@@ -26,7 +26,7 @@
             // 
             // BlueNorthWindowsFormsModule
             // 
-            this.RequiredModuleTypes.Add(typeof(BlueNorth.Module.BlueNorthModule));
+            this.RequiredModuleTypes.Add(typeof(GlueForth.Module.BlueNorthModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Win.SystemModule.SystemWindowsFormsModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Chart.Win.ChartWindowsFormsModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.FileAttachments.Win.FileAttachmentsWindowsFormsModule));

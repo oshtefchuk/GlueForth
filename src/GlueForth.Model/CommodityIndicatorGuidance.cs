@@ -1,6 +1,6 @@
 ﻿using DevExpress.Xpo;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
 
     public class CommodityIndicatorGuidance : XPObject

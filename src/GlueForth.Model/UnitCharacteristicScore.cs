@@ -3,7 +3,7 @@ using DevExpress.ExpressApp.Editors;
 using DevExpress.Xpo;
 using System;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [Appearance("HideOid", TargetItems = "Oid", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide)]
     public class UnitCharacteristicScore : XPObject

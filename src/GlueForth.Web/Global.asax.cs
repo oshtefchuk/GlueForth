@@ -10,7 +10,7 @@ using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Web;
 using DevExpress.Web;
 
-namespace BlueNorth.Web {
+namespace GlueForth.Web {
     public class Global : System.Web.HttpApplication {
         public Global() {
             InitializeComponent();

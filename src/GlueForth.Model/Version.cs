@@ -1,7 +1,7 @@
 ﻿using DevExpress.Xpo;
 using System;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     public class Version : XPObject
     {

@@ -8,7 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [DefaultProperty("ShortTitle")]
     [Appearance("HideOid", TargetItems = "Oid", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide)]

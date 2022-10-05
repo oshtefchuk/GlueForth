@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 
-namespace BlueNorth.Mobile
+namespace GlueForth.Mobile
 {
     public class Global : System.Web.HttpApplication
     {

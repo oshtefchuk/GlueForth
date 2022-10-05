@@ -1,4 +1,4 @@
-﻿using BlueNorth.WebApi.Areas.HelpPage;
+﻿using GlueForth.WebApi.Areas.HelpPage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
 
     public class Global : System.Web.HttpApplication

@@ -7,7 +7,7 @@ using DevExpress.ExpressApp.Editors;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [DefaultProperty("Title")]
     [NavigationItem("SPA Structure")]

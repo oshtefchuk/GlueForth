@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [NavigationItem("SPA Structure")]
     [DefaultProperty("ShortTitle")]

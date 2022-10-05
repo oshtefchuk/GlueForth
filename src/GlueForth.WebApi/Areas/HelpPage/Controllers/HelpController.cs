@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using BlueNorth.WebApi.Areas.HelpPage.ModelDescriptions;
-using BlueNorth.WebApi.Areas.HelpPage.Models;
+using GlueForth.WebApi.Areas.HelpPage.ModelDescriptions;
+using GlueForth.WebApi.Areas.HelpPage.Models;
 
-namespace BlueNorth.WebApi.Areas.HelpPage.Controllers
+namespace GlueForth.WebApi.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

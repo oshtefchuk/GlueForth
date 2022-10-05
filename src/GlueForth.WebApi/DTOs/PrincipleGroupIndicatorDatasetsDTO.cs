@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BlueNorth.WebApi.Helpers
+namespace GlueForth.WebApi.Helpers
 {
     public class PrincipleGroupIndicatorDatasetsDTO
     {

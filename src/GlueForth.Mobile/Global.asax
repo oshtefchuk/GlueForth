@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="BlueNorth.Mobile.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="GlueForth.Mobile.Global" Language="C#" %>

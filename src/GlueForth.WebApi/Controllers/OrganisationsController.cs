@@ -10,7 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.OData;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     [ApiExplorerSettings(IgnoreApi = false)]
     public class OrganisationsController : ApiController

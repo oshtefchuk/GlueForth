@@ -1,4 +1,4 @@
-﻿namespace BlueNorth.WebApi.DTOs
+﻿namespace GlueForth.WebApi.DTOs
 {
     /// <summary>
     /// Structure that used for transfer filter selection for AnswerNotes list page (Repository)

@@ -4,6 +4,6 @@ using System.Linq;
 
 using DevExpress.ExpressApp.ReportsV2.Mobile;
 
-namespace BlueNorth.Mobile {
+namespace GlueForth.Mobile {
     public class DownloadReportService : XafDownloadReportService<BlueNorthMobileApplication> { }
 }

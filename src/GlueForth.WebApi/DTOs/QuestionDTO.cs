@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlueNorth.WebApi.DTOs
+namespace GlueForth.WebApi.DTOs
 {
     /// <summary>
     /// This class represent Question model for FullQuestionDTO

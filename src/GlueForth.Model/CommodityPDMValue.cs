@@ -4,7 +4,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     /// <summary>
     /// Class, that represents Commodity-specific primary data value for specific Month

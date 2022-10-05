@@ -1,11 +1,11 @@
-﻿using BlueNorth.Model;
+﻿using GlueForth.Model;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Xpo;
 using System.ComponentModel;
 using System.Linq;
 
-namespace BlueNorth.Module.Controllers
+namespace GlueForth.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
     public partial class InitializeNonPersistentListViewController : ViewController

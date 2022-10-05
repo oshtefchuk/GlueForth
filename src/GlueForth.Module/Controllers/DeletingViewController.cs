@@ -1,8 +1,8 @@
-﻿using BlueNorth.Model;
+﻿using GlueForth.Model;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
 
-namespace BlueNorth.Module.Controllers
+namespace GlueForth.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
     public partial class DeletingViewController : ViewController

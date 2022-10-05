@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using BlueNorth.WebApi.DTOs;
-using static BlueNorth.WebApi.ReportsController;
+using GlueForth.WebApi.DTOs;
+using static GlueForth.WebApi.ReportsController;
 
-namespace BlueNorth.WebApi.Helpers
+namespace GlueForth.WebApi.Helpers
 {
     public class AssessmentHelper : IDisposable
     {

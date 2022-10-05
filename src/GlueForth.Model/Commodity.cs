@@ -5,7 +5,7 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System.ComponentModel;
 
-namespace BlueNorth.Model
+namespace GlueForth.Model
 {
     [NavigationItem("SPA Structure")]
     [Appearance("HideOid", TargetItems = "Oid", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide)]

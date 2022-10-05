@@ -4,10 +4,10 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using BlueNorth.Providers;
-using BlueNorth.Models;
+using GlueForth.Providers;
+using GlueForth.Models;
 
-namespace BlueNorth
+namespace GlueForth
 {
     public partial class Startup
     {

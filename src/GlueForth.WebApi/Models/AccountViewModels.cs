@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BlueNorth.Models
+namespace GlueForth.Models
 {
     // Models returned by AccountController actions.
 

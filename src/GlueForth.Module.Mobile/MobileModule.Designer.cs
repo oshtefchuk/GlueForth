@@ -1,4 +1,4 @@
-﻿namespace BlueNorth.Module.Mobile {
+﻿namespace GlueForth.Module.Mobile {
     partial class BlueNorthMobileModule {
         /// <summary> 
         /// Required designer variable.
@@ -26,7 +26,7 @@
             // 
             // BlueNorthMobileModule
             // 
-            this.RequiredModuleTypes.Add(typeof(BlueNorth.Module.BlueNorthModule));
+            this.RequiredModuleTypes.Add(typeof(GlueForth.Module.BlueNorthModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Mobile.SystemModule.SystemMobileModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.CloneObject.Mobile.CloneObjectMobileModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.ConditionalAppearance.Mobile.ConditionalAppearanceMobileModule));

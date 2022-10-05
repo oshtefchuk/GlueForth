@@ -7,7 +7,7 @@ using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 
-namespace BlueNorth.WebApi
+namespace GlueForth.WebApi
 {
     [ApiExplorerSettings(IgnoreApi = false)]
     public class StandardsController : ApiController

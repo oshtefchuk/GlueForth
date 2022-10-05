@@ -8,10 +8,10 @@ using System.Net;
 using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
-using BlueNorth.WebApi.DTOs;
-using BlueNorth.WebApi.Helpers;
+using GlueForth.WebApi.DTOs;
+using GlueForth.WebApi.Helpers;
 
-namespace BlueNorth.WebApi.Controllers
+namespace GlueForth.WebApi.Controllers
 {
     public class SPADataSetsController : ApiController
     {

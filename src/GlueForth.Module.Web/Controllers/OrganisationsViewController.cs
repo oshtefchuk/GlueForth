@@ -13,11 +13,11 @@ using DevExpress.ExpressApp.Templates;
 using DevExpress.ExpressApp.Utils;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using BlueNorth.Model;
+using GlueForth.Model;
 using DevExpress.ExpressApp.Web.Editors.ASPx;
 using DevExpress.Web;
 
-namespace BlueNorth.Module.Web.Controllers
+namespace GlueForth.Module.Web.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
     public partial class OrganisationsViewController : ViewController

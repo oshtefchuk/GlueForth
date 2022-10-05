@@ -9,13 +9,13 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Security.ClientServer;
 
-namespace BlueNorth.Mobile {
+namespace GlueForth.Mobile {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/DevExpressExpressAppWebWebApplicationMembersTopicAll.aspx
     public partial class BlueNorthMobileApplication : MobileApplication {
         private DevExpress.ExpressApp.SystemModule.SystemModule module1;
         private DevExpress.ExpressApp.Mobile.SystemModule.SystemMobileModule module2;
-        private BlueNorth.Module.BlueNorthModule module3;
-        private BlueNorth.Module.Mobile.BlueNorthMobileModule module4;
+        private GlueForth.Module.BlueNorthModule module3;
+        private GlueForth.Module.Mobile.BlueNorthMobileModule module4;
         private DevExpress.ExpressApp.Security.SecurityModule securityModule1;
         private DevExpress.ExpressApp.Security.SecurityStrategyComplex securityStrategyComplex1;
         private DevExpress.ExpressApp.Security.AuthenticationStandard authenticationStandard1;
@@ -118,8 +118,8 @@ namespace BlueNorth.Mobile {
         private void InitializeComponent() {
             this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();
             this.module2 = new DevExpress.ExpressApp.Mobile.SystemModule.SystemMobileModule();
-            this.module3 = new BlueNorth.Module.BlueNorthModule();
-            this.module4 = new BlueNorth.Module.Mobile.BlueNorthMobileModule();
+            this.module3 = new GlueForth.Module.BlueNorthModule();
+            this.module4 = new GlueForth.Module.Mobile.BlueNorthMobileModule();
             this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
             this.securityStrategyComplex1 = new DevExpress.ExpressApp.Security.SecurityStrategyComplex();
             this.authenticationStandard1 = new DevExpress.ExpressApp.Security.AuthenticationStandard();
